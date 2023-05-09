@@ -98,6 +98,96 @@
     font-weight: 600;
 }
 
+
+/* Films */
+
+#listFilms {
+    position: relative;
+    height: 1159px;
+}
+.header-films {
+    max-width: 1920px;
+    height: 155px;
+}
+.header-films h2 {
+    position: absolute;
+    top: 78px;
+    left: 151px;
+    font-size: 40px;
+    font-weight: 700;
+    /* color: #FFF; */
+}
+.header-films .whiteline {
+    position: absolute;
+    border: 1px solid #000;
+    width: 85.417%;
+    top: 153px;
+    left: 151px;
+}
+#listFilms .cards {
+    display:flex;
+    flex-wrap: wrap;
+}
+#listFilms .card-film {
+    position: relative;
+    width: 367px;
+    height: 850px;
+    display: flex;
+    flex-direction: column;
+    place-items: center;
+    text-align: center;
+}
+#listFilms img {
+    position: absolute;
+    top: 97px;
+    left: 44px;
+    width: 279px;
+    height: 378px;
+}
+#listFilms .info-film {
+    padding-top: 45px;
+    width: 300px;
+    height: 280px;
+    position: absolute;
+    top: 475px;
+    left: 33.5px;
+}
+#listFilms h2 {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    width: 300px;
+    height: 90px;
+    font-weight: 700;
+    font-size: 30px;
+    margin-bottom: 42px;
+}
+#listFilms p {
+    font-weight: 500;
+    font-size: 20px;
+}
+#listFilms input {
+    position: absolute;
+    top: 780px;
+    left: 55px;
+    background: #E51937;
+    width: 257px;
+    height: 53px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: 0.4s;
+}
+#listFilms input:hover {
+    background: #7D0B1C;
+}
+#listFilms input[value] {
+    color: #fff;
+    font-size: 25px;
+    font-weight: 600;
+}
+
 /* Footer */
 #footer {
     background: #000;
