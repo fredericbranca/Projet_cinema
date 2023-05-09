@@ -31,6 +31,7 @@
 #navbar a {
     color: #FFF;
     font-size: 24px;
+    font-weight: 500;
     text-decoration: none;
 }
 #navbar li {
@@ -38,14 +39,64 @@
 }
 
 /* Header */
+#header {
+    position: relative;
+    height: 489px;
+    background: rgba(0, 0, 0, 0.4) url(../img/cinema.jpg) no-repeat center;
+    background-blend-mode: darken;
+    background-size: cover;
+    color: #FFF;
+}
+.header {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    max-width: 661px;
+    max-height: 313px;
+    top: 130px;
+    left: 305px;
+}
 #header ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
     list-style: none;
+    font-size: 12px;
+    font-weight: 600;
 }
 #header li:not(:first-child)::before {
-    list-style: none;
-    /* content: "<i class='fa-sharp fa-solid fa-circle'></i>"; */
+    content: "•";
+    margin-right: 10px;
 }
-
+#header h1 {
+    font-size: 80px;
+    font-weight: 800;
+    margin-top: -20px;
+}
+#header p {
+    font-size: 30px;
+    font-weight: 200;
+    margin-left: 15px;
+}
+#header input {
+    background: #E51937;
+    margin-left: 15px;
+    width: 339px;
+    height: 53px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: 0.4s;
+}
+#header input:hover {
+    background: #7D0B1C;
+}
+#header input[value] {
+    margin-top: 37px;
+    color: #fff;
+    font-size: 25px;
+    font-weight: 600;
+}
 
 /* Footer */
 #footer {
