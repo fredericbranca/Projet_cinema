@@ -23,30 +23,37 @@
         <h2>Films</h2>
         <div class="whiteline"></div>
     </div>
+    <div id="container-film">
+        <div class="chevron" id="chevron-gauche"><i class="fa-solid fa-chevron-left"></i></div>
+        <div class="chevron" id="chevron-droit"><i class="fa-solid fa-chevron-right"></i></div>
+        <div id="caroussel">
 
-    <div class="cards">
-<?php
-foreach($requete->fetchAll() as $film) { ?>
-    
-    <form action="index.php?action=detailsFilm&id=<?= $film['id_film'] ?>" method="POST" enctype="multipart/form-data">
-        <div class="card-film">
-            <img src="public/img/<?= $film['affiche'];?>" alt="Affiche du Film : <?= $film['titre'];?>">
-            <div class="info-film">
-                <h2><?= $film['titre'];?></h2>
-                <p>
-                    <?php if($film['duree'] > 59) {
-                            echo $film['dureeFormat'];
-                         }
-                         else {echo $film['duree'] . " MIN";};?>
-                </p>
-                <p>Sortie le <?= $film['dateSortie'];?></p>
+            <div class="cards">
+
+        <?php
+        foreach($requeteFilms->fetchAll() as $film) { ?>
+            
+            <form action="index.php?action=detailsFilm&id=<?= $film['id_film'] ?>" method="POST" enctype="multipart/form-data">
+                <div class="card-film">
+                    <img src="public/img/<?= $film['affiche'];?>" alt="Affiche du Film : <?= $film['titre'];?>">
+                    <div class="info-film">
+                        <h2><?= $film['titre'];?></h2>
+                        <p>
+                            <?php if($film['duree'] > 59) {
+                                    echo $film['dureeFormat'];
+                                }
+                                else {echo $film['duree'] . " MIN";};?>
+                        </p>
+                        <p>Sortie le <?= $film['dateSortie'];?></p>
+                    </div>
+                    <input type="submit" name="submit" id="submit" Value="Détails du film">
+                </div> 
+            </form>
+        <?php } ?>
+
             </div>
-            <input type="submit" name="submit" id="submit" Value="Détails du film">
-        </div> 
-    </form>
-<?php } ?>
+        </div>
     </div>
-
 </section>
 
 <?php
