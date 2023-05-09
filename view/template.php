@@ -1,3 +1,8 @@
+<?php
+    $titre = (isset($titre)) ? $titre : "";
+    $titre_secondaire = (isset($titre_secondaire)) ? $titre_secondaire : "";
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -8,9 +13,9 @@
     <!-- Script fontawesome -->
     <script src="https://kit.fontawesome.com/de7e6c09fa.js" crossorigin="anonymous"></script>
     <!-- Link CSS -->
-    <link rel="stylesheet" href="../public/css/style.css">
+    <link rel="stylesheet" href="public/css/style.css">
 
-    <title>Document</title>
+    <title><?= $titre ?></title>
 </head>
 
 <body>
@@ -18,13 +23,13 @@
     <!-- NAVBAR -->
     <nav id="navbar">
         <ul>
-            <img src="../public/img/logo.jpg" alt="logo CNEMA Cretria">
+            <img src="public/img/logo.jpg" alt="logo CNEMA Cretria">
             <li><a href="">Accueil</a></li>
             <li><a href="">Admin</a></li>
         </ul>
     </nav>
 
-
+    <?= $contenu ?>
 
     <!-- FOOTER -->
     <footer id="footer">
@@ -38,7 +43,7 @@
 
         <div class="bot">
             <p>&copy; Copyright 2023 CNEMA Cretria</p>
-            <img src="../public/img/logo.jpg" alt="logo CNEMA Cretria">
+            <img src="public/img/logo.jpg" alt="logo CNEMA Cretria">
         </div>
     </footer>
 
