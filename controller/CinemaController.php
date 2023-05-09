@@ -6,7 +6,7 @@ use Model\Connect; // "use" pour accéder à la classe Connect située dans le n
 class CinemaController {
 
     /* Lister les films */
-    public function listFilms() {
+    public function accueil() {
 
         $pdo = Connect::seConnecter();
         $requete = $pdo->query("
@@ -15,7 +15,7 @@ class CinemaController {
             ORDER BY dateSortie DESC
         ");
 
-        require "view/listFilms.php";
+        require "view/accueil.php";
     }
 
     /* Lister les films */
