@@ -6,32 +6,27 @@ use Model\Connect; // "use" pour accéder à la classe Connect située dans le n
 class CinemaController {
 
     /* Lister les films */
-    public function accueil() {
+    public function listFilms() {
 
         $pdo = Connect::seConnecter();
         $requete = $pdo->query("
-            SELECT affiche, titre, duree, dateSortie
+            SELECT id_film, affiche, duree, titre, TIME_FORMAT(SEC_TO_TIME(duree * 60), '%k H %i') AS dureeFormat, DATE_FORMAT(dateSortie, '%e %M %Y') as dateSortie
             FROM film
-            ORDER BY dateSortie DESC
         ");
 
         require "view/accueil.php";
     }
 
     /* Lister les films */
-    public function listActeurs() {
+    // public function detailsFilm($id) {
 
-        $pdo = Connect::seConnecter();
-        $requete = $pdo->query("
-            SELECT f.titre, p.nom, p.prenom, r.role
-            FROM casting c
-            JOIN acteur a ON a.id_acteur = c.id_acteur
-            JOIN personne p ON p.id_personne = a.id_personne
-            JOIN film f ON f.id_film = c.id_film
-            JOIN role r ON r.id_role = c.id_role
-            ORDER BY f.titre ASC
-        ");
+    //     $pdo = Connect::seConnecter();
+    //     $requete = $pdo->query("
+    //         SELECT affiche
+    //         FROM film
+    //     ");
+    //     $requete->execute(["id" => $id]);
 
-        require "view/listActeurs.php";
-    }
+    //     require "view/detailsFilm.php";
+    // }
 }
