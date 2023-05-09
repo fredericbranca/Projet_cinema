@@ -1,6 +1,6 @@
 <?php
-    $titre = (isset($titre)) ? $titre : "";
-    $titre_secondaire = (isset($titre_secondaire)) ? $titre_secondaire : "";
+$titre = (isset($titre)) ? $titre : "";
+$titre_secondaire = (isset($titre_secondaire)) ? $titre_secondaire : "";
 ?>
 
 <!DOCTYPE html>
@@ -20,14 +20,16 @@
 
 <body>
 
-    <!-- NAVBAR -->
-    <nav id="navbar">
-        <ul>
-            <img src="public/img/logo.jpg" alt="logo CNEMA Cretria">
-            <li><a href="">Accueil</a></li>
-            <li><a href="">Admin</a></li>
-        </ul>
-    </nav>
+    <header>
+        <!-- NAVBAR -->
+        <nav id="navbar">
+            <ul>
+                <img src="public/img/logo.jpg" alt="logo CNEMA Cretria">
+                <li><a href="">Accueil</a></li>
+                <li><a href="">Admin</a></li>
+            </ul>
+        </nav>
+    </header>
 
     <?= $contenu ?>
 
