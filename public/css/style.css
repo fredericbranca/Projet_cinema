@@ -1,0 +1,81 @@
+/* import police Poppins depuis fonts.google.com */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+
+/* Réinitialise les marges, paddings + police de la page */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins';
+}
+
+/* Navbar */
+#navbar {
+    background: #000;
+    height: 67px;
+}
+#navbar img {
+    max-width: 248px;
+    max-height: 67px;
+    margin: 0 250px;
+}
+#navbar ul {
+    display: flex;
+    flex-wrap: wrap;
+    place-items: center;
+}
+#navbar ul li:nth-child(n+2) {
+    margin-right: 139px;
+}
+#navbar a {
+    color: #FFF;
+    font-size: 24px;
+    text-decoration: none;
+}
+#navbar li {
+    list-style: none;
+}
+
+
+/* Footer */
+#footer {
+    background: #000;
+    height: 194px;
+}
+.footer-social {
+    padding: 25px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 50px
+}
+.footer-social a{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    border: 1px solid #FFF;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    text-decoration: none;
+}
+#footer .bot {
+    display: flex;
+    flex-wrap: wrap;
+    place-items: center;
+    justify-content: center;
+    gap: 500px
+}
+#footer img {
+    max-width: 247px;
+    max-height: 92px;
+}
+#footer p {
+    color: #FFF;
+}
+.whiteline {
+    border-bottom:1px solid #fff;
+}
