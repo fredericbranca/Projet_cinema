@@ -13,9 +13,40 @@
         <h1>CNEMA Cretria</h1>
         <p>Site de référence du cinéma !</p>
         <form action="">
-            <input type="submit" name="join" id="submit" Value="Cinéma à proximité">
+            <input type="submit" name="submit" id="submit" Value="Cinéma à proximité">
         </form>
     </div>
+</section>
+
+<section id="listFilms">
+    <div class="header-films">
+        <h2>Films</h2>
+        <div class="whiteline"></div>
+    </div>
+
+    <div class="cards">
+<?php
+foreach($requete->fetchAll() as $film) { ?>
+    
+    <form action="index.php?action=detailsFilm&id=<?= $film['id_film'] ?>" method="POST" enctype="multipart/form-data">
+        <div class="card-film">
+            <img src="public/img/<?= $film['affiche'];?>" alt="Affiche du Film : <?= $film['titre'];?>">
+            <div class="info-film">
+                <h2><?= $film['titre'];?></h2>
+                <p>
+                    <?php if($film['duree'] > 59) {
+                            echo $film['dureeFormat'];
+                         }
+                         else {echo $film['duree'] . " MIN";};?>
+                </p>
+                <p>Sortie le <?= $film['dateSortie'];?></p>
+            </div>
+            <input type="submit" name="submit" id="submit" Value="Détails du film">
+        </div> 
+    </form>
+<?php } ?>
+    </div>
+
 </section>
 
 <?php
