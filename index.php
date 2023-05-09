@@ -12,7 +12,7 @@ $ctrlCinema = new CinemaController(); // On instancie le controller Cinema
 if(isset($_GET["action"])) {
 
     switch ($_GET["action"]) {
-        case "accueil" : $ctrlCinema -> accueil(); break;
-        case "listActeurs" : $ctrlCinema -> listActeurs(); break;
+        case "accueil" : $ctrlCinema -> listFilms(); break;
+        // case "detailsFilm" : $ctrlCinema -> detailsFilm($id); break;
     }
 }
