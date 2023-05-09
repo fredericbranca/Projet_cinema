@@ -37,6 +37,15 @@
     list-style: none;
 }
 
+/* Header */
+#header ul {
+    list-style: none;
+}
+#header li:not(:first-child)::before {
+    list-style: none;
+    /* content: "<i class='fa-sharp fa-solid fa-circle'></i>"; */
+}
+
 
 /* Footer */
 #footer {
