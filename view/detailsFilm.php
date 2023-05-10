@@ -8,15 +8,26 @@
             <h2><?= $film['titre'];?></h2>
             <div class="note">
                 <?php
-                $note = $film['note']; 
-                for($i = 1; $i <= 5; $i++) {
-                    if($i <= $note) {
+                $note = $film['note'];
+                $nbEtoile = floor($film['note']);
+                $nbDemiEtoile = ($note - $nbEtoile >= 0.2 && $note - $nbEtoile <= 0.8);
+                $nbEtoileSupp = ($note - $nbEtoile > 0.8);
+                
+                for($i = 1; $i <= $note; $i++) {
                         echo '<i class="fa-sharp fa-solid fa-star"></i>';
-                    } else {
-                        echo '<i class="fa-sharp fa-regular fa-star"></i>';
                     }
+                if($nbDemiEtoile) {
+                    echo '<i class="fa-regular fa-star-half-stroke"></i>';
+                }
+                if($nbEtoileSupp) {
+                    echo '<i class="fa-sharp fa-solid fa-star"></i>';
+                }
+                $nbEtoileVide = 5 - $nbEtoile - ($nbDemiEtoile ? 1 : 0) - ($nbEtoileSupp ? 1 : 0);
+                for ($i = 1; $i <= $nbEtoileVide; $i++) {
+                        echo '<i class="fa-sharp fa-regular fa-star"></i>';
                 } ?>
-                (<?= $film['note'];?>)
+                
+                (<?= $film['note'];?>) 
             </div>
             <div>
                 <p><span>Sortie le </span><?= $film['dateSortie'];?></p>
@@ -53,7 +64,7 @@
 <?php
 
 $RTitre = $requeteTitre->fetch();
-$titre = $film['titre'];
+$titre = "Détails du film : " . $film['titre'];
 $titre_secondaire = "Détails du Film";
 $contenu = ob_get_clean();
 require "view/template.php";
