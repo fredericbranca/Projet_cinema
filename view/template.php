@@ -25,7 +25,7 @@ $titre_secondaire = (isset($titre_secondaire)) ? $titre_secondaire : "";
         <nav id="navbar">
             <ul>
                 <img src="public/img/logo.jpg" alt="logo CNEMA Cretria">
-                <li><a href="">Accueil</a></li>
+                <li><a href="index.php?action=accueil">Accueil</a></li>
                 <li><a href="">Admin</a></li>
             </ul>
         </nav>
