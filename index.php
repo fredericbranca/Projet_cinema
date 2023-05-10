@@ -9,10 +9,12 @@ spl_autoload_register(function ($class_name) {
 
 $ctrlCinema = new CinemaController(); // On instancie le controller Cinema
 
+$id = (isset($_GET["id"])) ? $_GET["id"] : null;
+
 if(isset($_GET["action"])) {
 
     switch ($_GET["action"]) {
         case "accueil" : $ctrlCinema -> listFilms(); break;
-        // case "detailsFilm" : $ctrlCinema -> detailsFilm($id); break;
+        case "detailsFilm" : $ctrlCinema -> detailsFilm($id); break;
     }
 }
