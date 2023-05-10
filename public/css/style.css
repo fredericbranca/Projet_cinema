@@ -219,6 +219,67 @@
     font-weight: 600;
 }
 
+/***************************************** Details Film */
+#detail-film {
+    background: #151313;
+    color: #fff;
+    min-height: 80vh;
+    display: flex;
+}
+#detail-film img {
+    margin: 92px 43px 92px 70px;
+    width: auto;
+    height: 600px;
+}
+#detail-film .details {
+    padding-top: 92px;
+    padding-right: 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 43px;
+    margin-bottom: 50px;
+}
+#detail-film .size {
+    font-size: 24px;
+    font-weight: 400;
+}
+#detail-film span {
+    color: #828282;
+}
+#detail-film h2 {
+    font-size: 40px;
+    font-weight: 400;
+}
+#detail-film .note {
+    font-size: 20px;
+    font-weight: 400;
+}
+#detail-film .fa-star {
+    font-size: 25px;
+    padding-right: 5px;
+    color: #FFC107;
+}
+#detail-film .genre {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+}
+#detail-film .genre li:not(:first-child):not(:last-child)::before {
+    content: ", ";
+}
+#detail-film .genre li:last-child:before {
+    content: "\00a0";
+}
+#detail-film .acteur {
+    list-style: none;
+}
+#detail-film .synopsis {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+
 /***************************************** Footer */
 #footer {
     background: #000;
