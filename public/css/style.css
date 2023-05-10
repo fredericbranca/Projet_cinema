@@ -104,6 +104,7 @@
 #listFilms {
     position: relative;
     height: 1159px;
+    overflow-x: hidden;
 }
 .header-films {
     max-width: 1920px;
@@ -254,7 +255,7 @@
     font-size: 20px;
     font-weight: 400;
 }
-#detail-film .fa-star {
+#detail-film .fa-star, .fa-star-half-stroke {
     font-size: 25px;
     padding-right: 5px;
     color: #FFC107;
