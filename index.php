@@ -16,5 +16,6 @@ if(isset($_GET["action"])) {
     switch ($_GET["action"]) {
         case "accueil" : $ctrlCinema -> listFilms(); break;
         case "detailsFilm" : $ctrlCinema -> detailsFilm($id); break;
+        case "admin" : $ctrlCinema -> addFilm(); break;
     }
 }
