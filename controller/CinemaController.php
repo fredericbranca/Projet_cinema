@@ -64,4 +64,24 @@ class CinemaController {
         
         require "view/detailsFilm.php";
     }
+
+    /* Ajouter un film */
+    public function addFilm() {
+
+        $pdo = Connect::seConnecter();
+
+        // foreach($acteurs as $acteur) {
+
+        // }
+
+        $requeteTitres = $pdo->query("
+            SELECT id_film, titre
+            FROM film
+        ");
+        $requeteAddFilm = $pdo->prepare("
+            INSERT INTO 
+        ");
+
+        require "view/admin.php";
+    }
 }
