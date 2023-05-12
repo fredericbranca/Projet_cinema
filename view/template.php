@@ -19,6 +19,7 @@ $titre_secondaire = (isset($titre_secondaire)) ? $titre_secondaire : "";
 </head>
 
 <body>
+    <div class="overlay"></div>
 
     <header>
         <!-- NAVBAR -->
