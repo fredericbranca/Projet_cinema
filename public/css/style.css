@@ -306,8 +306,13 @@
     justify-content: center;
     text-decoration: none;
     color: #000;
+    transition: 0.3s;
+}
+#admin .header .lettre:hover {
+    background-color: rgb(190, 189, 189);
 }
 #admin .main {
+    position: relative;
     background: #F4F0EE;
     display: flex;
     flex-direction: column;
@@ -331,7 +336,58 @@
     padding-top: 11px;
     font-size: 24px;
 }
+#admin .addFilm {
+    position: absolute;
+    top: 78px;
+    right: 188px;
+    width: 202px;
+    height: 69px;
+    background-color: #D9D9D9;
+    font-size: 20px;
+    font-weight: 300;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+#admin .addFilm:hover {
+    background-color: rgb(190, 189, 189)
+}
 
+/***************************************** Modal */
+.overlay {
+    position:fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;;
+    background-color: rgba(0, 0, 0);
+    opacity: 0;
+    transition: 0.8s opacity ;
+    z-index: -1;
+}
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 1800px;
+    height: 877px;
+    background-color: #151313;
+    transform: translate(-50%, 100vh);
+    transition: 0.6s all ease-out;
+    z-index: 1;
+}
+.modal-open {
+    display: block;
+    transform: translate(-50%, -50%);
+}
+.modal_close {
+    position: absolute;
+    top: 10px;
+    left: 0px;
+    cursor: pointer;
+}
 
 /***************************************** Footer */
 #footer {
