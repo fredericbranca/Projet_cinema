@@ -5,9 +5,67 @@
 <div class="modal">
     <div onclick="closeModal()" class="modal-close">Retour</div>
     <div class="modal-body">
-        <p>
+
+        <form action="index.php?action=admin" method="POST" enctype="multipart/form-data">
+            <!-- Affiche -->
+            <label for="affiche">Affiche :</label>
+            <!-- Pour plus tard avec le fichier -->
+            <!-- <input type="file" id="affiche" name="affiche" accept="image/png, image/jpeg"> -->
+            <input type="text" id="affiche" name="affiche" required maxlength="50" size="20">
+
+            <!-- Titre -->
+            <label for="titre">Titre :</label>
+            <input type="text" id="titre" name="titre" required maxlength="50" size="20">
+
+            <!-- Note -->
+            <label for="note">Note (1,0 à 5):</label>
+            <input type="number" id="note" name="note" min="1.0" max="5.0" step="0.1">
+
+            <!-- Date de Sortie -->
+            <label for="dateSortie">Date de Sortie :</label>
+            <input type="date" id="dateSortie" name="dateSortie" required size="20">
+
+            <!-- Durée -->
+            <label for="duree">Durée :</label>
+            <input type="number" id="duree" name="duree" required min="1" step="1">
+
+            <!-- Genre -->
+            <fieldset aria-required="true">
+                <legend>Genre (minimum 1):</legend>
+                <?php 
+                    foreach($requeteGenre->fetchAll() as $genre) { ?>
+                        <label for="genre<?= $genre['id_genre'];?>"><?= $genre['nom'];?> :</label>
+                        <input type="checkbox" id="genre<?= $genre['id_genre'];?>" name="idGenre[]" value="<?= $genre['id_genre'];?>"><br>
+                    <?php } ?>
+            </fieldset>
+
+            <!-- Synopsis -->
+            <label for="synopsis">Synopsis :</label>
+            <input type="text" id="synopsis" name="synopsis" maxlength="2000" size="20">
+
+            <!-- Réalisateur -->
+            <label for="realisateur-choice">Réalisateur :</label>
+            <input list="nameRealisateur" id="realisateur-choice" name="idRealisateur">
             
-        </p>
+            <datalist id="nameRealisateur">
+                <?php 
+                    foreach($requeteRealisateur->fetchAll() as $realisateur) { ?>
+                        <option value="<?=$realisateur['id_realisateur'];?>"><?= $realisateur['name'];?>
+                <?php } ?>
+            </datalist>
+            
+            <br>
+
+            <label for="addRealisateur">Réalisateur :</label>
+            <input type="number" id="adddRealisateur" name="adddRealisateur" step="1">
+
+            <!-- Bouton ajouter le film -->
+            <div class="button">
+                <input type="submit" name="filmSubmit" id="submit" Value="Ajouter le film">
+            </div>
+        </form>
+
+        <!-- Bouton ferme le modal addFilm -->
         <button onclick="closeModal()" class="modal-button">Fermer</button>
     </div>
 </div>
