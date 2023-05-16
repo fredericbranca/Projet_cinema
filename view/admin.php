@@ -2,7 +2,7 @@
 
 <!-- Modal addFilm -->
 
-<div class="modal">
+<div id="modal" class="modal">
     <div onclick="closeModal()" class="modal-close">Retour</div>
     <div class="modal-body">
 
@@ -41,7 +41,7 @@
 
             <!-- Synopsis -->
             <label for="synopsis">Synopsis :</label>
-            <input type="text" id="synopsis" name="synopsis" maxlength="2000" size="20">
+            <input type="text" id="synopsis" name="synopsis" required maxlength="2000" size="20">
 
             <!-- Réalisateur -->
             <label for="realisateur-choice">Réalisateur :</label>
@@ -55,9 +55,15 @@
             </datalist>
             
             <br>
-
-            <label for="addRealisateur">Réalisateur :</label>
-            <input type="number" id="adddRealisateur" name="adddRealisateur" step="1">
+            <legend>Ajouter un réalisateur</legend>
+            <label for="addRealisateur">Nom :</label>
+            <input type="text" id="affiche" name="nom" maxlength="50" size="20">
+            <label for="addRealisateur">Prénom :</label>
+            <input type="text" id="affiche" name="prenom" maxlength="50" size="20">
+            <label for="addRealisateur">Sexe (H ou F):</label>
+            <input type="text" id="affiche" name="sexe" maxlength="1" size="20">
+            <label for="addRealisateur">Date de naissance :</label>
+            <input type="date" id="dateSortie" name="dateNaiss" size="20">
 
             <!-- Bouton ajouter le film -->
             <div class="button">
@@ -121,3 +127,4 @@ $titre = "Admin";
 $titre_secondaire = "Admin";
 $contenu = ob_get_clean();
 require "view/template.php";
+
