@@ -134,39 +134,20 @@ class CinemaController
                     move_uploaded_file($tmpName, 'public\img/' . $affiche);
 
                     //check les filtres
-                    if (
-                        $titre !== false &&
-                        $dateSortie !== false &&
-                        $duree !== false &&
-                        $synopsis !== false &&
-                        $note !== false &&
-                        $nom !== false &&
-                        $prenom !== false &&
-                        $sexe !== false &&
-                        $dateNaiss !== false &&
-                        $idGenres !== false )
-                    {
+                    if ( $titre !== false && $dateSortie !== false && $duree !== false && $synopsis !== false && $note !== false && $idGenres !== false ) {
 
                         //Vérifie si les champs ne sont pas vide (sauf pour la partie réalisateur)
-                        if (
-                            !empty($titre) &&
-                            !empty($dateSortie) &&
-                            !empty($duree) &&
-                            !empty($synopsis) &&
-                            !empty($note) &&
-                            !empty($idGenres) )
-                        {
+                        if ( !empty($titre) && !empty($dateSortie) && !empty($duree) && !empty($synopsis) && !empty($note) && !empty($idGenres) ) {
 
                             // Si aucun champ réalisateur est rempli, affiche un message
-                            if( empty($idRealisateur) && ( empty($nom) && empty($prenom) && empty($sexe) && empty($dateNaiss) ) ) {
+                            if (empty($idRealisateur) && (empty($nom) && empty($prenom) && empty($sexe) && empty($dateNaiss))) {
                                 var_dump("1er filtre rea");
                                 die();
                                 $_SESSION['Message'] = "Un réalisateur doit être sélectionné ou créé.";
                                 header("Location: index.php?action=admin#modal");
 
-                            // Si un réalisateur existant a été choisit : utilise la requête avec un réalisateur existant
-                            } elseif ( !empty($idRealisateur) && ( empty($nom) && empty($prenom) && empty($sexe) && empty($dateNaiss) ) ) {
-
+                                // Si un réalisateur existant a été choisit : utilise la requête avec un réalisateur existant (+check le filtre)
+                            } elseif ( ( !empty($idRealisateur) && $idRealisateur !== false ) && (empty($nom) && empty($prenom) && empty($sexe) && empty($dateNaiss))) {
                                 // Requete pour ajouter un film à la DB
                                 $requeteAddFilm = $pdo->prepare("
                                     INSERT INTO film (titre, dateSortie, duree, synopsis, note, affiche, id_realisateur)
@@ -177,7 +158,7 @@ class CinemaController
                                     INSERT INTO genre_film (id_film, id_genre)
                                     SELECT LAST_INSERT_ID(), :idGenre;
                                 ");
-                                
+
                                 //Execute la requête pour ajouter una film
                                 $requeteAddFilm->execute([
                                     'titre' => $titre,
@@ -188,19 +169,18 @@ class CinemaController
                                     'affiche' => $affiche,
                                     'idRealisateur' => $idRealisateur
                                 ]);
-            
+
                                 //Execute la requête pour ajouter le ou les genres au film ajouté
                                 foreach ($idGenres as $idGenre) {
                                     $requeteAddGenre->execute([
                                         'idGenre' => $idGenre
                                     ]);
                                 }
-            
+
                                 // Redirection sur le modal après l'ajout du film
                                 $_SESSION['Message'] = "Film ajouté.";
                                 header("Location: index.php?action=admin#modal");
-
-                            } else { // Si l'utilisateur veut créer un nouveau réalisateur
+                            } elseif ( (!empty($nom) && !empty($prenom) && !empty($sexe) && !empty($dateNaiss)) & ( $nom !== false && $prenom !== false && $sexe !== false && $dateNaiss!== false ) ) { // Si l'utilisateur veut créer un nouveau réalisateur
 
                                 // Requete pour créer une personne
                                 $requeteAddPersonne = $pdo->prepare("
@@ -224,7 +204,7 @@ class CinemaController
                                     INSERT INTO genre_film (id_film, id_genre)
                                     SELECT LAST_INSERT_ID(), :idGenre;
                                 ");
-                                
+
                                 //Execute la requete pour ajouter une personne
                                 $requeteAddPersonne->execute([
                                     'nom' => $nom,
@@ -245,7 +225,7 @@ class CinemaController
                                     'note' => $note,
                                     'affiche' => $affiche
                                 ]);
-            
+
                                 //Execute la requête pour ajouter le ou les genres au film ajouté
                                 foreach ($idGenres as $idGenre) {
                                     $requeteAddGenre->execute([
@@ -258,24 +238,24 @@ class CinemaController
                                 header("Location: index.php?action=admin#modal");
                             }
 
-                        // Affiche un message si un des champs du film est vide    
+                            // Affiche un message si un des champs du film est vide    
                         } else {
                             var_dump("champs film erreur");
                             die();
                             $_SESSION['Message'] = "Tous les champs sont obligatoires.";
                             header("Location: index.php?action=admin#modal");
                         }
-                    // Si les filtres pour le film ne passe pas
+                        // Si les filtres pour le film ne passe pas
                     } else {
                         var_dump("erreur filtre bool");
                         die();
                     }
-                // Si les caractéristiques de l'image ne correspondent pas
+                    // Si les caractéristiques de l'image ne correspondent pas
                 } else {
                     var_dump("Caractéristiques image incorrect");
                     die();
                 }
-            // Else pour le champ image
+                // Else pour le champ image
             } else {
                 var_dump("Image obligatoire");
                 die();
