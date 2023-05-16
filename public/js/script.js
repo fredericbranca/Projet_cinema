@@ -2,17 +2,28 @@
 
     // Fonction pour ouvrir le modal
     // Ces fonctions modifient le style css du modal pour le rendre visible ou invisible
-    function openModal() {
+    function openModal(modalId) {
         document.querySelector('.overlay').style.zIndex = '1';
         document.querySelector('.overlay').style.opacity = '1';
-        document.querySelector('.modal').classList.add('modal-open');
+        document.querySelector(modalId).classList.add('modal-open');
     }
     // Fonction pour fermer le modal
-    function closeModal() {
+    function closeModal(modalId) {
         document.querySelector('.overlay').style.opacity = '0';
         document.querySelector('.overlay').style.zIndex = '-1';
-        document.querySelector('.modal').classList.remove('modal-open');
+        document.querySelector(modalId).classList.remove('modal-open');
     }
+
+// Ouvrir le modal si le lien contient l'id #modal
+window.addEventListener('DOMContentLoaded', function() {
+
+    if (window.location.href.includes('#modalAddFilm')) {
+        openModal('#modalAddFilm');
+    }
+    if (window.location.href.includes('#modalAddCasting')) {
+        openModal('#modalAddCasting');
+    }
+});
 
 // Caroussel, liste des films de la page d'accueil
 
@@ -42,11 +53,3 @@ if (caroussel) {
         }
     }
 }
-
-// Ouvrir le modal si le lien contient l'id #modal
-window.addEventListener('DOMContentLoaded', function() {
-
-    if (window.location.href.includes('#modal')) {
-        openModal();
-    }
-});
