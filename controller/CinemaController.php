@@ -4,6 +4,7 @@ namespace Controller;
 
 use Model\Connect; // "use" pour accéder à la classe Connect située dans le namespace "Model"
 
+
 class CinemaController
 {
 
@@ -99,7 +100,6 @@ class CinemaController
             $duree = filter_input(INPUT_POST, 'duree', FILTER_VALIDATE_INT);
             $synopsis = filter_input(INPUT_POST, 'synopsis', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $note = filter_input(INPUT_POST, 'note', FILTER_VALIDATE_FLOAT, FILTER_FLAG_ALLOW_FRACTION); //FILTER_VALIDATE_FLOAT (champ "price") : validera le prix que s'il est un nombre à virgule (pas de texte ou autre…), le drapeau FILTER_FLAG_ALLOW_FRACTION est ajouté pour permettre l'utilisation du caractère "," ou "." pour la décimale.
-            $affiche = filter_input(INPUT_POST, 'affiche', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $idRealisateur = filter_input(INPUT_POST, 'idRealisateur', FILTER_VALIDATE_INT);
             $idGenres = filter_input(INPUT_POST, 'idGenre', FILTER_SANITIZE_NUMBER_INT, FILTER_REQUIRE_ARRAY); // FILTER_REQUIRE_ARRAY : on veut récupérer les valuers sous forme de tableau (idGenre[])
 
@@ -109,143 +109,175 @@ class CinemaController
             $sexe = filter_input(INPUT_POST, 'sexe', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $dateNaiss = filter_input(INPUT_POST, 'dateNaiss', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-            //check les filtres
-            if (
-                $titre !== false &&
-                $dateSortie !== false &&
-                $duree !== false &&
-                $synopsis !== false &&
-                $note !== false &&
-                $affiche !== false &&
-                // $idRealisateur !== false &&
-                $nom !== false &&
-                $prenom !== false &&
-                $sexe !== false &&
-                $dateNaiss !== false &&
-                $idGenres !== false )
-            {
+            // Vérifie si une image a été mise
+            if (isset($_FILES['affiche'])) {
 
-                //Vérifie si les champs ne sont pas vide (sauf pour la partie réalisateur)
-                if (
-                    !empty($titre) &&
-                    !empty($dateSortie) &&
-                    !empty($duree) &&
-                    !empty($synopsis) &&
-                    !empty($note) &&
-                    !empty($affiche) &&
-                    !empty($idGenres) )
-                {
+                $tmpName = $_FILES['affiche']['tmp_name'];
+                $ImgName = $_FILES['affiche']['name'];
+                $size = $_FILES['affiche']['size'];
+                $error = $_FILES['affiche']['error'];
 
-                    // Si aucun champ réalisateur est rempli, affiche un message
-                    if( empty($idRealisateur) && ( empty($nom) && empty($prenom) && empty($sexe) && empty($dateNaiss) ) ) {
-                        var_dump("1er filtre rea");
+                // vérification sur l'extension du fichier //
+                $tabExtension = explode('.', $ImgName);
+                $extension = strtolower(end($tabExtension));
+                //Tableau des extensions que l'on accepte
+                $extensions = ['jpg', 'png', 'jpeg'];
+                //Taille max que l'on accepte
+                $maxSize = 4000000;
+
+                // Vérifie si c'est bien une image avec les bonnes caractéristiques
+                if (in_array($extension, $extensions) && $size <= $maxSize && $error == 0) {
+                    $uniqueName = uniqid('', true);
+                    //uniqid génère quelque chose comme ca : 5f586bf96dcd38.73540086
+                    $affiche = $uniqueName . "." . $extension;
+                    //$affiche = 5f586bf96dcd38.73540086.jpg
+                    move_uploaded_file($tmpName, 'public\img/' . $affiche);
+
+                    //check les filtres
+                    if (
+                        $titre !== false &&
+                        $dateSortie !== false &&
+                        $duree !== false &&
+                        $synopsis !== false &&
+                        $note !== false &&
+                        $nom !== false &&
+                        $prenom !== false &&
+                        $sexe !== false &&
+                        $dateNaiss !== false &&
+                        $idGenres !== false )
+                    {
+
+                        //Vérifie si les champs ne sont pas vide (sauf pour la partie réalisateur)
+                        if (
+                            !empty($titre) &&
+                            !empty($dateSortie) &&
+                            !empty($duree) &&
+                            !empty($synopsis) &&
+                            !empty($note) &&
+                            !empty($idGenres) )
+                        {
+
+                            // Si aucun champ réalisateur est rempli, affiche un message
+                            if( empty($idRealisateur) && ( empty($nom) && empty($prenom) && empty($sexe) && empty($dateNaiss) ) ) {
+                                var_dump("1er filtre rea");
+                                die();
+                                $_SESSION['Message'] = "Un réalisateur doit être sélectionné ou créé.";
+                                header("Location: index.php?action=admin#modal");
+
+                            // Si un réalisateur existant a été choisit : utilise la requête avec un réalisateur existant
+                            } elseif ( !empty($idRealisateur) && ( empty($nom) && empty($prenom) && empty($sexe) && empty($dateNaiss) ) ) {
+
+                                // Requete pour ajouter un film à la DB
+                                $requeteAddFilm = $pdo->prepare("
+                                    INSERT INTO film (titre, dateSortie, duree, synopsis, note, affiche, id_realisateur)
+                                    VALUES (:titre, :dateSortie, :duree, :synopsis, :note, :affiche, :idRealisateur)
+                                ");
+                                // Requete pour ajouter un ou plusieurs genre au film ajouté
+                                $requeteAddGenre = $pdo->prepare("
+                                    INSERT INTO genre_film (id_film, id_genre)
+                                    SELECT LAST_INSERT_ID(), :idGenre;
+                                ");
+                                
+                                //Execute la requête pour ajouter una film
+                                $requeteAddFilm->execute([
+                                    'titre' => $titre,
+                                    'dateSortie' => $dateSortie,
+                                    'duree' => $duree,
+                                    'synopsis' => $synopsis,
+                                    'note' => $note,
+                                    'affiche' => $affiche,
+                                    'idRealisateur' => $idRealisateur
+                                ]);
+            
+                                //Execute la requête pour ajouter le ou les genres au film ajouté
+                                foreach ($idGenres as $idGenre) {
+                                    $requeteAddGenre->execute([
+                                        'idGenre' => $idGenre
+                                    ]);
+                                }
+            
+                                // Redirection sur le modal après l'ajout du film
+                                $_SESSION['Message'] = "Film ajouté.";
+                                header("Location: index.php?action=admin#modal");
+
+                            } else { // Si l'utilisateur veut créer un nouveau réalisateur
+
+                                // Requete pour créer une personne
+                                $requeteAddPersonne = $pdo->prepare("
+                                    INSERT INTO personne (nom, prenom, sexe, dateNaissance)
+                                    VALUE (:nom, :prenom, :sexe, :dateNaissance);
+                                ");
+
+                                // Requete pour que cette personne soit un rélisateur
+                                $requeteAddRealisateur = $pdo->prepare("
+                                    INSERT INTO realisateur (id_personne)
+                                    SELECT LAST_INSERT_ID();
+                                ");
+
+                                // Requete pour ajouter un film à la DB
+                                $requeteAddFilm = $pdo->prepare("
+                                    INSERT INTO film (titre, dateSortie, duree, synopsis, note, affiche, id_realisateur)
+                                    VALUES (:titre, :dateSortie, :duree, :synopsis, :note, :affiche, LAST_INSERT_ID())
+                                ");
+                                // Requete pour ajouter un ou plusieurs genre au film ajouté
+                                $requeteAddGenre = $pdo->prepare("
+                                    INSERT INTO genre_film (id_film, id_genre)
+                                    SELECT LAST_INSERT_ID(), :idGenre;
+                                ");
+                                
+                                //Execute la requete pour ajouter une personne
+                                $requeteAddPersonne->execute([
+                                    'nom' => $nom,
+                                    'prenom' => $prenom,
+                                    'sexe' => $sexe,
+                                    'dateNaissance' => $dateNaiss
+                                ]);
+
+                                //Execute la requete pour ajouter la personne à réalisateur
+                                $requeteAddRealisateur->execute();
+
+                                //Execute la requête pour ajouter una film
+                                $requeteAddFilm->execute([
+                                    'titre' => $titre,
+                                    'dateSortie' => $dateSortie,
+                                    'duree' => $duree,
+                                    'synopsis' => $synopsis,
+                                    'note' => $note,
+                                    'affiche' => $affiche
+                                ]);
+            
+                                //Execute la requête pour ajouter le ou les genres au film ajouté
+                                foreach ($idGenres as $idGenre) {
+                                    $requeteAddGenre->execute([
+                                        'idGenre' => $idGenre
+                                    ]);
+                                }
+
+                                // Redirection sur le modal après l'ajout du film
+                                $_SESSION['Message'] = "Nouveau réalisateur créé et film ajouté.";
+                                header("Location: index.php?action=admin#modal");
+                            }
+
+                        // Affiche un message si un des champs du film est vide    
+                        } else {
+                            var_dump("champs film erreur");
+                            die();
+                            $_SESSION['Message'] = "Tous les champs sont obligatoires.";
+                            header("Location: index.php?action=admin#modal");
+                        }
+                    // Si les filtres pour le film ne passe pas
+                    } else {
+                        var_dump("erreur filtre bool");
                         die();
-                        $_SESSION['Message'] = "Un réalisateur doit être sélectionné ou créé.";
-                        header("Location: index.php?action=admin#modal");
-
-                    // Si un réalisateur existant a été choisit : utilise la requête avec un réalisateur existant
-                    } elseif ( !empty($idRealisateur) && ( empty($nom) && empty($prenom) && empty($sexe) && empty($dateNaiss) ) ) {
-
-                        // Requete pour ajouter un film à la DB
-                        $requeteAddFilm = $pdo->prepare("
-                            INSERT INTO film (titre, dateSortie, duree, synopsis, note, affiche, id_realisateur)
-                            VALUES (:titre, :dateSortie, :duree, :synopsis, :note, :affiche, :idRealisateur)
-                        ");
-                        // Requete pour ajouter un ou plusieurs genre au film ajouté
-                        $requeteAddGenre = $pdo->prepare("
-                            INSERT INTO genre_film (id_film, id_genre)
-                            SELECT LAST_INSERT_ID(), :idGenre;
-                        ");
-                        
-                        //Execute la requête pour ajouter una film
-                        $requeteAddFilm->execute([
-                            'titre' => $titre,
-                            'dateSortie' => $dateSortie,
-                            'duree' => $duree,
-                            'synopsis' => $synopsis,
-                            'note' => $note,
-                            'affiche' => $affiche,
-                            'idRealisateur' => $idRealisateur
-                        ]);
-    
-                        //Execute la requête pour ajouter le ou les genres au film ajouté
-                        foreach ($idGenres as $idGenre) {
-                            $requeteAddGenre->execute([
-                                'idGenre' => $idGenre
-                            ]);
-                        }
-    
-                        // Redirection sur le modal après l'ajout du film
-                        $_SESSION['Message'] = "Film ajouté.";
-                        header("Location: index.php?action=admin#modal");
-
-                    } else { // Si l'utilisateur veut créer un nouveau réalisateur
-
-                        // Requete pour créer une personne
-                        $requeteAddPersonne = $pdo->prepare("
-                            INSERT INTO personne (nom, prenom, sexe, dateNaissance)
-                            VALUE (:nom, :prenom, :sexe, :dateNaissance);
-                        ");
-
-                        // Requete pour que cette personne soit un rélisateur
-                        $requeteAddRealisateur = $pdo->prepare("
-                            INSERT INTO realisateur (id_personne)
-                            SELECT LAST_INSERT_ID();
-                        ");
-
-                        // Requete pour ajouter un film à la DB
-                        $requeteAddFilm = $pdo->prepare("
-                            INSERT INTO film (titre, dateSortie, duree, synopsis, note, affiche, id_realisateur)
-                            VALUES (:titre, :dateSortie, :duree, :synopsis, :note, :affiche, LAST_INSERT_ID())
-                        ");
-                        // Requete pour ajouter un ou plusieurs genre au film ajouté
-                        $requeteAddGenre = $pdo->prepare("
-                            INSERT INTO genre_film (id_film, id_genre)
-                            SELECT LAST_INSERT_ID(), :idGenre;
-                        ");
-                        
-                        //Execute la requete pour ajouter une personne
-                        $requeteAddPersonne->execute([
-                            'nom' => $nom,
-                            'prenom' => $prenom,
-                            'sexe' => $sexe,
-                            'dateNaissance' => $dateNaiss
-                        ]);
-
-                        //Execute la requete pour ajouter la personne à réalisateur
-                        $requeteAddRealisateur->execute();
-
-                        //Execute la requête pour ajouter una film
-                        $requeteAddFilm->execute([
-                            'titre' => $titre,
-                            'dateSortie' => $dateSortie,
-                            'duree' => $duree,
-                            'synopsis' => $synopsis,
-                            'note' => $note,
-                            'affiche' => $affiche
-                        ]);
-    
-                        //Execute la requête pour ajouter le ou les genres au film ajouté
-                        foreach ($idGenres as $idGenre) {
-                            $requeteAddGenre->execute([
-                                'idGenre' => $idGenre
-                            ]);
-                        }
-
-                        // Redirection sur le modal après l'ajout du film
-                        $_SESSION['Message'] = "Nouveau réalisateur créé et film ajouté.";
-                        header("Location: index.php?action=admin#modal");
                     }
-
-                // Affiche un message si un des champs du film est vide    
+                // Si les caractéristiques de l'image ne correspondent pas
                 } else {
-                    var_dump("champs film erreur");
+                    var_dump("Caractéristiques image incorrect");
                     die();
-                    $_SESSION['Message'] = "Tous les champs sont obligatoires.";
-                    header("Location: index.php?action=admin#modal");
                 }
+            // Else pour le champ image
             } else {
-                var_dump("erreur filtre bool");
+                var_dump("Image obligatoire");
                 die();
             }
         }
