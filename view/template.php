@@ -3,9 +3,6 @@
 $titre = (isset($titre)) ? $titre : "";
 $titre_secondaire = (isset($titre_secondaire)) ? $titre_secondaire : "";
 
-if(isset($_SESSION['Message'])) {
-    echo $_SESSION['Message'];
-}
 ?>
 
 <!DOCTYPE html>
