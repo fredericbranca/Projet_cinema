@@ -18,22 +18,35 @@
 
     // On récupère les éléments HTML
     const caroussel = document.getElementById('caroussel');
+
+if (caroussel) {
     const cards = caroussel.querySelector('.cards');
 
-    const chevronGauche = document.getElementById('chevron-gauche');
-    const chevronDroit = document.getElementById('chevron-droit');
-    
-    // Variable pour le déplacement du carrousel, elle détermine la position actuelle du carrousel
-    let p = 0;
+    if (cards) {
+        const chevronGauche = document.getElementById('chevron-gauche');
+        const chevronDroit = document.getElementById('chevron-droit');
+        
+        // Variable pour le déplacement du carrousel, elle détermine la position actuelle du carrousel
+        let p = 0;
 
-    // Incrémente la valeur p et déplace le carrousel vers la droite
-    chevronGauche.onclick=function(){
-        p++
-        caroussel.style.transform="translate(" + p * 367 + "px)";
+        // Incrémente la valeur p et déplace le carrousel vers la droite
+        chevronGauche.onclick=function(){
+            p++
+            caroussel.style.transform="translate(" + p * 367 + "px)";
+        }
+        
+        //// Décrémente la valeur p et déplace le carrousel vers la gauche
+        chevronDroit.onclick=function(){
+            p--
+            caroussel.style.transform="translate(" + p * 367 + "px)";
+        }
     }
-    
-    //// Décrémente la valeur p et déplace le carrousel vers la gauche
-    chevronDroit.onclick=function(){
-        p--
-        caroussel.style.transform="translate(" + p * 367 + "px)";
+}
+
+// Ouvrir le modal si le lien contient l'id #modal
+window.addEventListener('DOMContentLoaded', function() {
+
+    if (window.location.href.includes('#modal')) {
+        openModal();
     }
+});
