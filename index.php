@@ -1,5 +1,7 @@
 <?php 
 
+session_start();
+
 use Controller\CinemaController; // On "use" le controller Cinema
 
 // On autocharge les classes du projet
