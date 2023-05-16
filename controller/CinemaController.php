@@ -144,7 +144,7 @@ class CinemaController
                                 var_dump("1er filtre rea");
                                 die();
                                 $_SESSION['Message'] = "Un réalisateur doit être sélectionné ou créé.";
-                                header("Location: index.php?action=admin#modal");
+                                header("Location: index.php?action=admin#modalAddFilm");
 
                                 // Si un réalisateur existant a été choisit : utilise la requête avec un réalisateur existant (+check le filtre)
                             } elseif ( ( !empty($idRealisateur) && $idRealisateur !== false ) && (empty($nom) && empty($prenom) && empty($sexe) && empty($dateNaiss))) {
@@ -179,7 +179,7 @@ class CinemaController
 
                                 // Redirection sur le modal après l'ajout du film
                                 $_SESSION['Message'] = "Film ajouté.";
-                                header("Location: index.php?action=admin#modal");
+                                header("Location: index.php?action=admin#modalAddCasting");
                             } elseif ( (!empty($nom) && !empty($prenom) && !empty($sexe) && !empty($dateNaiss)) & ( $nom !== false && $prenom !== false && $sexe !== false && $dateNaiss!== false ) ) { // Si l'utilisateur veut créer un nouveau réalisateur
 
                                 // Requete pour créer une personne
@@ -235,7 +235,7 @@ class CinemaController
 
                                 // Redirection sur le modal après l'ajout du film
                                 $_SESSION['Message'] = "Nouveau réalisateur créé et film ajouté.";
-                                header("Location: index.php?action=admin#modal");
+                                header("Location: index.php?action=admin#modalAddCasting");
                             }
 
                             // Affiche un message si un des champs du film est vide    
@@ -243,7 +243,7 @@ class CinemaController
                             var_dump("champs film erreur");
                             die();
                             $_SESSION['Message'] = "Tous les champs sont obligatoires.";
-                            header("Location: index.php?action=admin#modal");
+                            header("Location: index.php?action=admin#modalAddFilm");
                         }
                         // Si les filtres pour le film ne passe pas
                     } else {
