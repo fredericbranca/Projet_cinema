@@ -86,7 +86,7 @@
     <div class="modal-body">
 
         <form action="index.php?action=admin" method="POST" enctype="multipart/form-data">
-            <p>Ajout d'un casting pour le film </p>
+            <p>Ajout d'un casting pour le film : </p>
 
             <!-- Ajouter acteur(s) -->
             <legend>Ajouter un ou plusieurs acteur(s)</legend>
@@ -105,28 +105,6 @@
             </div>
 
             <button id="ajouter-acteur">+</button>
-
-            <!-- Nom -->
-            <!-- <label for="nom">Nom :</label> -->
-            <!-- <input type="text" id="nom" name="nom" maxlength="50" size="20"> -->
-            <!-- Prenom -->
-            <!-- <label for="prenom">Prénom :</label> -->
-            <!-- <input type="text" id="prenom" name="prenom" maxlength="50" size="20"> -->
-            <!-- Sexe -->
-            <!-- <fieldset> -->
-            <!-- <legend>Sexe :</legend> -->
-            <!-- <div> -->
-            <!-- <input type="radio" id="H" name="sexe" value="H" checked> -->
-            <!-- <label for="H">Homme</label> -->
-            <!-- </div> -->
-            <!-- <div> -->
-            <!-- <input type="radio" id="F" name="sexe" value="F"> -->
-            <!-- <label for="F">Femme</label> -->
-            <!-- </div> -->
-            <!-- </fieldset> -->
-            <!-- Date de naissance -->
-            <!-- <label for="dateNaiss">Date de naissance :</label> -->
-            <!-- <input type="date" id="dateNaiss" name="dateNaiss" size="20"> -->
 
             <!-- Bouton ajouter le film -->
             <div class="button">
