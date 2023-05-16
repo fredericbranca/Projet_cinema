@@ -2,16 +2,14 @@
 
 <!-- Modal addFilm -->
 
-<div id="modal" class="modal">
-    <div onclick="closeModal()" class="modal-close">Retour</div>
+<div id="modalAddFilm" class="modal">
+    <div onclick="closeModal('#modalAddFilm')" class="modal-close">Retour</div>
     <div class="modal-body">
 
         <form action="index.php?action=admin" method="POST" enctype="multipart/form-data">
             <!-- Affiche -->
             <label for="affiche">Affiche :</label>
-            <!-- Pour plus tard avec le fichier -->
-            <!-- <input type="file" id="affiche" name="affiche" accept="image/png, image/jpeg"> -->
-            <input type="text" id="affiche" name="affiche" required maxlength="50" size="20">
+            <input type="file" id="affiche" name="affiche" accept="image/png, image/jpeg">
 
             <!-- Titre -->
             <label for="titre">Titre :</label>
@@ -32,11 +30,11 @@
             <!-- Genre -->
             <fieldset aria-required="true">
                 <legend>Genre (minimum 1):</legend>
-                <?php 
-                    foreach($requeteGenre->fetchAll() as $genre) { ?>
-                        <label for="genre<?= $genre['id_genre'];?>"><?= $genre['nom'];?> :</label>
-                        <input type="checkbox" id="genre<?= $genre['id_genre'];?>" name="idGenre[]" value="<?= $genre['id_genre'];?>"><br>
-                    <?php } ?>
+                <?php
+                foreach ($requeteGenre->fetchAll() as $genre) { ?>
+                    <label for="genre<?= $genre['id_genre']; ?>"><?= $genre['nom']; ?> :</label>
+                    <input type="checkbox" id="genre<?= $genre['id_genre']; ?>" name="idGenre[]" value="<?= $genre['id_genre']; ?>"><br>
+                <?php } ?>
             </fieldset>
 
             <!-- Synopsis -->
@@ -44,26 +42,31 @@
             <input type="text" id="synopsis" name="synopsis" required maxlength="2000" size="20">
 
             <!-- Réalisateur -->
-            <label for="realisateur-choice">Réalisateur :</label>
-            <input list="nameRealisateur" id="realisateur-choice" name="idRealisateur">
-            
-            <datalist id="nameRealisateur">
-                <?php 
-                    foreach($requeteRealisateur->fetchAll() as $realisateur) { ?>
-                        <option value="<?=$realisateur['id_realisateur'];?>"><?= $realisateur['name'];?>
+            <label for="idRealisateur">Réalisateur :</label>
+            <select id="idRealisateur" name="idRealisateur">
+                <option value="">Sélectionner un réalisateur</option>
+                <?php foreach ($requeteRealisateur->fetchAll() as $realisateur) { ?>
+                    <option value="<?= $realisateur['id_realisateur']; ?>"><?= $realisateur['name']; ?></option>
                 <?php } ?>
-            </datalist>
-            
+            </select>
+
             <br>
+            <!-- Ajouter un réalisateur -->
             <legend>Ajouter un réalisateur</legend>
-            <label for="addRealisateur">Nom :</label>
-            <input type="text" id="affiche" name="nom" maxlength="50" size="20">
-            <label for="addRealisateur">Prénom :</label>
-            <input type="text" id="affiche" name="prenom" maxlength="50" size="20">
-            <label for="addRealisateur">Sexe (H ou F):</label>
-            <input type="text" id="affiche" name="sexe" maxlength="1" size="20">
-            <label for="addRealisateur">Date de naissance :</label>
-            <input type="date" id="dateSortie" name="dateNaiss" size="20">
+            <!-- Nom -->
+            <label for="nom">Nom :</label>
+            <input type="text" id="nom" name="nom" maxlength="50" size="20">
+            <!-- Prenom -->
+            <label for="prenom">Prénom :</label>
+            <input type="text" id="prenom" name="prenom" maxlength="50" size="20">
+            <!-- Sexe -->
+            <select name="sexe">
+                <option name="sexe" value="H">Homme</option>
+                <option name="sexe" value="F">Femme</option>
+            </select>
+            <!-- Date de naissance -->
+            <label for="dateNaiss">Date de naissance :</label>
+            <input type="date" id="dateNaiss" name="dateNaiss" size="20">
 
             <!-- Bouton ajouter le film -->
             <div class="button">
@@ -72,51 +75,112 @@
         </form>
 
         <!-- Bouton ferme le modal addFilm -->
-        <button onclick="closeModal()" class="modal-button">Fermer</button>
+        <button onclick="closeModal('#modalAddFilm')" class="modal-button">Fermer</button>
     </div>
 </div>
+
+<!-- Modal addCasting -->
+
+<div id="modalAddCasting" class="modal">
+    <div onclick="closeModal('#modalAddCasting')" class="modal-close">Retour</div>
+    <div class="modal-body">
+
+        <form action="index.php?action=admin" method="POST" enctype="multipart/form-data">
+            <p>Ajout d'un casting pour le film </p>
+
+            <!-- Ajouter acteur(s) -->
+            <legend>Ajouter un ou plusieurs acteur(s)</legend>
+
+            <div id="acteurs-container">
+                <div class="acteur-input">
+                    <input type="text" name="nom[]" placeholder="Nom de l'acteur">
+                    <input type="text" name="prenom[]" placeholder="Prénom de l'acteur">
+                    <select name="sexe[]">
+                        <option value="homme">Homme</option>
+                        <option value="femme">Femme</option>
+                    </select>
+                    <input type="date" name="dateNaissance[]">
+                    <input type="text" name="role[]" placeholder="Rôle de l'acteur">
+                </div>
+            </div>
+
+            <button id="ajouter-acteur">+</button>
+
+            <!-- Nom -->
+            <!-- <label for="nom">Nom :</label> -->
+            <!-- <input type="text" id="nom" name="nom" maxlength="50" size="20"> -->
+            <!-- Prenom -->
+            <!-- <label for="prenom">Prénom :</label> -->
+            <!-- <input type="text" id="prenom" name="prenom" maxlength="50" size="20"> -->
+            <!-- Sexe -->
+            <!-- <fieldset> -->
+            <!-- <legend>Sexe :</legend> -->
+            <!-- <div> -->
+            <!-- <input type="radio" id="H" name="sexe" value="H" checked> -->
+            <!-- <label for="H">Homme</label> -->
+            <!-- </div> -->
+            <!-- <div> -->
+            <!-- <input type="radio" id="F" name="sexe" value="F"> -->
+            <!-- <label for="F">Femme</label> -->
+            <!-- </div> -->
+            <!-- </fieldset> -->
+            <!-- Date de naissance -->
+            <!-- <label for="dateNaiss">Date de naissance :</label> -->
+            <!-- <input type="date" id="dateNaiss" name="dateNaiss" size="20"> -->
+
+            <!-- Bouton ajouter le film -->
+            <div class="button">
+                <input type="submit" name="castingSubmit" id="submit" Value="Ajouter le casting au film">
+            </div>
+        </form>
+
+        <!-- Bouton ferme le modal addFilm -->
+        <button onclick="closeModal('#modalAddCasting')" class="modal-button">Fermer</button>
+    </div>
+</div>
+
 
 <section id="admin">
     <div class="header">
         <div class="lettres">
             <?php
-            foreach(range('A', 'Z') as $lettre) { ?>
+            foreach (range('A', 'Z') as $lettre) { ?>
                 <a type="button" class="lettre" href="#<?= $lettre; ?>"><?= $lettre; ?></a>
             <?php } ?>
         </div>
     </div>
 
     <div class="main">
-            <div class="liste">
-                <!-- Lettre position verticale avec titre de film trié par ordre alphabétique -->
-                <?php
-                $titres = $requeteTitres->fetchAll();
+        <div class="liste">
+            <!-- Lettre position verticale avec titre de film trié par ordre alphabétique -->
+            <?php
+            $titres = $requeteTitres->fetchAll();
 
-                foreach(range('A', 'Z') as $lettre) { ?>
-                    <div class="liste-lettre-film">
-                        <div class="lettre" id="<?= $lettre; ?>"><?= $lettre; ?></div>
-                        <div class="film">
+            foreach (range('A', 'Z') as $lettre) { ?>
+                <div class="liste-lettre-film">
+                    <div class="lettre" id="<?= $lettre; ?>"><?= $lettre; ?></div>
+                    <div class="film">
                         <?php
-                            foreach($titres as $titre) {
-                                $search  = array('À', 'É', 'Ê', "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", " "); // voir REGEX
-                                $replace = array('A', 'E', 'E', "", "", "", "", "", "", "", "", "", "", "");
-                                $film = str_replace($search, $replace, $titre['titre']);
-                                $filmMaj = ucfirst($film);
+                        foreach ($titres as $titre) {
+                            $search  = array('À', 'É', 'Ê', "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", " "); // voir REGEX
+                            $replace = array('A', 'E', 'E', "", "", "", "", "", "", "", "", "", "", "");
+                            $film = str_replace($search, $replace, $titre['titre']);
+                            $filmMaj = ucfirst($film);
 
-                                if(substr($filmMaj, 0, 1) === $lettre) { ?>
-                                    <div><?= $titre['titre']; ?></div>
-                                <?php 
-                                }
-                            } ?>
-                        </div>
+                            if (substr($filmMaj, 0, 1) === $lettre) { ?>
+                                <div><?= $titre['titre']; ?></div>
+                        <?php
+                            }
+                        } ?>
                     </div>
-                <?php } ?>
+                </div>
+            <?php } ?>
 
-                <!-- Modal : Bouton Ajouter un film -->
+            <!-- Modal : Bouton Ajouter un film -->
 
-                <button onclick="openModal()" class="addFilm">Ajouter un film</button>
+            <button onclick="openModal('#modalAddFilm')" class="addFilm">Ajouter un film</button>
 
-            </div>
+        </div>
     </div>
 </section>
 
@@ -127,4 +191,3 @@ $titre = "Admin";
 $titre_secondaire = "Admin";
 $contenu = ob_get_clean();
 require "view/template.php";
-
