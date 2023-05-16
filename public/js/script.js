@@ -25,6 +25,40 @@ window.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+// Fonction pour ajouter un input d'acteur
+function ajouterChampActeur(event) {
+    event.preventDefault(); // Empêche le rafraîchissement de la page
+    const acteurInput = document.createElement('div');
+    acteurInput.classList.add('acteur-input');
+    acteurInput.innerHTML =   `<input type="text" name="acteur[]" placeholder="Nom de l&apos;acteur">
+                              <input type="text" name="prenom[]" placeholder="Prénom de l'acteur">
+                              <select name="sexe[]">
+                              <option value="homme">Homme</option>
+                              <option value="femme">Femme</option>
+                              </select>
+                              <input type="date" name="dateNaissance[]">
+                              <input type="text" name="role[]" placeholder="Rôle de l'acteur">
+                              <button class="supprimer-acteur">-</button>`;
+    acteursContainer.appendChild(acteurInput);
+  }
+
+/////////////////////////////////////////////////////////////////
+
+const acteursContainer = document.getElementById('acteurs-container');
+const ajouterActeurButton = document.getElementById('ajouter-acteur');
+
+// Clic sur le bouton d'ajout
+ajouterActeurButton.addEventListener('click', ajouterChampActeur);
+
+// Clic sur le bouton de suppression d'acteur
+acteursContainer.addEventListener('click', function(event) {
+  if (event.target.classList.contains('supprimer-acteur')) {
+    event.target.parentElement.remove();
+  }
+});
+
+
+
 // Caroussel, liste des films de la page d'accueil
 
     // On récupère les éléments HTML
