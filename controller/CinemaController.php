@@ -107,7 +107,7 @@ class CinemaController
             $nom = filter_input(INPUT_POST, 'nom', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $prenom = filter_input(INPUT_POST, 'prenom', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $sexe = filter_input(INPUT_POST, 'sexe', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            $dateNaiss = filter_input(INPUT_POST, 'dateNaiss', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $dateNaiss = filter_input(INPUT_POST, 'dateNaissance', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
             // Vérifie si une image a été mise
             if (isset($_FILES['affiche'])) {
@@ -291,7 +291,16 @@ class CinemaController
         }
 
         // Requete pour ajouter un casting
-        if (isset($_POST['castingSubmut'])) {
+        if (isset($_POST['castingSubmit'])) {
+
+            // Filtre
+            $nom = filter_input(INPUT_POST, 'nom', FILTER_SANITIZE_FULL_SPECIAL_CHARS); //+FILTER_REQUIRE_ARRAY
+            $prenom = filter_input(INPUT_POST, 'prenom', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $sexe = filter_input(INPUT_POST, 'sexe', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $dateNaiss = filter_input(INPUT_POST, 'dateNaissance', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $role = filter_input(INPUT_POST, 'role', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+
             // Requete pour créer une personne
             $requeteAddPersonne = $pdo->prepare("
             INSERT INTO personne (nom, prenom, sexe, dateNaissance)
@@ -349,10 +358,14 @@ class CinemaController
 
             // Execute la requete pour ajouter un nouveau casting
             $requeteAddCasting->execute([
-                "id_film" => $idFilm,
+                "id_film" => $_SESSION['id'],
                 "id_acteur" => $idActeur,
                 "id_role" => $idRole
             ]);
+
+            session_unset();
+            $_SESSION['Message'] = "Le casting a été ajouté.";
+            header("Location: index.php?action=admin");
         }
 
         require "view/admin.php";
