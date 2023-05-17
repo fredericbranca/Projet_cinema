@@ -30,7 +30,7 @@ function ajouterChampActeur(event) {
     event.preventDefault(); // Empêche le rafraîchissement de la page
     const acteurInput = document.createElement('div');
     acteurInput.classList.add('acteur-input');
-    acteurInput.innerHTML =   `<input type="text" name="acteur[]" placeholder="Nom de l&apos;acteur">
+    acteurInput.innerHTML =   `<input type="text" name="acteur[]" placeholder="Nom de l'acteur">
                               <input type="text" name="prenom[]" placeholder="Prénom de l'acteur">
                               <select name="sexe[]">
                               <option value="homme">Homme</option>
@@ -42,8 +42,19 @@ function ajouterChampActeur(event) {
     acteursContainer.appendChild(acteurInput);
   }
 
+// Fonction pour ajouter un input genre
+function ajouterChampGenre(event) {
+    event.preventDefault();
+    const genreInput = document.createElement('div');
+    genreInput.classList.add('genre-input');
+    genreInput.innerHTML =  `<input type="text" name="genre[]" placeholder="Nom du genre">
+                            <button class="supprimer-genre">-</button>`;
+    genresContainer.appendChild(genreInput);
+}
+
 /////////////////////////////////////////////////////////////////
 
+//Ajouter un input acteur
 const acteursContainer = document.getElementById('acteurs-container');
 if (acteursContainer) {
     const ajouterActeurButton = document.getElementById('ajouter-acteur');
@@ -54,6 +65,22 @@ if (acteursContainer) {
     // Clic sur le bouton de suppression d'acteur
     acteursContainer.addEventListener('click', function(event) {
     if (event.target.classList.contains('supprimer-acteur')) {
+        event.target.parentElement.remove();
+    }
+    });
+}
+
+//Ajouter un input genre
+const genresContainer = document.getElementById('genres-container');
+if (genresContainer) {
+    const ajouterGenreButton = document.getElementById('ajouter-genre');
+
+    // Clic sur le bouton d'ajout
+    ajouterGenreButton.addEventListener('click', ajouterChampGenre);
+
+    // Clic sur le bouton de suppression d'acteur
+    genresContainer.addEventListener('click', function(event) {
+    if (event.target.classList.contains('supprimer-genre')) {
         event.target.parentElement.remove();
     }
     });
@@ -80,7 +107,7 @@ if (caroussel) {
             caroussel.style.transform="translate(" + p * 367 + "px)";
         }
         
-        //// Décrémente la valeur p et déplace le carrousel vers la gauche
+        // Décrémente la valeur p et déplace le carrousel vers la gauche
         chevronDroit.onclick=function(){
             p--
             caroussel.style.transform="translate(" + p * 367 + "px)";
