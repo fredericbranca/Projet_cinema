@@ -147,7 +147,7 @@ class CinemaController
                                 header("Location: index.php?action=admin#modalAddFilm");
 
                                 // Si un réalisateur existant a été choisit : utilise la requête avec un réalisateur existant (+check le filtre)
-                            } elseif ( ( !empty($idRealisateur) && $idRealisateur !== false ) && (empty($nom) && empty($prenom) && empty($sexe) && empty($dateNaiss))) {
+                            } elseif ( ( !empty($idRealisateur) && $idRealisateur !== false ) && (empty($nom) || empty($prenom) || empty($sexe) || empty($dateNaiss))) {
                                 // Requete pour ajouter un film à la DB
                                 $requeteAddFilm = $pdo->prepare("
                                     INSERT INTO film (titre, dateSortie, duree, synopsis, note, affiche, id_realisateur)
@@ -156,10 +156,16 @@ class CinemaController
                                 // Requete pour ajouter un ou plusieurs genre au film ajouté
                                 $requeteAddGenre = $pdo->prepare("
                                     INSERT INTO genre_film (id_film, id_genre)
-                                    SELECT LAST_INSERT_ID(), :idGenre;
+                                    SELECT LAST_INSERT_ID(), :idGenre
+                                ");
+                                //Requete pour récupérer l'id du film ajouté
+                                $requeteLastIdFilm = $pdo->query("
+                                    SELECT LAST_INSERT_ID() as lastId, titre
+                                    FROM film
+                                    WHERE id_film = LAST_INSERT_ID()
                                 ");
 
-                                //Execute la requête pour ajouter una film
+                                //Execute la requête pour ajouter un film
                                 $requeteAddFilm->execute([
                                     'titre' => $titre,
                                     'dateSortie' => $dateSortie,
@@ -169,29 +175,36 @@ class CinemaController
                                     'affiche' => $affiche,
                                     'idRealisateur' => $idRealisateur
                                 ]);
-
                                 //Execute la requête pour ajouter le ou les genres au film ajouté
                                 foreach ($idGenres as $idGenre) {
                                     $requeteAddGenre->execute([
                                         'idGenre' => $idGenre
                                     ]);
                                 }
+                                //Execute la requete pour récupérer l'id du dernier film ajouté
+                                $requeteLastIdFilm->execute();
+
+                                //Id du dernier film en session
+                                $lastFilm = $requeteLastIdFilm->fetch();
+                                $_SESSION['id'] = $lastFilm['lastId'];
+                                $_SESSION['titre'] = $lastFilm['titre'];
 
                                 // Redirection sur le modal après l'ajout du film
                                 $_SESSION['Message'] = "Film ajouté.";
                                 header("Location: index.php?action=admin#modalAddCasting");
+
                             } elseif ( (!empty($nom) && !empty($prenom) && !empty($sexe) && !empty($dateNaiss)) & ( $nom !== false && $prenom !== false && $sexe !== false && $dateNaiss!== false ) ) { // Si l'utilisateur veut créer un nouveau réalisateur
 
                                 // Requete pour créer une personne
                                 $requeteAddPersonne = $pdo->prepare("
                                     INSERT INTO personne (nom, prenom, sexe, dateNaissance)
-                                    VALUE (:nom, :prenom, :sexe, :dateNaissance);
+                                    VALUE (:nom, :prenom, :sexe, :dateNaissance)
                                 ");
 
                                 // Requete pour que cette personne soit un rélisateur
                                 $requeteAddRealisateur = $pdo->prepare("
                                     INSERT INTO realisateur (id_personne)
-                                    SELECT LAST_INSERT_ID();
+                                    SELECT LAST_INSERT_ID()
                                 ");
 
                                 // Requete pour ajouter un film à la DB
@@ -202,7 +215,14 @@ class CinemaController
                                 // Requete pour ajouter un ou plusieurs genre au film ajouté
                                 $requeteAddGenre = $pdo->prepare("
                                     INSERT INTO genre_film (id_film, id_genre)
-                                    SELECT LAST_INSERT_ID(), :idGenre;
+                                    SELECT LAST_INSERT_ID(), :idGenre
+                                ");
+
+                                //Requete pour récupérer l'id du film ajouté
+                                $requeteLastIdFilm = $pdo->query("
+                                    SELECT LAST_INSERT_ID() as lastId, titre
+                                    FROM film
+                                    WHERE id_film = LAST_INSERT_ID()
                                 ");
 
                                 //Execute la requete pour ajouter une personne
@@ -233,6 +253,14 @@ class CinemaController
                                     ]);
                                 }
 
+                                //Execute la requete pour récupérer l'id du dernier film ajouté
+                                $requeteLastIdFilm->execute();
+
+                                //Id du dernier film en session
+                                $lastFilm = $requeteLastIdFilm->fetch();
+                                $_SESSION['id'] = $lastFilm['lastId'];
+                                $_SESSION['titre'] = $lastFilm['titre'];
+
                                 // Redirection sur le modal après l'ajout du film
                                 $_SESSION['Message'] = "Nouveau réalisateur créé et film ajouté.";
                                 header("Location: index.php?action=admin#modalAddCasting");
@@ -261,6 +289,16 @@ class CinemaController
                 die();
             }
         }
+
+
+
+        // Requete pour ajouter un casting
+        // if (isset($_POST['castingSubmut'])) {
+        //     $requete = $pdo->query();
+        // }
+
         require "view/admin.php";
+
     }
+
 }
