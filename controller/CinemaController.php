@@ -290,15 +290,72 @@ class CinemaController
             }
         }
 
-
-
         // Requete pour ajouter un casting
-        // if (isset($_POST['castingSubmut'])) {
-        //     $requete = $pdo->query();
-        // }
+        if (isset($_POST['castingSubmut'])) {
+            // Requete pour créer une personne
+            $requeteAddPersonne = $pdo->prepare("
+            INSERT INTO personne (nom, prenom, sexe, dateNaissance)
+                VALUE (:nom, :prenom, :sexe, :dateNaissance)
+            ");
+            // Requete pour que cette personne soit un acteur
+            $requeteAddActeur = $pdo->prepare("
+                INSERT INTO acteur (id_personne)
+                SELECT LAST_INSERT_ID()
+            ");
+            // Requete pour récupérer l'ID de l'acteur ajouté
+            $requeteLastActeur = $pdo->query("
+                SELECT LAST_INSERT_ID() as lastActorId
+            ");
+            // Requete pour ajouter un role
+            $requeteAddRole = $pdo->prepare("
+                INSERT INTO role (role)
+                VALUE (:role)
+            ");
+            // Requete pour récupérer l'ID du role ajouté
+            $requeteLastRole = $pdo->query("
+                SELECT LAST_INSERT_ID() as lastRoleId
+            ");
+            $requeteAddCasting = $pdo->prepare("
+                INSERT INTO casting (id_film, id_acteur, id_role)
+                VALUE (:id_film, :id_acteur, :id_role)
+            ");
+
+            // Execute la requete pour créer une personne
+            $requeteAddPersonne->execute([
+                'nom' => $nom,
+                'prenom' => $prenom,
+                'sexe' => $sexe,
+                'dateNaissance' => $dateNaiss
+            ]);
+            // Execute la requete pour ajouter à la personne en tant qu'acteur
+            $requeteAddActeur->execute();
+
+            // Execute la requete pour récupérer l'ID de l'acteur ajouté
+            $requeteLastActeur->execute();
+            // Enregistrement de l'ID
+            $requete = $requeteLastActeur->fetch();
+            $idActeur = $requete['lastActorId'];
+
+            // Execute la requete pour ajouter un role
+            $requeteAddRole->execute([
+                'role' => $role
+            ]);
+
+            // Execute la requete pour récupérer l'ID du role ajouté
+            $requeteLastRole->execute();
+            // Enregistrement 
+            $requete = $requeteLastRole->fetch();
+            $idRole = $requete['lastRoleId'];
+
+            // Execute la requete pour ajouter un nouveau casting
+            $requeteAddCasting->execute([
+                "id_film" => $idFilm,
+                "id_acteur" => $idActeur,
+                "id_role" => $idRole
+            ]);
+        }
 
         require "view/admin.php";
 
     }
-
 }
