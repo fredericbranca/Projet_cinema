@@ -103,6 +103,15 @@ class CinemaController
             $idRealisateur = filter_input(INPUT_POST, 'idRealisateur', FILTER_VALIDATE_INT);
             $idGenres = filter_input(INPUT_POST, 'idGenre', FILTER_SANITIZE_NUMBER_INT, FILTER_REQUIRE_ARRAY); // FILTER_REQUIRE_ARRAY : on veut récupérer les valuers sous forme de tableau (idGenre[])
 
+            if (isset($_POST['genre'])) {
+                $genres = filter_input(INPUT_POST, 'genre', FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_REQUIRE_ARRAY);
+                if ($genres == false) {
+                    $_SESSION['Message'] = "Le champ genre est incorrect !";
+                    echo $_SESSION['Message'];
+                    die();
+                }
+            }
+
             //Filtre pour ajouter un nouveau réalisateur
             $nom = filter_input(INPUT_POST, 'nom', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $prenom = filter_input(INPUT_POST, 'prenom', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -148,6 +157,16 @@ class CinemaController
 
                                 // Si un réalisateur existant a été choisit : utilise la requête avec un réalisateur existant (+check le filtre)
                             } elseif ( ( !empty($idRealisateur) && $idRealisateur !== false ) && (empty($nom) || empty($prenom) || empty($sexe) || empty($dateNaiss))) {
+                                
+                                // Requete pour ajouter un/des genre(s) à la db
+                                $requeteAddNewGenre = $pdo->prepare("
+                                    INSERT INTO genre (nom)
+                                    VALUE (:genre)
+                                ");
+                                $requeteGetGenreId = $pdo->prepare("
+                                    SELECT LAST_INSERT_ID() as genreId
+                                ");
+                                
                                 // Requete pour ajouter un film à la DB
                                 $requeteAddFilm = $pdo->prepare("
                                     INSERT INTO film (titre, dateSortie, duree, synopsis, note, affiche, id_realisateur)
@@ -165,6 +184,18 @@ class CinemaController
                                     WHERE id_film = LAST_INSERT_ID()
                                 ");
 
+                                if (!empty($genres)) {
+                                    // Execute la requête pour ajouter le ou les gens et récupérer l'id
+                                    foreach ($genres as $genre) {
+                                        $requeteAddNewGenre->execute([
+                                            'genre' => $genre
+                                        ]);
+                                        $requeteGetGenreId->execute();
+    
+                                        $requete = $requeteGetGenreId->fetch();
+                                        $idNewGenres[] = $requete['genreId'];
+                                    }
+                                }
                                 //Execute la requête pour ajouter un film
                                 $requeteAddFilm->execute([
                                     'titre' => $titre,
@@ -180,6 +211,13 @@ class CinemaController
                                     $requeteAddGenre->execute([
                                         'idGenre' => $idGenre
                                     ]);
+                                }
+                                if (!empty($genres)) {
+                                    foreach ($idNewGenre as $idGenre) {
+                                        $requeteAddGenre->execute([
+                                            'idGenre' => $idGenre
+                                        ]);
+                                    }
                                 }
                                 //Execute la requete pour récupérer l'id du dernier film ajouté
                                 $requeteLastIdFilm->execute();
