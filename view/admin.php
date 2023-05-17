@@ -35,6 +35,11 @@
                     <label for="genre<?= $genre['id_genre']; ?>"><?= $genre['nom']; ?> :</label>
                     <input type="checkbox" id="genre<?= $genre['id_genre']; ?>" name="idGenre[]" value="<?= $genre['id_genre']; ?>"><br>
                 <?php } ?>
+                <div id="genres-container">
+                    <h2>Créer un nouveau genre</h2>
+                    <button id="ajouter-genre">+</button>
+                </div>
+                
             </fieldset>
 
             <!-- Synopsis -->
