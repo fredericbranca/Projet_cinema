@@ -86,7 +86,7 @@
     <div class="modal-body">
 
         <form action="index.php?action=admin" method="POST" enctype="multipart/form-data">
-            <p>Ajout d'un casting pour le film : </p>
+            <p>Ajout d'un casting pour le film : <?= $_SESSION['titre']; ?></p>
 
             <!-- Ajouter acteur(s) -->
             <legend>Ajouter un ou plusieurs acteur(s)</legend>
