@@ -65,8 +65,8 @@
                 <option name="sexe" value="F">Femme</option>
             </select>
             <!-- Date de naissance -->
-            <label for="dateNaiss">Date de naissance :</label>
-            <input type="date" id="dateNaiss" name="dateNaiss" size="20">
+            <label for="dateNaissance">Date de naissance :</label>
+            <input type="date" id="dateNaissance" name="dateNaissance" size="20">
 
             <!-- Bouton ajouter le film -->
             <div class="button">
@@ -92,7 +92,7 @@
             <legend>Ajouter un ou plusieurs acteur(s)</legend>
 
             <div id="acteurs-container">
-                <div class="acteur-input">
+               <!-- <div class="acteur-input">
                     <input type="text" name="nom[]" placeholder="Nom de l'acteur">
                     <input type="text" name="prenom[]" placeholder="Prénom de l'acteur">
                     <select name="sexe[]">
@@ -101,8 +101,20 @@
                     </select>
                     <input type="date" name="dateNaissance[]">
                     <input type="text" name="role[]" placeholder="Rôle de l'acteur">
+                </div> -->
+                <div class="acteur-input">
+                    <input type="text" name="nom" placeholder="Nom de l'acteur">
+                    <input type="text" name="prenom" placeholder="Prénom de l'acteur">
+                    <select name="sexe">
+                        <option value="homme">Homme</option>
+                        <option value="femme">Femme</option>
+                    </select>
+                    <input type="date" name="dateNaissance">
+                    <input type="text" name="role" placeholder="Rôle de l'acteur">
                 </div>
-            </div>
+            </div> 
+
+
 
             <button id="ajouter-acteur">+</button>
 
