@@ -45,25 +45,25 @@ function ajouterChampActeur(event) {
 /////////////////////////////////////////////////////////////////
 
 const acteursContainer = document.getElementById('acteurs-container');
-const ajouterActeurButton = document.getElementById('ajouter-acteur');
+if (acteursContainer) {
+    const ajouterActeurButton = document.getElementById('ajouter-acteur');
 
-// Clic sur le bouton d'ajout
-ajouterActeurButton.addEventListener('click', ajouterChampActeur);
+    // Clic sur le bouton d'ajout
+    ajouterActeurButton.addEventListener('click', ajouterChampActeur);
 
-// Clic sur le bouton de suppression d'acteur
-acteursContainer.addEventListener('click', function(event) {
-  if (event.target.classList.contains('supprimer-acteur')) {
-    event.target.parentElement.remove();
-  }
-});
-
+    // Clic sur le bouton de suppression d'acteur
+    acteursContainer.addEventListener('click', function(event) {
+    if (event.target.classList.contains('supprimer-acteur')) {
+        event.target.parentElement.remove();
+    }
+    });
+}
 
 
 // Caroussel, liste des films de la page d'accueil
-
     // On récupère les éléments HTML
     const caroussel = document.getElementById('caroussel');
-
+    console.log(caroussel);
 if (caroussel) {
     const cards = caroussel.querySelector('.cards');
 
