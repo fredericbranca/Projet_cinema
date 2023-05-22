@@ -28,6 +28,8 @@ window.addEventListener('DOMContentLoaded', function() {
 // Fonction pour ajouter un input d'acteur
 function ajouterChampActeur(event) {
     event.preventDefault(); // Empêche le rafraîchissement de la page
+
+    // Créer et ajouter les éléments au conteneur
     const acteurInput = document.createElement('div');
     acteurInput.classList.add('acteur-input');
     acteurInput.innerHTML =   `<input type="text" name="acteur[]" placeholder="Nom de l'acteur">
@@ -39,7 +41,30 @@ function ajouterChampActeur(event) {
                               <input type="date" name="dateNaissance[]">
                               <input type="text" name="role[]" placeholder="Rôle de l'acteur">
                               <button class="supprimer-acteur">-</button>`;
-    acteursContainer.appendChild(acteurInput);
+    acteursInputContainer.appendChild(acteurInput);
+  }
+
+// Fonction pour ajouter un select d'acteur
+function ajouterSelectActeur(event) {
+    event.preventDefault(); // Empêche le rafraîchissement de la page
+
+    // Construction des options depuis $acteurs
+    // valeur par défaut de options
+    let options = '<option value="">Sélectionner un acteur</option>';
+    // forEach pour parcourir chaque élément du tableau acteursDate (qui correspond à $requeteActeur->fetchAll();)
+    acteursData.forEach(function(acteur) {
+        options += '<option value="' + acteur.id_acteur + '">' + acteur.name + '</option>';
+    });
+
+    // Créer et ajouter les éléments au conteneur
+    const acteurSelect = document.createElement('div');
+    acteurSelect.classList.add('acteurs-select');
+    acteurSelect.innerHTML =   `<select id="idActeur" name="idActeur[]">
+                                    ${options}
+                                </select>
+                                <input type="text" name="role[]" placeholder="Rôle de l'acteur">
+                                <button class="supprimer-acteur">-</button>`;
+    acteurSelectContainer.appendChild(acteurSelect);
   }
 
 // Fonction pour ajouter un input genre
@@ -55,15 +80,31 @@ function ajouterChampGenre(event) {
 /////////////////////////////////////////////////////////////////
 
 //Ajouter un input acteur
-const acteursContainer = document.getElementById('acteurs-container');
-if (acteursContainer) {
+const acteursInputContainer = document.getElementById('acteurs-input-container');
+if (acteursInputContainer) {
     const ajouterActeurButton = document.getElementById('ajouter-acteur');
 
     // Clic sur le bouton d'ajout
     ajouterActeurButton.addEventListener('click', ajouterChampActeur);
 
     // Clic sur le bouton de suppression d'acteur
-    acteursContainer.addEventListener('click', function(event) {
+    acteursInputContainer.addEventListener('click', function(event) {
+    if (event.target.classList.contains('supprimer-acteur')) {
+        event.target.parentElement.remove();
+    }
+    });
+}
+
+//Ajouter un select acteur
+const acteurSelectContainer = document.getElementById('acteurs-select-container');
+if (acteurSelectContainer) {
+    const ajouterActeurButton = document.getElementById('ajouter-select-acteur');
+
+    // Clic sur le bouton d'ajout
+    ajouterActeurButton.addEventListener('click', ajouterSelectActeur);
+
+    // Clic sur le bouton de suppression d'acteur
+    acteurSelectContainer.addEventListener('click', function(event) {
     if (event.target.classList.contains('supprimer-acteur')) {
         event.target.parentElement.remove();
     }
