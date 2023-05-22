@@ -32,7 +32,7 @@ function ajouterChampActeur(event) {
     // Créer et ajouter les éléments au conteneur
     const acteurInput = document.createElement('div');
     acteurInput.classList.add('acteur-input');
-    acteurInput.innerHTML =   `<input type="text" name="acteur[]" placeholder="Nom de l'acteur">
+    acteurInput.innerHTML =   `<input type="text" name="nom[]" placeholder="Nom de l'acteur">
                               <input type="text" name="prenom[]" placeholder="Prénom de l'acteur">
                               <select name="sexe[]">
                               <option value="homme">Homme</option>
