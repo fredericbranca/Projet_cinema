@@ -379,14 +379,16 @@ class CinemaController
             $arrayRoles = filter_input(INPUT_POST, 'role', FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_REQUIRE_ARRAY);
 
             // Filtre Input acteur
-            $nom = filter_input(INPUT_POST, 'nom', FILTER_SANITIZE_FULL_SPECIAL_CHARS); //+FILTER_REQUIRE_ARRAY
-            $prenom = filter_input(INPUT_POST, 'prenom', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            $sexe = filter_input(INPUT_POST, 'sexe', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            $dateNaiss = filter_input(INPUT_POST, 'dateNaissance', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            $role = filter_input(INPUT_POST, 'role2', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $noms = filter_input(INPUT_POST, 'nom', FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_REQUIRE_ARRAY);
+            $prenoms = filter_input(INPUT_POST, 'prenom', FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_REQUIRE_ARRAY);
+            $sexes = filter_input(INPUT_POST, 'sexe', FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_REQUIRE_ARRAY);
+            $datesNaiss = filter_input(INPUT_POST, 'dateNaissance', FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_REQUIRE_ARRAY);
+            $roles = filter_input(INPUT_POST, 'role2', FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_REQUIRE_ARRAY);
 
-            if ($idActeur !== false && $arrayRoles !== false && $nom !== false && $prenom !== false && $sexe !== false && $dateNaiss !== false && $role !== false) {
-                if ( ( !empty($idActeur) && !empty($arrayRoles) ) || ( !empty($nom) && !empty($prenom) && !empty($sexe) && !empty($dateNaiss) && !empty($role) ) ) {
+            var_dump($noms); 
+
+            if ($idActeur !== false && $arrayRoles !== false && $noms !== false && $prenoms !== false && $sexes !== false && $datesNaiss !== false && $roles !== false) {
+                if ( ( !empty($idActeur) && !empty($arrayRoles) ) || ( !empty($noms) && !empty($prenoms) && !empty($sexes) && !empty($datesNaiss) && !empty($roles) ) ) {
 
                     // Requete pour le select (acteur + addRole + addCasting)
                     if ( !empty($idActeur) && !empty($arrayRoles) ) {
@@ -414,8 +416,9 @@ class CinemaController
                         }
                     }
 
-                    if ( !empty($nom) && !empty($prenom) && !empty($sexe) && !empty($dateNaiss) && !empty($role) ) {
+                    if ( !empty($noms) && !empty($prenoms) && !empty($sexes) && !empty($datesNaiss) && !empty($roles) ) {
                         // Requete pour créer une personne
+                        
                         $requeteAddPersonne = $pdo->prepare("
                         INSERT INTO personne (nom, prenom, sexe, dateNaissance)
                             VALUE (:nom, :prenom, :sexe, :dateNaissance)
@@ -444,39 +447,41 @@ class CinemaController
                             VALUE (:id_film, :id_acteur, :id_role)
                         ");
 
-                        // Execute la requete pour créer une personne
-                        $requeteAddPersonne->execute([
-                            'nom' => $nom,
-                            'prenom' => $prenom,
-                            'sexe' => $sexe,
-                            'dateNaissance' => $dateNaiss
-                        ]);
-                        // Execute la requete pour ajouter à la personne en tant qu'acteur
-                        $requeteAddActeur->execute();
+                        foreach($noms as $i => $nom) {
+                            // Execute la requete pour créer une personne
+                            $requeteAddPersonne->execute([
+                                'nom' => $nom,
+                                'prenom' => $prenoms[$i],
+                                'sexe' => $sexes[$i],
+                                'dateNaissance' => $datesNaiss[$i]
+                            ]);
+                            // Execute la requete pour ajouter à la personne en tant qu'acteur
+                            $requeteAddActeur->execute();
 
-                        // Execute la requete pour récupérer l'ID de l'acteur ajouté
-                        $requeteLastActeur->execute();
-                        // Enregistrement de l'ID
-                        $requete = $requeteLastActeur->fetch();
-                        $idActeur = $requete['lastActorId'];
+                            // Execute la requete pour récupérer l'ID de l'acteur ajouté
+                            $requeteLastActeur->execute();
+                            // Enregistrement de l'ID
+                            $requete = $requeteLastActeur->fetch();
+                            $idActeur = $requete['lastActorId'];
 
-                        // Execute la requete pour ajouter un role
-                        $requeteAddRole->execute([
-                            'role' => $role
-                        ]);
+                            // Execute la requete pour ajouter un role
+                            $requeteAddRole->execute([
+                                'role' => $roles[$i]
+                            ]);
 
-                        // Execute la requete pour récupérer l'ID du role ajouté
-                        $requeteLastRole->execute();
-                        // Enregistrement 
-                        $requete = $requeteLastRole->fetch();
-                        $idRole = $requete['lastRoleId'];
+                            // Execute la requete pour récupérer l'ID du role ajouté
+                            $requeteLastRole->execute();
+                            // Enregistrement 
+                            $requete = $requeteLastRole->fetch();
+                            $idRole = $requete['lastRoleId'];
 
-                        // Execute la requete pour ajouter un nouveau casting
-                        $requeteAddCasting->execute([
-                            "id_film" => $_SESSION['id'],
-                            "id_acteur" => $idActeur,
-                            "id_role" => $idRole
-                        ]);
+                            // Execute la requete pour ajouter un nouveau casting
+                            $requeteAddCasting->execute([
+                                "id_film" => $_SESSION['id'],
+                                "id_acteur" => $idActeur,
+                                "id_role" => $idRole
+                            ]);
+                        }
                     }
 
                     session_unset();
