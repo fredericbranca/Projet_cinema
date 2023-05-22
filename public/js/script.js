@@ -77,6 +77,22 @@ function ajouterChampGenre(event) {
     genresContainer.appendChild(genreInput);
 }
 
+// Fonction pour ouvrir le menu déroulant 
+function afficherMenuDeroulant(filmId) {
+    var menuDeroulant = document.getElementById(filmId);
+    menuDeroulant.style.display ="block";
+}
+
+// Fonction pour rediriger les choix du menu déroulant
+function redirection(selection) {
+    var choix = select.value;
+    if (choix === "Modifier") {
+        window.location.href="index.php?action=modifierFilm"; //redirection vers le lien modifier film
+    } else if (choix === "Supprimer") {
+        windows.location.href="index.php?action=admin#modalSupprimer"; //redirection vers la modal pour supprimer le film sélectionné
+    }
+}
+
 /////////////////////////////////////////////////////////////////
 
 //Ajouter un input acteur
