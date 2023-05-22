@@ -153,7 +153,7 @@ class CinemaController
                     if ( $titre !== false && $dateSortie !== false && $duree !== false && $synopsis !== false && $note !== false && $idGenres !== false ) {
 
                         //Vérifie si les champs ne sont pas vide (sauf pour la partie réalisateur)
-                        if ( !empty($titre) && !empty($dateSortie) && !empty($duree) && !empty($synopsis) && !empty($note) && !empty($idGenres) ) {
+                        if ( !empty($titre) && !empty($dateSortie) && !empty($duree) && !empty($synopsis) && !empty($note) && ( !empty($idGenres) || !empty($genres) ) ) {
 
                             // Si aucun champ réalisateur est rempli, affiche un message
                             if (empty($idRealisateur) && (empty($nom) && empty($prenom) && empty($sexe) && empty($dateNaiss))) {
@@ -222,7 +222,7 @@ class CinemaController
                                 }
                                 // Execute cette requête uniquement si un nouveau genre a été saisi
                                 if (!empty($genres)) {
-                                    foreach ($idNewGenre as $idGenre) {
+                                    foreach ($idNewGenres as $idGenre) {
                                         $requeteAddGenre->execute([
                                             'idGenre' => $idGenre
                                         ]);
@@ -241,6 +241,16 @@ class CinemaController
                                 header("Location: index.php?action=admin#modalAddCasting");
 
                             } elseif ( (!empty($nom) && !empty($prenom) && !empty($sexe) && !empty($dateNaiss)) & ( $nom !== false && $prenom !== false && $sexe !== false && $dateNaiss!== false ) ) { // Si l'utilisateur veut créer un nouveau réalisateur
+
+
+                                // Requete pour ajouter un/des genre(s) à la db
+                                $requeteAddNewGenre = $pdo->prepare("
+                                    INSERT INTO genre (nom)
+                                    VALUE (:genre)
+                                ");
+                                $requeteGetGenreId = $pdo->prepare("
+                                    SELECT LAST_INSERT_ID() as genreId
+                                ");
 
                                 // Requete pour créer une personne
                                 $requeteAddPersonne = $pdo->prepare("
@@ -272,6 +282,20 @@ class CinemaController
                                     WHERE id_film = LAST_INSERT_ID()
                                 ");
 
+                                // condition si un nouveau genre a été saisi
+                                if (!empty($genres)) {
+                                    // Execute la requête pour ajouter le ou les genre(s) et récupérer l'id
+                                    foreach ($genres as $genre) {
+                                        $requeteAddNewGenre->execute([
+                                            'genre' => $genre
+                                        ]);
+                                        $requeteGetGenreId->execute();
+    
+                                        $requete = $requeteGetGenreId->fetch();
+                                        $idNewGenres[] = $requete['genreId'];
+                                    }
+                                }
+
                                 //Execute la requete pour ajouter une personne
                                 $requeteAddPersonne->execute([
                                     'nom' => $nom,
@@ -283,7 +307,7 @@ class CinemaController
                                 //Execute la requete pour ajouter la personne à réalisateur
                                 $requeteAddRealisateur->execute();
 
-                                //Execute la requête pour ajouter una film
+                                //Execute la requête pour ajouter un film
                                 $requeteAddFilm->execute([
                                     'titre' => $titre,
                                     'dateSortie' => $dateSortie,
@@ -292,16 +316,26 @@ class CinemaController
                                     'note' => $note,
                                     'affiche' => $affiche
                                 ]);
-
-                                //Execute la requête pour ajouter le ou les genres au film ajouté
-                                foreach ($idGenres as $idGenre) {
-                                    $requeteAddGenre->execute([
-                                        'idGenre' => $idGenre
-                                    ]);
-                                }
-
                                 //Execute la requete pour récupérer l'id du dernier film ajouté
                                 $requeteLastIdFilm->execute();
+
+                                //Execute la requête pour ajouter le ou les genres au film ajouté
+                                if (!empty($idGenres)) {
+                                    foreach ($idGenres as $idGenre) {
+                                        $requeteAddGenre->execute([
+                                            'idGenre' => $idGenre
+                                        ]);
+                                    }
+                                }
+
+                                // Execute cette requête uniquement si un nouveau genre a été saisi
+                                if (!empty($genres)) {
+                                    foreach ($idNewGenres as $idGenre) {
+                                        $requeteAddGenre->execute([
+                                            'idGenre' => $idGenre
+                                        ]);
+                                    }
+                                }
 
                                 //Id du dernier film en session
                                 $lastFilm = $requeteLastIdFilm->fetch();
@@ -349,103 +383,115 @@ class CinemaController
             $prenom = filter_input(INPUT_POST, 'prenom', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $sexe = filter_input(INPUT_POST, 'sexe', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $dateNaiss = filter_input(INPUT_POST, 'dateNaissance', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            $role = filter_input(INPUT_POST, 'role', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $role = filter_input(INPUT_POST, 'role2', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-            // Requete pour le select (acteur + addRole + addCasting)
-            $i = 0;
-            foreach ($arrayRoles as $role) {
-                // requete pour ajouter un nouveau role
-                $requeteAddRole = $pdo->prepare("
-                    INSERT INTO role (role)
-                    VALUE (:role)
-                ");
-                // requete pour ajouter la partie select dans la table casting
-                $requeteAddCasting = $pdo->prepare("
-                    INSERT INTO casting (id_film, id_acteur, id_role)
-                    VALUE (:id_film, :id_acteur, LAST_INSERT_ID())
-                ");
+            if ($idActeur !== false && $arrayRoles !== false && $nom !== false && $prenom !== false && $sexe !== false && $dateNaiss !== false && $role !== false) {
+                if ( ( !empty($idActeur) && !empty($arrayRoles) ) || ( !empty($nom) && !empty($prenom) && !empty($sexe) && !empty($dateNaiss) && !empty($role) ) ) {
 
-                // execute la requete pour ajouter un nouveau role
-                $requeteAddRole->execute([
-                    'role' => $role
-                ]);
-                // execute la requete pour ajouter la partie select dans la table casting
-                $requeteAddCasting->execute([
-                    'id_film' => $_SESSION['id'],
-                    'id_acteur' => $idActeur[$i]
-                ]);
-                $i++;
+                    // Requete pour le select (acteur + addRole + addCasting)
+                    if ( !empty($idActeur) && !empty($arrayRoles) ) {
+                        foreach ($arrayRoles as $i => $role) {
+                            // requete pour ajouter un nouveau role
+                            $requeteAddRole = $pdo->prepare("
+                                INSERT INTO role (role)
+                                VALUE (:role)
+                            ");
+                            // requete pour ajouter la partie select dans la table casting
+                            $requeteAddCasting = $pdo->prepare("
+                                INSERT INTO casting (id_film, id_acteur, id_role)
+                                VALUE (:id_film, :id_acteur, LAST_INSERT_ID())
+                            ");
+
+                            // execute la requete pour ajouter un nouveau role
+                            $requeteAddRole->execute([
+                                'role' => $role
+                            ]);
+                            // execute la requete pour ajouter la partie select dans la table casting
+                            $requeteAddCasting->execute([
+                                'id_film' => $_SESSION['id'],
+                                'id_acteur' => $idActeur[$i]
+                            ]);
+                        }
+                    }
+
+                    if ( !empty($nom) && !empty($prenom) && !empty($sexe) && !empty($dateNaiss) && !empty($role) ) {
+                        // Requete pour créer une personne
+                        $requeteAddPersonne = $pdo->prepare("
+                        INSERT INTO personne (nom, prenom, sexe, dateNaissance)
+                            VALUE (:nom, :prenom, :sexe, :dateNaissance)
+                        ");
+                        // Requete pour que cette personne soit un acteur
+                        $requeteAddActeur = $pdo->prepare("
+                            INSERT INTO acteur (id_personne)
+                            SELECT LAST_INSERT_ID()
+                        ");
+                        // Requete pour récupérer l'ID de l'acteur ajouté
+                        $requeteLastActeur = $pdo->query("
+                            SELECT LAST_INSERT_ID() as lastActorId
+                        ");
+                        // Requete pour ajouter un role
+                        $requeteAddRole = $pdo->prepare("
+                            INSERT INTO role (role)
+                            VALUE (:role)
+                        ");
+                        // Requete pour récupérer l'ID du role ajouté
+                        $requeteLastRole = $pdo->query("
+                            SELECT LAST_INSERT_ID() as lastRoleId
+                        ");
+                        // Requete pour ajouter un casting
+                        $requeteAddCasting = $pdo->prepare("
+                            INSERT INTO casting (id_film, id_acteur, id_role)
+                            VALUE (:id_film, :id_acteur, :id_role)
+                        ");
+
+                        // Execute la requete pour créer une personne
+                        $requeteAddPersonne->execute([
+                            'nom' => $nom,
+                            'prenom' => $prenom,
+                            'sexe' => $sexe,
+                            'dateNaissance' => $dateNaiss
+                        ]);
+                        // Execute la requete pour ajouter à la personne en tant qu'acteur
+                        $requeteAddActeur->execute();
+
+                        // Execute la requete pour récupérer l'ID de l'acteur ajouté
+                        $requeteLastActeur->execute();
+                        // Enregistrement de l'ID
+                        $requete = $requeteLastActeur->fetch();
+                        $idActeur = $requete['lastActorId'];
+
+                        // Execute la requete pour ajouter un role
+                        $requeteAddRole->execute([
+                            'role' => $role
+                        ]);
+
+                        // Execute la requete pour récupérer l'ID du role ajouté
+                        $requeteLastRole->execute();
+                        // Enregistrement 
+                        $requete = $requeteLastRole->fetch();
+                        $idRole = $requete['lastRoleId'];
+
+                        // Execute la requete pour ajouter un nouveau casting
+                        $requeteAddCasting->execute([
+                            "id_film" => $_SESSION['id'],
+                            "id_acteur" => $idActeur,
+                            "id_role" => $idRole
+                        ]);
+                    }
+
+                    session_unset();
+                    $_SESSION['Message'] = "Le casting a été ajouté.";
+                    header("Location: index.php?action=admin");
+                } else {
+                    var_dump("Erreur input ajouter casting");
+                    die();
+                }
+
+            } else {
+                var_dump("Erreur filtre bool");
+                die();
             }
-            
 
-            if ($i==20) {
-                // Requete pour créer une personne
-                $requeteAddPersonne = $pdo->prepare("
-                INSERT INTO personne (nom, prenom, sexe, dateNaissance)
-                    VALUE (:nom, :prenom, :sexe, :dateNaissance)
-                ");
-                // Requete pour que cette personne soit un acteur
-                $requeteAddActeur = $pdo->prepare("
-                    INSERT INTO acteur (id_personne)
-                    SELECT LAST_INSERT_ID()
-                ");
-                // Requete pour récupérer l'ID de l'acteur ajouté
-                $requeteLastActeur = $pdo->query("
-                    SELECT LAST_INSERT_ID() as lastActorId
-                ");
-                // Requete pour ajouter un role
-                $requeteAddRole = $pdo->prepare("
-                    INSERT INTO role (role)
-                    VALUE (:role)
-                ");
-                // Requete pour récupérer l'ID du role ajouté
-                $requeteLastRole = $pdo->query("
-                    SELECT LAST_INSERT_ID() as lastRoleId
-                ");
-                // Requete pour ajouter un casting
-                $requeteAddCasting = $pdo->prepare("
-                    INSERT INTO casting (id_film, id_acteur, id_role)
-                    VALUE (:id_film, :id_acteur, :id_role)
-                ");
-
-                // Execute la requete pour créer une personne
-                $requeteAddPersonne->execute([
-                    'nom' => $nom,
-                    'prenom' => $prenom,
-                    'sexe' => $sexe,
-                    'dateNaissance' => $dateNaiss
-                ]);
-                // Execute la requete pour ajouter à la personne en tant qu'acteur
-                $requeteAddActeur->execute();
-
-                // Execute la requete pour récupérer l'ID de l'acteur ajouté
-                $requeteLastActeur->execute();
-                // Enregistrement de l'ID
-                $requete = $requeteLastActeur->fetch();
-                $idActeur = $requete['lastActorId'];
-
-                // Execute la requete pour ajouter un role
-                $requeteAddRole->execute([
-                    'role' => $role
-                ]);
-
-                // Execute la requete pour récupérer l'ID du role ajouté
-                $requeteLastRole->execute();
-                // Enregistrement 
-                $requete = $requeteLastRole->fetch();
-                $idRole = $requete['lastRoleId'];
-
-                // Execute la requete pour ajouter un nouveau casting
-                $requeteAddCasting->execute([
-                    "id_film" => $_SESSION['id'],
-                    "id_acteur" => $idActeur,
-                    "id_role" => $idRole
-                ]);
-            }
-
-            session_unset();
-            $_SESSION['Message'] = "Le casting a été ajouté.";
-            header("Location: index.php?action=admin");
         }
 
         require "view/admin.php";
