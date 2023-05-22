@@ -39,7 +39,7 @@ function ajouterChampActeur(event) {
                               <option value="femme">Femme</option>
                               </select>
                               <input type="date" name="dateNaissance[]">
-                              <input type="text" name="role[]" placeholder="Rôle de l'acteur">
+                              <input type="text" name="role2[]" placeholder="Rôle de l'acteur">
                               <button class="supprimer-acteur">-</button>`;
     acteursInputContainer.appendChild(acteurInput);
   }
