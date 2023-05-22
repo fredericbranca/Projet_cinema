@@ -39,7 +39,7 @@
                     <h2>Créer un nouveau genre</h2>
                     <button id="ajouter-genre">+</button>
                 </div>
-                
+
             </fieldset>
 
             <!-- Synopsis -->
@@ -93,11 +93,34 @@
         <form action="index.php?action=admin" method="POST" enctype="multipart/form-data">
             <p>Ajout d'un casting pour le film : <?= $_SESSION['titre']; ?></p>
 
-            <!-- Ajouter acteur(s) -->
-            <legend>Ajouter un ou plusieurs acteur(s)</legend>
 
-            <div id="acteurs-container">
-               <!-- <div class="acteur-input">
+            <!-- Selection acteur(s) existant -->
+            <?php
+                $acteurs = $requeteActeur->fetchAll();
+                $acteursJSON = json_encode($acteurs); // json_encode() permet de convertir une valeur PHP en une chaîne JSON
+            ?>
+            <div id="acteurs-select-container">
+                <legend>Ajouter un/des acteur(s) existant dans la base de données</legend>
+
+                <div class="acteurs-select">
+                    <select id="idActeur" name="idActeur[]">
+                        <option value="">Sélectionner un acteur</option>
+                        <?php foreach ($acteurs as $acteur) { ?>
+                            <option value="<?= $acteur['id_acteur']; ?>"><?= $acteur['name']; ?></option>
+                        <?php } ?>
+                    </select>
+                    <input type="text" name="role[]" placeholder="Rôle de l'acteur">
+                </div>
+            </div>
+            <button id="ajouter-select-acteur">+</button>
+
+
+            <div id="acteurs-input-container">
+                <!-- Ajouter acteur(s) -->
+                <legend>Ajouter un ou plusieurs acteur(s)</legend>
+
+
+                <!-- <div class="acteur-input">
                     <input type="text" name="nom[]" placeholder="Nom de l'acteur">
                     <input type="text" name="prenom[]" placeholder="Prénom de l'acteur">
                     <select name="sexe[]">
@@ -115,9 +138,9 @@
                         <option value="femme">Femme</option>
                     </select>
                     <input type="date" name="dateNaissance">
-                    <input type="text" name="role" placeholder="Rôle de l'acteur">
+                    <input type="text" name="role2" placeholder="Rôle de l'acteur">
                 </div>
-            </div> 
+            </div>
 
 
 
@@ -179,6 +202,9 @@
     </div>
 </section>
 
+<script>
+  var acteursData = <?php echo $acteursJSON; ?>;
+</script>
 
 <?php
 
