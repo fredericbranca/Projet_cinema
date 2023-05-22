@@ -101,50 +101,23 @@
             ?>
             <div id="acteurs-select-container">
                 <legend>Ajouter un/des acteur(s) existant dans la base de données</legend>
-
+                <button id="ajouter-select-acteur">+</button>
                 <div class="acteurs-select">
-                    <select id="idActeur" name="idActeur[]">
-                        <option value="">Sélectionner un acteur</option>
-                        <?php foreach ($acteurs as $acteur) { ?>
-                            <option value="<?= $acteur['id_acteur']; ?>"><?= $acteur['name']; ?></option>
-                        <?php } ?>
-                    </select>
-                    <input type="text" name="role[]" placeholder="Rôle de l'acteur">
+
                 </div>
             </div>
-            <button id="ajouter-select-acteur">+</button>
+            
 
 
             <div id="acteurs-input-container">
                 <!-- Ajouter acteur(s) -->
                 <legend>Ajouter un ou plusieurs acteur(s)</legend>
+                <button id="ajouter-acteur">+</button>
 
-
-                <!-- <div class="acteur-input">
-                    <input type="text" name="nom[]" placeholder="Nom de l'acteur">
-                    <input type="text" name="prenom[]" placeholder="Prénom de l'acteur">
-                    <select name="sexe[]">
-                        <option value="homme">Homme</option>
-                        <option value="femme">Femme</option>
-                    </select>
-                    <input type="date" name="dateNaissance[]">
-                    <input type="text" name="role[]" placeholder="Rôle de l'acteur">
-                </div> -->
                 <div class="acteur-input">
-                    <input type="text" name="nom" placeholder="Nom de l'acteur">
-                    <input type="text" name="prenom" placeholder="Prénom de l'acteur">
-                    <select name="sexe">
-                        <option value="homme">Homme</option>
-                        <option value="femme">Femme</option>
-                    </select>
-                    <input type="date" name="dateNaissance">
-                    <input type="text" name="role2" placeholder="Rôle de l'acteur">
+
                 </div>
             </div>
-
-
-
-            <button id="ajouter-acteur">+</button>
 
             <!-- Bouton ajouter le film -->
             <div class="button">
