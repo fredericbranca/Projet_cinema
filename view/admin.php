@@ -159,7 +159,13 @@
                             $filmMaj = ucfirst($film);
 
                             if (substr($filmMaj, 0, 1) === $lettre) { ?>
-                                <div><?= $titre['titre']; ?></div>
+                                <div class="titreFilm" onclick="afficherMenuDeroulant(filmId<?=$titre['id_film'];?>)"><?= $titre['titre']; ?></div>
+                                <div id="filmId<?= $titre['id_film'];?>" style="display: none;">
+                                    <select onchange="redirection(this)">
+                                        <option value="modifier">Modifier</option>
+                                        <option value="supprimer">Supprimer</option>
+                                    </select>
+                                </div>
                         <?php
                             }
                         } ?>
