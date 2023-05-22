@@ -26,9 +26,9 @@ CREATE TABLE IF NOT EXISTS `acteur` (
   PRIMARY KEY (`id_acteur`),
   UNIQUE KEY `id_personne` (`id_personne`),
   CONSTRAINT `acteur_ibfk_1` FOREIGN KEY (`id_personne`) REFERENCES `personne` (`id_personne`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=latin1;
 
--- Listage des données de la table cinema.acteur : ~22 rows (environ)
+-- Listage des données de la table cinema.acteur : ~25 rows (environ)
 INSERT INTO `acteur` (`id_acteur`, `id_personne`) VALUES
 	(1, 2),
 	(2, 3),
@@ -51,7 +51,10 @@ INSERT INTO `acteur` (`id_acteur`, `id_personne`) VALUES
 	(19, 25),
 	(20, 27),
 	(21, 28),
-	(22, 29);
+	(22, 29),
+	(26, 59),
+	(27, 60),
+	(28, 61);
 
 -- Listage de la structure de table cinema. casting
 CREATE TABLE IF NOT EXISTS `casting` (
@@ -66,7 +69,7 @@ CREATE TABLE IF NOT EXISTS `casting` (
   CONSTRAINT `casting_ibfk_3` FOREIGN KEY (`id_role`) REFERENCES `role` (`id_role`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Listage des données de la table cinema.casting : ~22 rows (environ)
+-- Listage des données de la table cinema.casting : ~25 rows (environ)
 INSERT INTO `casting` (`id_film`, `id_acteur`, `id_role`) VALUES
 	(1, 1, 1),
 	(1, 2, 2),
@@ -89,7 +92,10 @@ INSERT INTO `casting` (`id_film`, `id_acteur`, `id_role`) VALUES
 	(8, 19, 19),
 	(9, 20, 20),
 	(1, 21, 21),
-	(3, 22, 22);
+	(3, 22, 22),
+	(68, 26, 32),
+	(68, 27, 33),
+	(68, 28, 34);
 
 -- Listage de la structure de table cinema. film
 CREATE TABLE IF NOT EXISTS `film` (
@@ -104,9 +110,9 @@ CREATE TABLE IF NOT EXISTS `film` (
   PRIMARY KEY (`id_film`),
   KEY `id_realisateur` (`id_realisateur`),
   CONSTRAINT `film_ibfk_1` FOREIGN KEY (`id_realisateur`) REFERENCES `realisateur` (`id_realisateur`)
-) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=latin1;
 
--- Listage des données de la table cinema.film : ~9 rows (environ)
+-- Listage des données de la table cinema.film : ~10 rows (environ)
 INSERT INTO `film` (`id_film`, `titre`, `dateSortie`, `duree`, `synopsis`, `note`, `affiche`, `id_realisateur`) VALUES
 	(1, 'Super Mario Bros, le film', '2023-04-05', 92, 'Alors qu’ils tentent de réparer une canalisation souterraine, Mario et son frère Luigi, tous deux plombiers, se retrouvent plongés dans un nouvel univers féerique à travers un mystérieux conduit. Mais lorsque les deux frères sont séparés, Mario s’engage dans une aventure trépidante pour retrouver Luigi.Dans sa quête, il peut compter sur l’aide du champignon Toad, habitant du Royaume Champignon, et les conseils avisés, en matière de techniques de combat, de la Princesse Peach, guerrière déterminée à la tête du Royaume. C’est ainsi que Mario réussit à mobiliser ses propres forces pour aller au bout de sa mission.', 4, 'Super_Mario_Bros_Film.jpg', 1),
 	(2, 'À vol d\'oiseaux', '2023-04-05', 57, 'À Vol d’oiseaux rassemble trois courts métrages d’animation délicats, sensibles. Un pur moment de bonheur, aérien, à la fin duquel on se sent pousser des ailes ! Un programme comme une parenthèse de douceur, où les adultes retrouvent leur âme d’enfant, les plus jeunes grandissent dans l’espoir d’une vie bienveillante, où chacun est incité à sortir de sa coquille pour voler de ses propres ailes. ', 3, 'A_vol_d_oiseaux.jpg', 2),
@@ -116,14 +122,15 @@ INSERT INTO `film` (`id_film`, `titre`, `dateSortie`, `duree`, `synopsis`, `note
 	(6, 'John Wick : Chapitre 4', '2023-03-22', 170, 'John Wick découvre un moyen de vaincre l’organisation criminelle connue sous le nom de la Grande Table. Mais avant de gagner sa liberté, Il doit affronter un nouvel ennemi qui a tissé de puissantes alliances à travers le monde et qui transforme les vieux amis de John en ennemis.', 4, 'John_Wick_4.jpg', 6),
 	(7, 'Scream VI', '2023-03-08', 122, 'Après avoir frappé à trois reprises à Woodsboro, après avoir terrorisé le campus de Windsor et les studios d’Hollywood, Ghostface a décidé de sévir dans Big Apple, mais dans une ville aussi grande que New-York personne ne vous entendra crier…', 3, 'Scream_6.jpg', 7),
 	(8, 'Creed III', '2023-03-01', 117, 'Idole de la boxe et entouré de sa famille, Adonis Creed n’a plus rien à prouver. Jusqu’au jour où son ami d’enfance, Damian, prodige de la boxe lui aussi, refait surface. A peine sorti de prison, Damian est prêt à tout pour monter sur le ring et reprendre ses droits. Adonis joue alors sa survie, face à un adversaire déterminé à l’anéantir.', 4, 'Creed_3.jpg', 8),
-	(9, 'Les Gardiennes de la planète', '2023-02-22', 82, 'Une baleine à bosse s\'est échouée sur un rivage isolé. Alors qu\'un groupe d\'hommes et de femmes organise son sauvetage, nous découvrons l\'histoire extraordinaire des cétacés, citoyens des océans du monde, essentiels à l’écosystème de notre planète depuis plus de 50 millions d’années.', 4, 'Les_Gardiennes_de_la_planete.jpg', 9);
+	(9, 'Les Gardiennes de la planète', '2023-02-22', 82, 'Une baleine à bosse s\'est échouée sur un rivage isolé. Alors qu\'un groupe d\'hommes et de femmes organise son sauvetage, nous découvrons l\'histoire extraordinaire des cétacés, citoyens des océans du monde, essentiels à l’écosystème de notre planète depuis plus de 50 millions d’années.', 4, 'Les_Gardiennes_de_la_planete.jpg', 9),
+	(68, 'Misanthrope', '2023-04-26', 118, 'Eleanor, une jeune enqu&ecirc;trice au lourd pass&eacute;, est appel&eacute;e sur les lieux d&rsquo;un crime de masse terrible. La police et le FBI lancent une chasse &agrave; l&rsquo;homme sans pr&eacute;c&eacute;dent, mais face au mode op&eacute;ratoire constamment impr&eacute;visible de l&rsquo;assassin, l&rsquo;enqu&ecirc;te pi&eacute;tine. Eleanor, quant &agrave; elle se trouve de plus en plus impliqu&eacute;e dans l&#039;affaire et se rend compte que ses propres d&eacute;mons int&eacute;rieurs peuvent l&rsquo;aider &agrave; cerner l&#039;esprit de ce tueur si singulier&hellip;', 3.9, '646b788fb6b6b6.28655703.jpg', 30);
 
 -- Listage de la structure de table cinema. genre
 CREATE TABLE IF NOT EXISTS `genre` (
   `id_genre` int NOT NULL AUTO_INCREMENT,
   `nom` varchar(50) NOT NULL,
   PRIMARY KEY (`id_genre`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 
 -- Listage des données de la table cinema.genre : ~15 rows (environ)
 INSERT INTO `genre` (`id_genre`, `nom`) VALUES
@@ -153,7 +160,7 @@ CREATE TABLE IF NOT EXISTS `genre_film` (
   CONSTRAINT `genre_film_ibfk_2` FOREIGN KEY (`id_genre`) REFERENCES `genre` (`id_genre`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Listage des données de la table cinema.genre_film : ~21 rows (environ)
+-- Listage des données de la table cinema.genre_film : ~23 rows (environ)
 INSERT INTO `genre_film` (`id_film`, `id_genre`) VALUES
 	(1, 1),
 	(6, 1),
@@ -165,6 +172,7 @@ INSERT INTO `genre_film` (`id_film`, `id_genre`) VALUES
 	(3, 4),
 	(8, 4),
 	(7, 5),
+	(68, 7),
 	(4, 8),
 	(5, 8),
 	(1, 9),
@@ -175,7 +183,8 @@ INSERT INTO `genre_film` (`id_film`, `id_genre`) VALUES
 	(1, 11),
 	(2, 11),
 	(5, 11),
-	(9, 11);
+	(9, 11),
+	(68, 12);
 
 -- Listage de la structure de table cinema. personne
 CREATE TABLE IF NOT EXISTS `personne` (
@@ -185,9 +194,9 @@ CREATE TABLE IF NOT EXISTS `personne` (
   `sexe` varchar(10) NOT NULL,
   `dateNaissance` date DEFAULT NULL,
   PRIMARY KEY (`id_personne`)
-) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=latin1;
 
--- Listage des données de la table cinema.personne : ~29 rows (environ)
+-- Listage des données de la table cinema.personne : ~33 rows (environ)
 INSERT INTO `personne` (`id_personne`, `nom`, `prenom`, `sexe`, `dateNaissance`) VALUES
 	(1, 'Horvath', 'Aaron ', 'H', '1980-08-19'),
 	(2, 'Pratt', 'Chris', 'H', '1979-06-21'),
@@ -217,7 +226,11 @@ INSERT INTO `personne` (`id_personne`, `nom`, `prenom`, `sexe`, `dateNaissance`)
 	(26, 'Lièvre', 'Jean-Albert', 'H', '1961-08-15'),
 	(27, 'Dujardin', 'Jean', 'H', '1972-06-19'),
 	(28, 'Black', 'Jack', 'H', '1969-08-28'),
-	(29, 'Yamane', 'Ann', 'F', '1997-02-03');
+	(29, 'Yamane', 'Ann', 'F', '1997-02-03'),
+	(58, 'Szifron', 'Dami&aacute;n', 'H', '1975-07-09'),
+	(59, 'Woodley', 'Shailene', 'femme', '1991-11-15'),
+	(60, 'Mendelsohn', 'Ben', 'homme', '1969-04-03'),
+	(61, 'Adepo', 'Jovan', 'homme', '1988-09-06');
 
 -- Listage de la structure de table cinema. realisateur
 CREATE TABLE IF NOT EXISTS `realisateur` (
@@ -226,9 +239,9 @@ CREATE TABLE IF NOT EXISTS `realisateur` (
   PRIMARY KEY (`id_realisateur`),
   UNIQUE KEY `id_personne` (`id_personne`),
   CONSTRAINT `realisateur_ibfk_1` FOREIGN KEY (`id_personne`) REFERENCES `personne` (`id_personne`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
 
--- Listage des données de la table cinema.realisateur : ~9 rows (environ)
+-- Listage des données de la table cinema.realisateur : ~10 rows (environ)
 INSERT INTO `realisateur` (`id_realisateur`, `id_personne`) VALUES
 	(1, 1),
 	(2, 5),
@@ -238,16 +251,17 @@ INSERT INTO `realisateur` (`id_realisateur`, `id_personne`) VALUES
 	(6, 18),
 	(7, 20),
 	(8, 25),
-	(9, 26);
+	(9, 26),
+	(30, 58);
 
 -- Listage de la structure de table cinema. role
 CREATE TABLE IF NOT EXISTS `role` (
   `id_role` int NOT NULL AUTO_INCREMENT,
   `role` varchar(50) NOT NULL,
   PRIMARY KEY (`id_role`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=latin1;
 
--- Listage des données de la table cinema.role : ~22 rows (environ)
+-- Listage des données de la table cinema.role : ~25 rows (environ)
 INSERT INTO `role` (`id_role`, `role`) VALUES
 	(1, 'Mario'),
 	(2, 'Princesse Peach'),
@@ -270,7 +284,10 @@ INSERT INTO `role` (`id_role`, `role`) VALUES
 	(19, 'Adonis Johnson Creed'),
 	(20, 'Voix Off'),
 	(21, 'Bowser'),
-	(22, 'Daijin');
+	(22, 'Daijin'),
+	(32, 'Eleonor'),
+	(33, 'Lammark'),
+	(34, 'Mackenzie');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
