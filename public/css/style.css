@@ -353,6 +353,9 @@
 #admin .addFilm:hover {
     background-color: rgb(190, 189, 189)
 }
+#admin .titreFilm {
+    cursor: pointer;
+}
 
 /***************************************** Modal */
 .overlay {
