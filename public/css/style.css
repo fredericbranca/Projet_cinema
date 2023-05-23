@@ -356,7 +356,7 @@
 #admin .titreFilm {
     cursor: pointer;
 }
-#admin .film a {
+#admin .film input {
     text-decoration: none;
     color: black;
     cursor: pointer;

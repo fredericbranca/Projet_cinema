@@ -134,7 +134,7 @@
     </div>
 </div>
 
-<!-- Modal supprimer film -->
+<!-- Modal supprimer film 
 
 <div id="modalDelFilm" class="modalDeleteFilm">
     <div class="modal-body">
@@ -144,7 +144,7 @@
             <div onclick="closeModal('#modalDelFilm')" class="modal-close">Non</div>
         </div>
     </div>
-</div>
+</div> -->
 
 
 <section id="admin">
@@ -177,8 +177,12 @@
                             if (substr($filmMaj, 0, 1) === $lettre) { ?>
                                 <div class="titreFilm" onclick="afficherMenuDeroulant('#menuId<?=$titre['id_film'];?>')"><?= $titre['titre']; ?></div>
                                 <div id="menuId<?= $titre['id_film'];?>" style="display: none;">
-                                        <a href="">Modifier</a>
-                                        <a onclick="openModal('#modalDelFilm')">Supprimer</a>
+                                    <form action="index.php?action=admin" method="POST" enctype="multipart/form-data">
+                                        <input type="submit" name="modifierFilmSubmit" id="submit" value="Modifier">
+                                    </form>
+                                    <form action="index.php?action=admin&id=<?= $titre['id_film'];?>" method="POST" enctype="multipart/form-data">
+                                        <input type="submit" name="supprimerFilmSubmit" id="submit" value="Supprimer">
+                                    </form>
                                 </div>
                         <?php
                             }
