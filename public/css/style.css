@@ -356,6 +356,12 @@
 #admin .titreFilm {
     cursor: pointer;
 }
+#admin .film a {
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
+    font-size: 17px;
+}
 
 /***************************************** Modal */
 .overlay {
@@ -365,6 +371,17 @@
     width: 100vw;
     height: 100vh;;
     background-color: rgba(0, 0, 0);
+    opacity: 0;
+    transition: 0.8s opacity ;
+    z-index: -1;
+}
+.overlay2 {
+    position:fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: hwb(0 83% 17% / 0.534);
     opacity: 0;
     transition: 0.8s opacity ;
     z-index: -1;
@@ -381,6 +398,41 @@
     transition: 0.6s all ease-out;
     z-index: 1;
     color: white;
+}
+.modalDeleteFilm {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 100px;
+    background-color: #cecece;
+    transform: translate(-50%, 100vh);
+    transition: 0.6s all ease-out;
+    z-index: 1;
+    border-radius: 30px;
+}
+.modalDeleteFilm .modal-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 30px;
+}
+.modalDeleteFilm .bouton {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 200px;
+    justify-content: center;
+    align-items: center;
+}
+.modalDeleteFilm .bouton div{
+    cursor: pointer;
+    border: 1px solid black;
+    border-radius: 30px;
+    width: 50px;
+    height: 30px;
 }
 .modal-open {
     display: block;
