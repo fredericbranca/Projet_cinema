@@ -134,6 +134,18 @@
     </div>
 </div>
 
+<!-- Modal supprimer film -->
+
+<div id="modalDelFilm" class="modalDeleteFilm">
+    <div class="modal-body">
+        <div>Voulez-vous vraiment supprimer le film : ... ?</div>
+        <div class="bouton">
+            <div>Oui</div>
+            <div onclick="closeModal('#modalDelFilm')" class="modal-close">Non</div>
+        </div>
+    </div>
+</div>
+
 
 <section id="admin">
     <div class="header">
@@ -166,7 +178,7 @@
                                 <div class="titreFilm" onclick="afficherMenuDeroulant('#menuId<?=$titre['id_film'];?>')"><?= $titre['titre']; ?></div>
                                 <div id="menuId<?= $titre['id_film'];?>" style="display: none;">
                                         <a href="">Modifier</a>
-                                        <a href="">Supprimer</a>
+                                        <a onclick="openModal('#modalDelFilm')">Supprimer</a>
                                 </div>
                         <?php
                             }
