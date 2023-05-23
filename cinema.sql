@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `acteur` (
   PRIMARY KEY (`id_acteur`),
   UNIQUE KEY `id_personne` (`id_personne`),
   CONSTRAINT `acteur_ibfk_1` FOREIGN KEY (`id_personne`) REFERENCES `personne` (`id_personne`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=latin1;
 
 -- Listage des données de la table cinema.acteur : ~25 rows (environ)
 INSERT INTO `acteur` (`id_acteur`, `id_personne`) VALUES
@@ -54,7 +54,8 @@ INSERT INTO `acteur` (`id_acteur`, `id_personne`) VALUES
 	(22, 29),
 	(26, 59),
 	(27, 60),
-	(28, 61);
+	(28, 61),
+	(29, 62);
 
 -- Listage de la structure de table cinema. casting
 CREATE TABLE IF NOT EXISTS `casting` (
@@ -108,9 +109,10 @@ CREATE TABLE IF NOT EXISTS `film` (
   `affiche` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `id_realisateur` int NOT NULL,
   PRIMARY KEY (`id_film`),
+  UNIQUE KEY `titre` (`titre`),
   KEY `id_realisateur` (`id_realisateur`),
   CONSTRAINT `film_ibfk_1` FOREIGN KEY (`id_realisateur`) REFERENCES `realisateur` (`id_realisateur`)
-) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=79 DEFAULT CHARSET=latin1;
 
 -- Listage des données de la table cinema.film : ~10 rows (environ)
 INSERT INTO `film` (`id_film`, `titre`, `dateSortie`, `duree`, `synopsis`, `note`, `affiche`, `id_realisateur`) VALUES
@@ -130,7 +132,7 @@ CREATE TABLE IF NOT EXISTS `genre` (
   `id_genre` int NOT NULL AUTO_INCREMENT,
   `nom` varchar(50) NOT NULL,
   PRIMARY KEY (`id_genre`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
 
 -- Listage des données de la table cinema.genre : ~15 rows (environ)
 INSERT INTO `genre` (`id_genre`, `nom`) VALUES
@@ -148,7 +150,8 @@ INSERT INTO `genre` (`id_genre`, `nom`) VALUES
 	(12, 'Policier'),
 	(14, 'Apocalyptique'),
 	(15, 'Romande'),
-	(16, 'Biographie');
+	(16, 'Biographie'),
+	(21, 'Guitare');
 
 -- Listage de la structure de table cinema. genre_film
 CREATE TABLE IF NOT EXISTS `genre_film` (
@@ -194,7 +197,7 @@ CREATE TABLE IF NOT EXISTS `personne` (
   `sexe` varchar(10) NOT NULL,
   `dateNaissance` date DEFAULT NULL,
   PRIMARY KEY (`id_personne`)
-) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=latin1;
 
 -- Listage des données de la table cinema.personne : ~33 rows (environ)
 INSERT INTO `personne` (`id_personne`, `nom`, `prenom`, `sexe`, `dateNaissance`) VALUES
@@ -230,7 +233,8 @@ INSERT INTO `personne` (`id_personne`, `nom`, `prenom`, `sexe`, `dateNaissance`)
 	(58, 'Szifron', 'Dami&aacute;n', 'H', '1975-07-09'),
 	(59, 'Woodley', 'Shailene', 'femme', '1991-11-15'),
 	(60, 'Mendelsohn', 'Ben', 'homme', '1969-04-03'),
-	(61, 'Adepo', 'Jovan', 'homme', '1988-09-06');
+	(61, 'Adepo', 'Jovan', 'homme', '1988-09-06'),
+	(62, 'Nom test', 'prenom test', 'femme', '2121-02-21');
 
 -- Listage de la structure de table cinema. realisateur
 CREATE TABLE IF NOT EXISTS `realisateur` (
@@ -241,7 +245,7 @@ CREATE TABLE IF NOT EXISTS `realisateur` (
   CONSTRAINT `realisateur_ibfk_1` FOREIGN KEY (`id_personne`) REFERENCES `personne` (`id_personne`)
 ) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
 
--- Listage des données de la table cinema.realisateur : ~10 rows (environ)
+-- Listage des données de la table cinema.realisateur : ~0 rows (environ)
 INSERT INTO `realisateur` (`id_realisateur`, `id_personne`) VALUES
 	(1, 1),
 	(2, 5),
@@ -259,7 +263,7 @@ CREATE TABLE IF NOT EXISTS `role` (
   `id_role` int NOT NULL AUTO_INCREMENT,
   `role` varchar(50) NOT NULL,
   PRIMARY KEY (`id_role`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=latin1;
 
 -- Listage des données de la table cinema.role : ~25 rows (environ)
 INSERT INTO `role` (`id_role`, `role`) VALUES
@@ -287,7 +291,13 @@ INSERT INTO `role` (`id_role`, `role`) VALUES
 	(22, 'Daijin'),
 	(32, 'Eleonor'),
 	(33, 'Lammark'),
-	(34, 'Mackenzie');
+	(34, 'Mackenzie'),
+	(35, 'Guitariste'),
+	(36, 'Bassiste'),
+	(42, 'Guitariste'),
+	(43, 'Guitariste'),
+	(44, 'Guitariste'),
+	(45, 'Guitariste');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
