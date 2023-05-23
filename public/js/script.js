@@ -3,15 +3,27 @@
     // Fonction pour ouvrir le modal
     // Ces fonctions modifient le style css du modal pour le rendre visible ou invisible
     function openModal(modalId) {
-        document.querySelector('.overlay').style.zIndex = '1';
-        document.querySelector('.overlay').style.opacity = '1';
-        document.querySelector(modalId).classList.add('modal-open');
+        if (modalId === '#modalDelFilm') {
+            document.querySelector('.overlay2').style.zIndex = '1';
+            document.querySelector('.overlay2').style.opacity = '1';
+            document.querySelector(modalId).classList.add('modal-open');
+        } else {
+            document.querySelector('.overlay').style.zIndex = '1';
+            document.querySelector('.overlay').style.opacity = '1';
+            document.querySelector(modalId).classList.add('modal-open');
+        }
     }
     // Fonction pour fermer le modal
     function closeModal(modalId) {
-        document.querySelector('.overlay').style.opacity = '0';
-        document.querySelector('.overlay').style.zIndex = '-1';
-        document.querySelector(modalId).classList.remove('modal-open');
+        if (modalId === '#modalDelFilm') {
+            document.querySelector('.overlay2').style.opacity = '0';
+            document.querySelector('.overlay2').style.zIndex = '-1';
+            document.querySelector(modalId).classList.remove('modal-open');
+        } else {
+            document.querySelector('.overlay').style.opacity = '0';
+            document.querySelector('.overlay').style.zIndex = '-1';
+            document.querySelector(modalId).classList.remove('modal-open');
+        }
     }
 
 // Ouvrir le modal si le lien contient l'id #modal
