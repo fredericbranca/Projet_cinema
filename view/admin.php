@@ -91,8 +91,12 @@
     <div class="modal-body">
 
         <form action="index.php?action=admin" method="POST" enctype="multipart/form-data">
-            <p>Ajout d'un casting pour le film : <?= $_SESSION['titre']; ?></p>
-
+            <p>Ajout d'un casting pour le film : 
+            <? 
+            if (!empty($_SESSION['titre'])) {
+                echo $_SESSION['titre']; 
+            } ?>
+            </p>
 
             <!-- Selection acteur(s) existant -->
             <?php
@@ -159,12 +163,10 @@
                             $filmMaj = ucfirst($film);
 
                             if (substr($filmMaj, 0, 1) === $lettre) { ?>
-                                <div class="titreFilm" onclick="afficherMenuDeroulant(filmId<?=$titre['id_film'];?>)"><?= $titre['titre']; ?></div>
-                                <div id="filmId<?= $titre['id_film'];?>" style="display: none;">
-                                    <select onchange="redirection(this)">
-                                        <option value="modifier">Modifier</option>
-                                        <option value="supprimer">Supprimer</option>
-                                    </select>
+                                <div class="titreFilm" onclick="afficherMenuDeroulant('#menuId<?=$titre['id_film'];?>')"><?= $titre['titre']; ?></div>
+                                <div id="menuId<?= $titre['id_film'];?>" style="display: none;">
+                                        <a href="">Modifier</a>
+                                        <a href="">Supprimer</a>
                                 </div>
                         <?php
                             }
