@@ -1,4 +1,7 @@
-<?php ob_start(); ?>
+<?php 
+ob_start(); 
+$rea = $requeteRealisateur->fetch();
+?>
 
 <section id="detail-film">
     
@@ -39,15 +42,15 @@
                 </ul>
             </div>
             <div>
-                <p><span>De </span><?php $rea = $requeteRealisateur->fetch(); echo $rea['rea'];?></p>
+                <p><span>De </span><a href="index.php?action=detailsRealisateur&id=<?= $rea['idRealisateur']?>"><?= $rea['rea'] ?></a></p>
                 <div class="acteur">
                     <span>Avec</span>
                     <?php 
                     $i = 0;
                     foreach($requeteActeur->fetchAll() as $acteur) {
                         if($i == 0) {
-                            echo " " . $acteur['act'] . " (" . $acteur['role'] . ")";
-                        } else { echo ", " . $acteur['act'] . " (" . $acteur['role'] . ")"; }
+                            echo ' <a href="index.php?action=detailsActeur&id=' . $acteur['idActeur'] . '">' . $acteur['act'] . '</a> (' . $acteur['role'] . ')';
+                        } else { echo ', <a href="index.php?action=detailsActeur&id=' . $acteur['idActeur'] . '">' . $acteur['act'] . '</a> (' . $acteur['role'] . ')'; }
                         $i = 1;
                     } ?>
                 </div>
