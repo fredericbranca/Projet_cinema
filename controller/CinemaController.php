@@ -499,7 +499,71 @@ class CinemaController
 
         }
 
-        require "view/admin.php";
+        
 
+        // Supprimer un film
+
+        if (isset($_POST['supprimerFilmSubmit'])) {
+
+            $idFilm = $_GET['id'];
+
+            //Requete pour récupérer le nom de l'image
+            $requeteImage = $pdo->prepare("
+                SELECT affiche
+                FROM film
+                WHERE id_film = :id_film
+            ");
+
+            //Execute la requete pour récupérer le nom de l'image
+            $requeteImage->execute([
+                "id_film" => $idFilm
+            ]);
+            
+            $affiche = $requeteImage->fetch();
+            $nomAffiche = $affiche['affiche'];
+            // var_dump($nomAffiche);
+            // die();
+            unlink("public/img/" . $nomAffiche);
+
+            // requete pour supprimer des castings
+            $requeteSupprimerCasting = $pdo->prepare("
+                DELETE FROM casting
+                WHERE id_film = :id_film
+            ");
+        
+            // requete pour supprimer le ou les genres associé à un film
+            $requeteSupprimerGenreFilm = $pdo->prepare("
+                DELETE FROM genre_film
+                WHERE id_film = :id_film
+            ");
+        
+            // requete pour supprimer un film avec l'id
+            $requeteSupprimerFilm = $pdo->prepare("
+                DELETE FROM film
+                WHERE id_film = :id_film
+            ");
+        
+            //Execute la requete pour supprimer des castings
+            $requeteSupprimerCasting->execute([
+                "id_film" => $idFilm
+            ]);
+        
+            //Execute la requete pour supprimer les genres associés au film
+            $requeteSupprimerGenreFilm->execute([
+                "id_film" => $idFilm
+            ]);
+        
+            //Execute la requete pour supprimer le film
+            $requeteSupprimerFilm->execute([
+                "id_film" => $idFilm
+            ]);
+
+
+            $_SESSION['Message'] = "Film supprimé";
+            header("Location: index.php?action=admin");
+        }
+
+        require "view/admin.php";
     }
+
 }
