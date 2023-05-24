@@ -16,7 +16,7 @@ class RealisateurController
         $requeteLangue = $pdo->query("SET lc_time_names = 'fr_FR';");
 
         // Requete pour afficher les info de l'acteur depuis l'id
-        $requeteAfficherActeur = $pdo->prepare("
+        $requeteAfficherRealisateur = $pdo->prepare("
         SELECT CONCAT(p.nom, ' ', P.prenom) AS realisateur, sexe, DATE_FORMAT(dateNaissance, '%e %M %Y') as dateNaiss
         FROM personne p
         JOIN realisateur r ON r.id_personne = p.id_personne
@@ -24,7 +24,7 @@ class RealisateurController
         ");
         
         // Execute la requete pour afficher les info de l'acteur
-        $requeteAfficherActeur->execute([
+        $requeteAfficherRealisateur->execute([
             'id_realisateur' => $id
         ]);
 
