@@ -91,17 +91,17 @@
     <div class="modal-body">
 
         <form action="index.php?action=admin" method="POST" enctype="multipart/form-data">
-            <p>Ajout d'un casting pour le film : 
-            <? 
-            if (!empty($_SESSION['titre'])) {
-                echo $_SESSION['titre']; 
-            } ?>
+            <p>Ajout d'un casting pour le film :
+                <?
+                if (!empty($_SESSION['titre'])) {
+                    echo $_SESSION['titre'];
+                } ?>
             </p>
 
             <!-- Selection acteur(s) existant -->
             <?php
-                $acteurs = $requeteActeur->fetchAll();
-                $acteursJSON = json_encode($acteurs); // json_encode() permet de convertir une valeur PHP en une chaîne JSON
+            $acteurs = $requeteActeur->fetchAll();
+            $acteursJSON = json_encode($acteurs); // json_encode() permet de convertir une valeur PHP en une chaîne JSON
             ?>
             <div id="acteurs-select-container">
                 <legend>Ajouter un/des acteur(s) existant dans la base de données</legend>
@@ -110,7 +110,7 @@
 
                 </div>
             </div>
-            
+
 
 
             <div id="acteurs-input-container">
@@ -175,12 +175,10 @@
                             $filmMaj = ucfirst($film);
 
                             if (substr($filmMaj, 0, 1) === $lettre) { ?>
-                                <div class="titreFilm" onclick="afficherMenuDeroulant('#menuId<?=$titre['id_film'];?>')"><?= $titre['titre']; ?></div>
-                                <div id="menuId<?= $titre['id_film'];?>" style="display: none;">
-                                    <form action="index.php?action=admin" method="POST" enctype="multipart/form-data">
-                                        <input type="submit" name="modifierFilmSubmit" id="submit" value="Modifier">
-                                    </form>
-                                    <form action="index.php?action=admin&id=<?= $titre['id_film'];?>" method="POST" enctype="multipart/form-data">
+                                <div class="titreFilm" onclick="afficherMenuDeroulant('#menuId<?= $titre['id_film']; ?>')"><?= $titre['titre']; ?></div>
+                                <div id="menuId<?= $titre['id_film']; ?>" class="menuFilm" style="display: none;">
+                                    <a href="index.php?action=update&id=<?= $titre['id_film']; ?>">Modifier</a>
+                                    <form action="index.php?action=admin&id=<?= $titre['id_film']; ?>" method="POST" enctype="multipart/form-data">
                                         <input type="submit" name="supprimerFilmSubmit" id="submit" value="Supprimer">
                                     </form>
                                 </div>
@@ -200,7 +198,7 @@
 </section>
 
 <script>
-  var acteursData = <?php echo $acteursJSON; ?>;
+    var acteursData = <?php echo $acteursJSON; ?>;
 </script>
 
 <?php

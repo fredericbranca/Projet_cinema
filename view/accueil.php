@@ -1,4 +1,9 @@
-<?php ob_start(); ?>
+<?php 
+
+ob_start(); 
+$films = $requeteFilms->fetchAll();
+
+?>
 
 <section id="header">
     <div class="header">
@@ -12,9 +17,7 @@
         </ul>
         <h1>CNEMA Cretria</h1>
         <p>Site de référence du cinéma !</p>
-        <form action="">
-            <input type="submit" name="submit" id="submit" Value="Cinéma à proximité">
-        </form>
+        <a href="#">Cinéma à proximité</a>
     </div>
 </section>
 
@@ -31,9 +34,8 @@
             <div class="cards">
 
         <?php
-        foreach($requeteFilms->fetchAll() as $film) { ?>
+        foreach($films as $film) { ?>
             
-            <form action="index.php?action=detailsFilm&id=<?= $film['id_film'] ?>" method="POST" enctype="multipart/form-data">
                 <div class="card-film">
                     <img src="public/img/<?= $film['affiche'];?>" alt="Affiche du Film : <?= $film['titre'];?>">
                     <div class="info-film">
@@ -46,9 +48,8 @@
                         </p>
                         <p>Sortie le <?= $film['dateSortie'];?></p>
                     </div>
-                    <input type="submit" name="submit" id="submit" Value="Détails du film">
+                    <a href="index.php?action=detailsFilm&id=<?= $film['id_film']?>">Détails du film</a>
                 </div> 
-            </form>
         <?php } ?>
 
             </div>
