@@ -1,21 +1,19 @@
-<?php ob_start(); ?>
+<?php 
 
-<section id="detail-acteur">
+ob_start();
+$realisateur = $requeteAfficherRealisateur->fetch();
 
-    <?php
-    $detailsActeur = $requeteAfficherRealisateur->fetchAll();
+?>
 
-    foreach($detailsActeur as $acteur) { ?>
-        <div>Réalisateur : <?= $acteur['realisateur'];?></div>
-        <div>Sexe : <?= $acteur['sexe'];?></div>
-        <div>Date de naissance : <?= $acteur['dateNaiss'];?></div>
-    <?php } ?>
-
+<section id="detail-personne">
+        <div>Réalisateur : <?= $realisateur['realisateur'];?></div>
+        <div>Sexe : <?= $realisateur['sexe'];?></div>
+        <div>Date de naissance : <?= $realisateur['dateNaiss'];?></div>
 </section>
 
 <?php
 
-$titre = "Détail du réalisateur : " . $detailsActeur['realisateur'];
+$titre = "Détail du réalisateur : " . $realisateur['realisateur'];
 $titre_secondaire = "Détails réalisateur";
 $contenu = ob_get_clean();
 require "view/template.php";
