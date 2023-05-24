@@ -227,6 +227,13 @@
     min-height: 80vh;
     display: flex;
 }
+#detail-film a {
+    text-decoration: none;
+    color:rgb(255, 255, 255);
+}
+#detail-film a:hover {
+    color:rgb(161, 153, 153);
+}
 #detail-film img {
     margin: 92px 43px 92px 70px;
     width: auto;
