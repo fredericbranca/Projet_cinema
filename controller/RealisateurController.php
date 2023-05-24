@@ -9,7 +9,7 @@ class RealisateurController
 {
 
     /* Lister les réalisateurs */
-    public function listRealisateurs($id)
+    public function detailsRealisateur($id)
     {
         $pdo = Connect::seConnecter();
 

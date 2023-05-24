@@ -8,7 +8,7 @@ use Model\Connect; // "use" pour accéder à la classe Connect située dans le n
 class ActeurController
 {
     /* Lister les acteurs */
-    public function listActeurs($id)
+    public function detailsActeur($id)
     {
         $pdo = Connect::seConnecter();
 
