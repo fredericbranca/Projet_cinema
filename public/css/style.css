@@ -452,6 +452,25 @@
     cursor: pointer;
 }
 
+/***************************************** Liste genres */
+#list-genres {
+    background: #151313;
+    color: #fff;
+    min-height: 80vh;
+}
+#list-genres .genres{
+    display: flex;
+    flex-direction: column;
+}
+#list-genres .genres a {
+    width: fit-content;
+    color:rgb(255, 255, 255);
+    text-decoration: none;
+}
+#list-genres .genres a:hover {
+    color:rgb(161, 153, 153);
+}
+
 /***************************************** Footer */
 #footer {
     background: #070707;
