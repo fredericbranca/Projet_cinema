@@ -36,7 +36,7 @@ class CinemaController
             WHERE id_film = :id
         ");
         $requeteGenre = $pdo->prepare("
-            SELECT nom
+            SELECT *
             FROM genre g
             JOIN genre_film gf ON g.id_genre = gf.id_genre
             JOIN film f ON f.id_film = gf.id_film
