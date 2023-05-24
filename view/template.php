@@ -35,8 +35,8 @@ if(isset($_SESSION['Message'])) {
             <ul>
                 <img src="public/img/logo.jpg" alt="logo CNEMA Cretria">
                 <li><a href="index.php?action=accueil">Accueil</a></li>
-                <li><a href="index.php?action=admin">Admin</a></li>
                 <li><a href="index.php?action=listGenres">Genres</a></li>
+                <li><a href="index.php?action=admin">Admin</a></li>
             </ul>
         </nav>
     </header>
