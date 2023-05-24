@@ -27,6 +27,7 @@ if(isset($_GET["action"])) {
         case "accueil" : $ctrlCinema -> listFilms(); break;
         case "detailsFilm" : $ctrlCinema -> detailsFilm($id); break;
         case "admin" : $ctrlCinema -> addFilm(); break;
+        case "modifierFilm" : $ctrlCinema -> modifierFilm($id); break;
 
         // ActeurController
         case "detailsActeur" : $ctrlActeur -> detailsActeur($id); break;

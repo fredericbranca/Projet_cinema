@@ -563,4 +563,12 @@ class CinemaController
         require "view/admin.php";
     }
 
+    /* Modifier les informations d'un film */
+    public function modifierFilm($id)
+    {
+
+        $pdo = Connect::seConnecter();
+
+        require "view/modifierFilm.php";
+    }
 }
