@@ -19,7 +19,7 @@ $genre = $requeteGenre->fetch();
 
 <?php
 
-$titre = "Liste des genres";
-$titre_secondaire = "Liste des genres";
+$titre = $genre['nom'] . " : Liste films";
+$titre_secondaire = "Liste des films par genre";
 $contenu = ob_get_clean();
 require "view/template.php";
