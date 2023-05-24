@@ -27,12 +27,9 @@ class CinemaController
     {
 
         $pdo = Connect::seConnecter();
+
         $requeteLangue = $pdo->query("SET lc_time_names = 'fr_FR';");
-        $requeteTitre = $pdo->prepare("
-            SELECT titre
-            FROM film
-            WHERE id_film = :id
-        ");
+
         $requeteFilm = $pdo->prepare("
             SELECT affiche, titre, note, DATE_FORMAT(dateSortie, '%e %M %Y') as dateSortie, TIME_FORMAT(SEC_TO_TIME(duree * 60), '%k H %i') AS dureeFormat, synopsis
             FROM film
@@ -46,14 +43,14 @@ class CinemaController
             WHERE f.id_film = :id
         ");
         $requeteRealisateur = $pdo->prepare("
-            SELECT CONCAT(p.nom, ' ', p.prenom) AS rea, r.id_realisateur AS idRealisateur
+            SELECT CONCAT(p.nom, ' ', p.prenom) AS realisateur, r.id_realisateur AS idRealisateur
             FROM personne p
             JOIN realisateur r ON r.id_personne = p.id_personne
             JOIN film f ON f.id_realisateur = r.id_realisateur
             WHERE f.id_film = :id
         ");
         $requeteActeur = $pdo->prepare("
-            SELECT c.id_acteur as idActeur, CONCAT(p.nom, ' ', p.prenom) as act, r.role as role
+            SELECT c.id_acteur as idActeur, CONCAT(p.nom, ' ', p.prenom) as acteur, r.role as role
             FROM casting c
             JOIN role r ON r.id_role = c.id_role
             JOIN film f ON f.id_film = c.id_film
@@ -61,7 +58,7 @@ class CinemaController
             JOIN personne p ON a.id_personne = p.id_personne
             WHERE f.id_film = :id
         ");
-        $requeteTitre->execute(["id" => $id]);
+
         $requeteFilm->execute(["id" => $id]);
         $requeteGenre->execute(["id" => $id]);
         $requeteRealisateur->execute(["id" => $id]);
