@@ -5,6 +5,7 @@ session_start();
 use Controller\CinemaController; // On "use" le controller Cinema
 use Controller\ActeurController;
 use Controller\RealisateurController;
+use Controller\GenreController;
 
 // On autocharge les classes du projet
 spl_autoload_register(function ($class_name) {
@@ -12,9 +13,9 @@ spl_autoload_register(function ($class_name) {
 });
 
 $ctrlCinema = new CinemaController(); // On instancie le controller Cinema
-$ctrlActeur = new ActeurController();
+$ctrlActeur = new ActeurController(); 
 $ctrlRealisateur = new RealisateurController();
-
+$ctrlGenre = new GenreController();
 
 $id = (isset($_GET["id"])) ? $_GET["id"] : null;
 
@@ -27,10 +28,13 @@ if(isset($_GET["action"])) {
         case "detailsFilm" : $ctrlCinema -> detailsFilm($id); break;
         case "admin" : $ctrlCinema -> addFilm(); break;
 
-        //ActeurController
-        case "detailsActeur" : $ctrlActeur -> listActeurs($id); break;
+        // ActeurController
+        case "detailsActeur" : $ctrlActeur -> detailsActeur($id); break;
 
-        //RealisateurController
-        case "detailsRealisateur" : $ctrlRealisateur -> listRealisateurs($id); break;
+        // RealisateurController
+        case "detailsRealisateur" : $ctrlRealisateur -> detailsRealisateur($id); break;
+
+        // GenreController
+        case "listGenre" : $ctrlGenre -> listGenres(); break;
     }
 }
