@@ -435,6 +435,11 @@
     z-index: 1;
     color: white;
 }
+.modal2 .addRealisateur {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+}
 .modalDeleteFilm {
     position: fixed;
     top: 50%;
