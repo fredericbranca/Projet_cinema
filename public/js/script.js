@@ -99,7 +99,88 @@ function afficherMenuDeroulant(menuId) {
     }
 }
 
+// Fonction vue modifierFilm
+    // Fonction pour ajouter un champ genre
+    function ajouterSelectGenre(event) {
+        event.preventDefault();
+
+        let options = `<option value="">Sélection d'un genre</option>`;
+        genresData.forEach(function(genre) {
+            options += '<option value="' + genre.id_genre + '">' + genre.nom + '</option>';
+        });
+        const genreSelect = document.createElement('div');
+        genreSelect.classList.add('genre-select');
+        genreSelect.innerHTML = `<select id="genre" name="genre[]">
+                                    ${options}
+                                </select>
+                                <button id="supprimer-genre">-</button>`;
+        genreSelectDiv.appendChild(genreSelect);
+    }
+
+    // Fonction pour ajouter un casting
+    function ajouterCasting(event) {
+        event.preventDefault();
+
+        let optionsActeur = `<option value="">Sélection d'un acteur</option>`;
+        acteursData.forEach(function(acteur) {
+            optionsActeur += '<option value="' + acteur.id_acteur + '">' + acteur.acteur + '</option>';
+        });
+        let optionsRole = `<option value="">Sélection d'un rôle</option>`;
+        rolesData.forEach(function(role) {
+            optionsRole += '<option value="' + role.id_role + '">' + role.role + '</option>';
+        });
+        const casting = document.createElement('div');
+        casting.setAttribute('id', 'casting');
+        casting.innerHTML = `<div id="acteurRole">
+                                <div class="acteur-select">
+                                    <select id="acteur" name="acteur[]">
+                                        ${optionsActeur}
+                                    </select>
+                                </div>
+                                <div class="role-select">
+                                    <select id="role" name="role[]">
+                                        ${optionsRole}
+                                    </select>
+                                </div>
+                            </div>
+                            <button id="supprimer-casting">-</button>`;
+        modifierFilmCasting.appendChild(casting);
+    }
 /////////////////////////////////////////////////////////////////
+
+// ModifierFilm view
+    // Ajouter un champ genre
+    const genreSelectDiv = document.getElementById('modifierFilmGenre');
+    if (genreSelectDiv) {
+        const ajouterGenreButton = document.getElementById('ajouter-genre');
+
+        // Clic sur le bouton d'ajout
+        ajouterGenreButton.addEventListener('click', ajouterSelectGenre);
+
+        // Clic sur le bouton de suppression de genre
+        genreSelectDiv.addEventListener('click', function(event) {
+        event.preventDefault();
+        if (event.target.id === 'supprimer-genre') {
+            event.target.parentElement.remove();
+        }
+        });
+}
+    // Ajouter un champ casting
+    const modifierFilmCasting = document.getElementById('modifierFilmCasting');
+    if (modifierFilmCasting) {
+        const ajouterDivCasting = document.getElementById('ajouter-casting');
+
+        // Clic sur le bouton d'ajout
+        ajouterDivCasting.addEventListener('click', ajouterCasting);
+
+        // Clic sur le bouton de suppression d'acteur
+        modifierFilmCasting.addEventListener('click', function(event) {
+        event.preventDefault();
+        if (event.target.id === 'supprimer-casting') {
+            event.target.parentElement.remove();
+        }
+        });
+}
 
 //Ajouter un input acteur
 const acteursInputContainer = document.getElementById('acteurs-input-container');
@@ -153,7 +234,6 @@ if (genresContainer) {
 // Caroussel, liste des films de la page d'accueil
     // On récupère les éléments HTML
     const caroussel = document.getElementById('caroussel');
-    console.log(caroussel);
 if (caroussel) {
     const cards = caroussel.querySelector('.cards');
 
