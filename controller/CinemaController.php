@@ -581,6 +581,7 @@ class CinemaController
             SELECT CONCAT(p.nom, ' ', p.prenom) AS acteur, a.id_acteur AS id_acteur
             FROM personne p
             JOIN acteur a ON a.id_personne = p.id_personne
+            ORDER BY acteur ASC
         ");
         // Requête pour récupérer tous les rôles
         $requeteRole = $pdo->query("
@@ -687,6 +688,44 @@ class CinemaController
             }
         }
 
+        // Requete pour ajouter un acteur
+        if (isset($_POST['addActeurSubmit']) && isset($_GET['id'])) {
+            $id = $_GET['id'];
+            $nom = filter_input(INPUT_POST, 'nom', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $prenom = filter_input(INPUT_POST, 'prenom', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $sexe = filter_input(INPUT_POST, 'sexe', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $dateNaiss = filter_input(INPUT_POST, 'dateNaissance', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+            if($nom !== false && $prenom !== false && $sexe !== false && $dateNaiss !== false && !empty($nom) && !empty($prenom) && !empty($sexe) && !empty($dateNaiss)) {
+
+                $pdo = Connect::seConnecter();
+
+                $requeteAddPersonne = $pdo->prepare("
+                    INSERT INTO personne (nom, prenom, sexe, dateNaissance)
+                    VALUE (:nom, :prenom, :sexe, :dateNaissance)
+                ");
+                $requeteAddActeur = $pdo->prepare("
+                    INSERT INTO acteur (id_personne)
+                    SELECT LAST_INSERT_ID()
+                ");
+                $requeteAddPersonne->execute([
+                    'nom' => $nom,
+                    'prenom' => $prenom,
+                    'sexe' => $sexe,
+                    'dateNaissance' => $dateNaiss
+                ]);
+                $requeteAddActeur->execute();
+
+                $_SESSION['message'] = "L'acteur $nom $prenom a été ajouté.";
+                header("Location: index.php?action=modifierFilm&id=$id");
+            }
+            else {
+                $_SESSION['message'] = "Erreur : L'acteur n'a pas pu être ajouté.";
+                header("Location: index.php?action=modifierFilm&id=$id");
+            }
+        }
+
         require "view/modifierFilm.php";
     }
+
 }
