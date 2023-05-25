@@ -1,4 +1,14 @@
-<?php ob_start(); ?>
+<?php 
+
+ob_start();
+
+$genres = $requeteGenre->fetchAll();
+$realisateurs = $requeteRealisateur->fetchAll();
+$acteurs = $requeteActeur->fetchAll();
+$acteursJSON = json_encode($acteurs); // json_encode() permet de convertir une valeur PHP en une chaîne JSON
+$titres = $requeteTitres->fetchAll();
+
+?>
 
 <!-- Modal addFilm -->
 
@@ -31,7 +41,7 @@
             <fieldset aria-required="true">
                 <legend>Genre (minimum 1):</legend>
                 <?php
-                foreach ($requeteGenre->fetchAll() as $genre) { ?>
+                foreach ($genres as $genre) { ?>
                     <label for="genre<?= $genre['id_genre']; ?>"><?= $genre['nom']; ?> :</label>
                     <input type="checkbox" id="genre<?= $genre['id_genre']; ?>" name="idGenre[]" value="<?= $genre['id_genre']; ?>"><br>
                 <?php } ?>
@@ -50,7 +60,7 @@
             <label for="idRealisateur">Réalisateur :</label>
             <select id="idRealisateur" name="idRealisateur">
                 <option value="">Sélectionner un réalisateur</option>
-                <?php foreach ($requeteRealisateur->fetchAll() as $realisateur) { ?>
+                <?php foreach ($realisateurs as $realisateur) { ?>
                     <option value="<?= $realisateur['id_realisateur']; ?>"><?= $realisateur['name']; ?></option>
                 <?php } ?>
             </select>
@@ -99,10 +109,6 @@
             </p>
 
             <!-- Selection acteur(s) existant -->
-            <?php
-            $acteurs = $requeteActeur->fetchAll();
-            $acteursJSON = json_encode($acteurs); // json_encode() permet de convertir une valeur PHP en une chaîne JSON
-            ?>
             <div id="acteurs-select-container">
                 <legend>Ajouter un/des acteur(s) existant dans la base de données</legend>
                 <button id="ajouter-select-acteur">+</button>
@@ -161,8 +167,6 @@
         <div class="liste">
             <!-- Lettre position verticale avec titre de film trié par ordre alphabétique -->
             <?php
-            $titres = $requeteTitres->fetchAll();
-
             foreach (range('A', 'Z') as $lettre) { ?>
                 <div class="liste-lettre-film">
                     <div class="lettre" id="<?= $lettre; ?>"><?= $lettre; ?></div>
@@ -177,7 +181,7 @@
                             if (substr($filmMaj, 0, 1) === $lettre) { ?>
                                 <div class="titreFilm" onclick="afficherMenuDeroulant('#menuId<?= $titre['id_film']; ?>')"><?= $titre['titre']; ?></div>
                                 <div id="menuId<?= $titre['id_film']; ?>" class="menuFilm" style="display: none;">
-                                    <a href="index.php?action=update&id=<?= $titre['id_film']; ?>">Modifier</a>
+                                    <a href="index.php?action=modifierFilm&id=<?= $titre['id_film']; ?>">Modifier</a>
                                     <form action="index.php?action=admin&id=<?= $titre['id_film']; ?>" method="POST" enctype="multipart/form-data">
                                         <input type="submit" name="supprimerFilmSubmit" id="submit" value="Supprimer">
                                     </form>
