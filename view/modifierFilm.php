@@ -51,7 +51,7 @@ $rolesJSON = json_encode($roles);
             <p>Ajouter un réalisateur</p>
 
             <!-- Ajouter Realisateur -->
-            <div>
+            <div class="addRealisateur">
                 <!-- Nom -->
                 <label for="nom">Nom :</label>
                 <input type="text" id="nom" name="nom" maxlength="50" size="20">
@@ -59,6 +59,7 @@ $rolesJSON = json_encode($roles);
                 <label for="prenom">Prénom :</label>
                 <input type="text" id="prenom" name="prenom" maxlength="50" size="20">
                 <!-- Sexe -->
+                <legend>Sexe :</legend>
                 <select name="sexe">
                     <option name="sexe" value="H">Homme</option>
                     <option name="sexe" value="F">Femme</option>
