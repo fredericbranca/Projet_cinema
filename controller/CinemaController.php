@@ -569,6 +569,59 @@ class CinemaController
 
         $pdo = Connect::seConnecter();
 
+        // Requête pour récupérer tous les réalisateurs
+        $requeteRealisateur = $pdo->query("
+            SELECT CONCAT(p.nom, ' ', p.prenom) AS realisateur, r.id_realisateur AS id_realisateur
+            FROM personne p
+            JOIN realisateur r ON r.id_personne = p.id_personne
+            JOIN film f ON f.id_realisateur = r.id_realisateur
+        ");
+        // Requête pour récupérer tous les acteurs
+        $requeteActeur = $pdo->query("
+            SELECT CONCAT(p.nom, ' ', p.prenom) AS acteur, a.id_acteur AS id_acteur
+            FROM personne p
+            JOIN acteur a ON a.id_personne = p.id_personne
+        ");
+        // Requête pour récupérer tous les rôles
+        $requeteRole = $pdo->query("
+            SELECT *
+            FROM role
+        ");
+        // Requête pour récupérer les infos de tous les castings
+        $requeteCasting = $pdo->prepare("
+            SELECT c.id_film, c.id_acteur, c.id_role, f.titre, CONCAT(p.nom, ' ', p.prenom) AS acteur, r.role
+            FROM casting c
+            JOIN film f ON f.id_film = c.id_film
+            JOIN acteur a ON a.id_acteur = c.id_acteur
+            JOIN personne p ON p.id_personne = a.id_personne
+            JOIN role r ON r.id_role = c.id_role
+            WHERE f.id_film = :id_film
+        ");
+        // Requête pour afficher les infos du film
+        $requeteFilm = $pdo->prepare("
+            SELECT *
+            FROM film
+            WHERE id_film = :id_film
+        ");
+        // Requûete pour récupérer tous les genres d'un film
+        $requeteGenreFilm = $pdo->prepare("
+            SELECT g.id_genre AS id_genre, g.nom AS nom
+            FROM genre g
+            JOIN genre_film gf ON gf.id_genre = g.id_genre
+            JOIN film f ON f.id_film = gf.id_film
+            WHERE f.id_film = :id_film
+        ");
+        // Requûete pour récupérer tous les genres
+        $requeteGenres = $pdo->query("
+            SELECT *
+            FROM genre
+        ");
+
+        // Execute les requêtes
+        $requeteFilm->execute(['id_film' => $id]);
+        $requeteGenreFilm->execute(['id_film' => $id]);
+        $requeteCasting->execute(['id_film' => $id]);
+
         require "view/modifierFilm.php";
     }
 }
