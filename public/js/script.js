@@ -35,6 +35,18 @@ window.addEventListener('DOMContentLoaded', function() {
     if (window.location.href.includes('#modalAddCasting')) {
         openModal('#modalAddCasting');
     }
+    if (window.location.href.includes('#modalAddGenre')) {
+        openModal('#modalAddGenre');
+    }
+    if (window.location.href.includes('#modalAddRealisateur')) {
+        openModal('#modalAddRealisateur');
+    }
+    if (window.location.href.includes('#modalAddActeur')) {
+        openModal('#modalAddActeur');
+    }
+    if (window.location.href.includes('#modalAddRole')) {
+        openModal('#modalAddRole');
+    }
 });
 
 // Fonction pour ajouter un input d'acteur
