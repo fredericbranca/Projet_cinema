@@ -574,7 +574,7 @@ class CinemaController
             SELECT CONCAT(p.nom, ' ', p.prenom) AS realisateur, r.id_realisateur AS id_realisateur
             FROM personne p
             JOIN realisateur r ON r.id_personne = p.id_personne
-            JOIN film f ON f.id_realisateur = r.id_realisateur
+            ORDER BY realisateur ASC
         ");
         // Requête pour récupérer tous les acteurs
         $requeteActeur = $pdo->query("
@@ -645,8 +645,45 @@ class CinemaController
                 header("Location: index.php?action=modifierFilm&id=$id");
             }
             else {
-                $_SESSION['message'] = "Erreur champ genre";
-                header("Location: index.php?action=modifierFilm&id=$id#modalAddGenre");
+                $_SESSION['message'] = "Erreur : Le champ n'a pas pu être ajouté";
+                header("Location: index.php?action=modifierFilm&id=$id");
+            }
+        }
+
+        // Requete pour ajouter un realisateur
+        if (isset($_POST['addRealisateurSubmit']) && isset($_GET['id'])) {
+            $id = $_GET['id'];
+            $nom = filter_input(INPUT_POST, 'nom', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $prenom = filter_input(INPUT_POST, 'prenom', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $sexe = filter_input(INPUT_POST, 'sexe', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $dateNaiss = filter_input(INPUT_POST, 'dateNaissance', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+            if($nom !== false && $prenom !== false && $sexe !== false && $dateNaiss !== false && !empty($nom) && !empty($prenom) && !empty($sexe) && !empty($dateNaiss)) {
+
+                $pdo = Connect::seConnecter();
+
+                $requeteAddPersonne = $pdo->prepare("
+                    INSERT INTO personne (nom, prenom, sexe, dateNaissance)
+                    VALUE (:nom, :prenom, :sexe, :dateNaissance)
+                ");
+                $requeteAddRealisateur = $pdo->prepare("
+                    INSERT INTO realisateur (id_personne)
+                    SELECT LAST_INSERT_ID()
+                ");
+                $requeteAddPersonne->execute([
+                    'nom' => $nom,
+                    'prenom' => $prenom,
+                    'sexe' => $sexe,
+                    'dateNaissance' => $dateNaiss
+                ]);
+                $requeteAddRealisateur->execute();
+
+                $_SESSION['message'] = "Le réalisateur $nom $prenom a été ajouté.";
+                header("Location: index.php?action=modifierFilm&id=$id");
+            }
+            else {
+                $_SESSION['message'] = "Erreur : Le réalisateur n'a pas pu être ajouté.";
+                header("Location: index.php?action=modifierFilm&id=$id");
             }
         }
 
