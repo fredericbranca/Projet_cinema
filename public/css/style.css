@@ -386,7 +386,6 @@
     font-size: 17px;
 }
 
-
 /***************************************** Modal */
 .overlay {
     position:fixed;
@@ -467,6 +466,35 @@
     top: 10px;
     left: 0px;
     cursor: pointer;
+}
+
+/***************************************** Modifier film */
+#modifier-film {
+    background: #151313;
+    color: #fff;
+    min-height: 80vh;
+}
+
+#modifier-film .formulaire {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+#modifier-film .casting {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+}
+#modifier-film .acteur {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#modifier-film .role {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 /***************************************** Liste genres */
