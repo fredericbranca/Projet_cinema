@@ -112,9 +112,6 @@ $titres = $requeteTitres->fetchAll();
             <div id="acteurs-select-container">
                 <legend>Ajouter un/des acteur(s) existant dans la base de données</legend>
                 <button id="ajouter-select-acteur">+</button>
-                <div class="acteurs-select">
-
-                </div>
             </div>
 
 
@@ -123,10 +120,6 @@ $titres = $requeteTitres->fetchAll();
                 <!-- Ajouter acteur(s) -->
                 <legend>Ajouter un ou plusieurs acteur(s)</legend>
                 <button id="ajouter-acteur">+</button>
-
-                <div class="acteur-input">
-
-                </div>
             </div>
 
             <!-- Bouton ajouter le film -->
