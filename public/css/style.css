@@ -480,21 +480,31 @@
     flex-direction: column;
     gap: 30px;
 }
-#modifier-film .casting {
+#modifier-film .genre {
+    display: flex;
+    width: fit-content;
+    flex-direction: column;
+    gap: 10px;
+}
+#modifier-film #modifierFilmCasting {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+#modifier-film .label {
     display: flex;
     flex-wrap: wrap;
-    gap: 50px;
+    gap: 142px;
 }
-#modifier-film .acteur {
+#modifier-film #casting {
     display: flex;
-    flex-direction: column;
-    gap: 20px;
+    flex-wrap: wrap;
+    gap: 10px;
 }
-
-#modifier-film .role {
+#modifier-film #acteurRole {
     display: flex;
-    flex-direction: column;
-    gap: 20px;
+    flex-wrap: wrap;
+    gap: 30px;
 }
 
 /***************************************** Liste genres */
