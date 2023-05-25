@@ -36,9 +36,9 @@ $listGenres = $requeteGenres->fetchAll(); // récupère tous les genres
         <div class="genre">
             <label>Genre</label>
             <?php
-            foreach ($genresFilm as $i => $genreFilm) {
+            foreach ($genresFilm as $genreFilm) {
             ?>
-                <select id="genre<?= $i ?>" name="genre<?= $i ?>">
+                <select id="genre" name="genre[]">
                     <option value="">Sélection d'un genre</option>
                     <?php
                     foreach ($listGenres as $genre) {
@@ -76,9 +76,9 @@ $listGenres = $requeteGenres->fetchAll(); // récupère tous les genres
             <div class="acteur">
                 <label>Acteur(s)</label>
                 <?php
-                foreach ($casting as $i => $acteurCasting) {
+                foreach ($casting as $acteurCasting) {
                 ?>
-                    <select id="acteur<?= $i ?>" name="acteur<?= $i ?>">
+                    <select id="acteur" name="acteur[]">
                         <option value="">Sélection d'un acteur</option>
                         <?php
                         foreach ($acteurs as $acteur) {
@@ -98,9 +98,9 @@ $listGenres = $requeteGenres->fetchAll(); // récupère tous les genres
             <div class="role">
                 <label>Rôle</label>
                 <?php
-                foreach ($casting as $i => $roleCasting) {
+                foreach ($casting as $roleCasting) {
                 ?>
-                    <select id="role<?= $i ?>" name="role<?= $i ?>">
+                    <select id="role" name="role[]">
                         <option value="">Sélection d'un role</option>
                         <?php
                         foreach ($roles as $role) {
@@ -132,7 +132,7 @@ $listGenres = $requeteGenres->fetchAll(); // récupère tous les genres
 
 <?php
 
-$titre = "Modifier film : ";
+$titre = "Modifier film : " . $film['titre'];
 $titre_secondaire = "Modification des films";
 $contenu = ob_get_clean();
 require "view/template.php";
