@@ -51,21 +51,21 @@ $rolesJSON = json_encode($roles);
             <p>Ajouter un réalisateur</p>
 
             <!-- Ajouter Realisateur -->
-            <div class="addRealisateur">
+            <div class="addPersonne">
                 <!-- Nom -->
-                <label for="nom">Nom :</label>
+                <label for="nom">Nom</label>
                 <input type="text" id="nom" name="nom" maxlength="50" size="20">
                 <!-- Prenom -->
-                <label for="prenom">Prénom :</label>
+                <label for="prenom">Prénom</label>
                 <input type="text" id="prenom" name="prenom" maxlength="50" size="20">
                 <!-- Sexe -->
-                <legend>Sexe :</legend>
+                <legend>Sexe</legend>
                 <select name="sexe">
                     <option name="sexe" value="H">Homme</option>
                     <option name="sexe" value="F">Femme</option>
                 </select>
                 <!-- Date de naissance -->
-                <label for="dateNaissance">Date de naissance :</label>
+                <label for="dateNaissance">Date de naissance</label>
                 <input type="date" id="dateNaissance" name="dateNaissance" size="20">
             </div>
 
@@ -90,20 +90,21 @@ $rolesJSON = json_encode($roles);
             <p>Ajouter un acteur</p>
 
             <!-- Ajouter Acteur -->
-            <div>
+            <div class="addPersonne">
                 <!-- Nom -->
-                <label for="nom">Nom :</label>
+                <label for="nom">Nom</label>
                 <input type="text" id="nom" name="nom" maxlength="50" size="20">
                 <!-- Prenom -->
-                <label for="prenom">Prénom :</label>
+                <label for="prenom">Prénom</label>
                 <input type="text" id="prenom" name="prenom" maxlength="50" size="20">
                 <!-- Sexe -->
+                <legend>Sexe</legend>
                 <select name="sexe">
                     <option name="sexe" value="H">Homme</option>
                     <option name="sexe" value="F">Femme</option>
                 </select>
                 <!-- Date de naissance -->
-                <label for="dateNaissance">Date de naissance :</label>
+                <label for="dateNaissance">Date de naissance</label>
                 <input type="date" id="dateNaissance" name="dateNaissance" size="20">
             </div>
 
