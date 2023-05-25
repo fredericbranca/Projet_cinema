@@ -615,12 +615,40 @@ class CinemaController
         $requeteGenres = $pdo->query("
             SELECT *
             FROM genre
+            ORDER BY nom ASC
         ");
 
         // Execute les requêtes
         $requeteFilm->execute(['id_film' => $id]);
         $requeteGenreFilm->execute(['id_film' => $id]);
         $requeteCasting->execute(['id_film' => $id]);
+
+
+        // Requete pour ajouter un genre
+        if (isset($_POST['addGenreSubmit']) && isset($_GET['id'])) {
+            $id = $_GET['id'];
+            $genre = filter_input(INPUT_POST, 'genre', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+            if($genre !== false && !empty($genre)) {
+
+                $pdo = Connect::seConnecter();
+
+                $requeteAddGenre = $pdo->prepare("
+                    INSERT INTO genre (nom)
+                    VALUE (:nom)
+                ");
+                $requeteAddGenre->execute([
+                    'nom' => $genre
+                ]);
+
+                $_SESSION['message'] = "Le genre $genre a été ajouté.";
+                header("Location: index.php?action=modifierFilm&id=$id");
+            }
+            else {
+                $_SESSION['message'] = "Erreur champ genre";
+                header("Location: index.php?action=modifierFilm&id=$id#modalAddGenre");
+            }
+        }
 
         require "view/modifierFilm.php";
     }
