@@ -587,6 +587,7 @@ class CinemaController
         $requeteRole = $pdo->query("
             SELECT *
             FROM role
+            ORDER BY role ASC
         ");
         // Requête pour récupérer les infos de tous les castings
         $requeteCasting = $pdo->prepare("
@@ -721,6 +722,32 @@ class CinemaController
             }
             else {
                 $_SESSION['message'] = "Erreur : L'acteur n'a pas pu être ajouté.";
+                header("Location: index.php?action=modifierFilm&id=$id");
+            }
+        }
+
+        // Requete pour ajouter un rôle
+        if (isset($_POST['addRoleSubmit']) && isset($_GET['id'])) {
+            $id = $_GET['id'];
+            $role = filter_input(INPUT_POST, 'role', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+            if($role !== false && !empty($role)) {
+
+                $pdo = Connect::seConnecter();
+
+                $requeteAddGenre = $pdo->prepare("
+                    INSERT INTO role (role)
+                    VALUE (:role)
+                ");
+                $requeteAddGenre->execute([
+                    'role' => $role
+                ]);
+
+                $_SESSION['message'] = "Le rôle $genre a été ajouté.";
+                header("Location: index.php?action=modifierFilm&id=$id");
+            }
+            else {
+                $_SESSION['message'] = "Erreur : Le rôle n'a pas pu être ajouté";
                 header("Location: index.php?action=modifierFilm&id=$id");
             }
         }
