@@ -16,7 +16,139 @@ $rolesJSON = json_encode($roles);
 
 ?>
 
+<!-- Modal Créer un Nouveau Genre -->
+
+<div id="modalAddGenre" class="modal2">
+    <div onclick="closeModal('#modalAddGenre')" class="modal-close">Retour</div>
+    <div class="modal-body">
+
+        <form action="index.php?action=modifierFilm&id=<?= $film['id_film'] ?>" method="POST" enctype="multipart/form-data">
+            <p>Ajouter un genre</p>
+
+            <!-- Ajouter Genre -->
+            <div>
+                <input type="text" name="genre" placeholder="Nom du genre" maxlength="50" size="20" required>
+            </div>
+
+            <!-- Bouton ajouter le genre -->
+            <div class="button">
+                <input type="submit" name="addGenreSubmit" id="submit" Value="Ajouter le genre">
+            </div>
+        </form>
+
+        <!-- Bouton ferme le modal -->
+        <button onclick="closeModal('#modalAddGenre')" class="modal-button">Fermer</button>
+    </div>
+</div>
+
+<!-- Modal Créer un Nouveau Réalisateur -->
+
+<div id="modalAddRealisateur" class="modal2">
+    <div onclick="closeModal('#modalAddRealisateur')" class="modal-close">Retour</div>
+    <div class="modal-body">
+
+        <form action="index.php?action=modifierFilm&id=<?= $film['id_film'] ?>" method="POST" enctype="multipart/form-data">
+            <p>Ajouter un réalisateur</p>
+
+            <!-- Ajouter Realisateur -->
+            <div>
+                <!-- Nom -->
+                <label for="nom">Nom :</label>
+                <input type="text" id="nom" name="nom" maxlength="50" size="20">
+                <!-- Prenom -->
+                <label for="prenom">Prénom :</label>
+                <input type="text" id="prenom" name="prenom" maxlength="50" size="20">
+                <!-- Sexe -->
+                <select name="sexe">
+                    <option name="sexe" value="H">Homme</option>
+                    <option name="sexe" value="F">Femme</option>
+                </select>
+                <!-- Date de naissance -->
+                <label for="dateNaissance">Date de naissance :</label>
+                <input type="date" id="dateNaissance" name="dateNaissance" size="20">
+            </div>
+
+            <!-- Bouton ajouter le réalisateur -->
+            <div class="button">
+                <input type="submit" name="addRealisateurSubmit" id="submit" Value="Ajouter le réalisateur">
+            </div>
+        </form>
+
+        <!-- Bouton ferme le modal -->
+        <button onclick="closeModal('#modalAddRealisateur')" class="modal-button">Fermer</button>
+    </div>
+</div>
+
+<!-- Modal Créer un nouvel acteur -->
+
+<div id="modalAddActeur" class="modal2">
+    <div onclick="closeModal('#modalAddActeur')" class="modal-close">Retour</div>
+    <div class="modal-body">
+
+        <form action="index.php?action=modifierFilm&id=<?= $film['id_film'] ?>" method="POST" enctype="multipart/form-data">
+            <p>Ajouter un acteur</p>
+
+            <!-- Ajouter Acteur -->
+            <div>
+                <!-- Nom -->
+                <label for="nom">Nom :</label>
+                <input type="text" id="nom" name="nom" maxlength="50" size="20">
+                <!-- Prenom -->
+                <label for="prenom">Prénom :</label>
+                <input type="text" id="prenom" name="prenom" maxlength="50" size="20">
+                <!-- Sexe -->
+                <select name="sexe">
+                    <option name="sexe" value="H">Homme</option>
+                    <option name="sexe" value="F">Femme</option>
+                </select>
+                <!-- Date de naissance -->
+                <label for="dateNaissance">Date de naissance :</label>
+                <input type="date" id="dateNaissance" name="dateNaissance" size="20">
+            </div>
+
+            <!-- Bouton ajouter l'acteur -->
+            <div class="button">
+                <input type="submit" name="addActeurSubmit" id="submit" Value="Ajouter l'acteur'">
+            </div>
+        </form>
+
+        <!-- Bouton ferme le modal addFilm -->
+        <button onclick="closeModal('#modalAddActeur')" class="modal-button">Fermer</button>
+    </div>
+</div>
+
+<!-- Modal Créer un Nouveau rôle -->
+
+<div id="modalAddRole" class="modal2">
+    <div onclick="closeModal('#modalAddRole')" class="modal-close">Retour</div>
+    <div class="modal-body">
+
+        <form action="index.php?action=modifierFilm&id=<?= $film['id_film'] ?>" method="POST" enctype="multipart/form-data">
+            <p>Ajouter un rôle</p>
+
+            <!-- Ajouter Role -->
+            <div>
+                <input type="text" name="role" placeholder="Nom du rôle" maxlength="50" size="20" required>
+            </div>
+
+            <!-- Bouton ajouter le rôle -->
+            <div class="button">
+                <input type="submit" name="addRoleSubmit" id="submit" Value="Ajouter le rôle">
+            </div>
+        </form>
+
+        <!-- Bouton ferme le modal -->
+        <button onclick="closeModal('#modalAddRole')" class="modal-button">Fermer</button>
+    </div>
+</div>
+
 <section id="modifier-film">
+
+    <button onclick="openModal('#modalAddGenre')" class="addGenre">Ajouter un genre</button> <!-- Modal : Bouton Ajouter un genre -->
+    <button onclick="openModal('#modalAddRealisateur')" class="addRealisateur">Ajouter un réalisateur</button> <!-- Modal : Bouton Ajouter un réalisateur -->
+    <button onclick="openModal('#modalAddActeur')" class="addActeur">Ajouter un acteur</button> <!-- Modal : Bouton Ajouter un acteur -->
+    <button onclick="openModal('#modalAddRole')" class="addRole">Ajouter un rôle</button> <!-- Modal : Bouton Ajouter un rôle -->
+
     <form class="formulaire" action="index.php?action=modifierFilm&id=<?= $film['id_film'] ?>" method="POST" enctype="multipart/form-data">
         <!-- Titre -->
         <div class="titre">
