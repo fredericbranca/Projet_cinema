@@ -10,6 +10,10 @@ $film = $requeteFilm->fetch(); // // récupère toutes les infos d'un film
 $genresFilm = $requeteGenreFilm->fetchAll(); // récupère tous les genres d'un film
 $listGenres = $requeteGenres->fetchAll(); // récupère tous les genres
 
+$genresJSON = json_encode($listGenres); // json_encode() permet de convertir une valeur PHP en une chaîne JSON
+$acteursJSON = json_encode($acteurs);
+$rolesJSON = json_encode($roles);
+
 ?>
 
 <section id="modifier-film">
@@ -33,22 +37,25 @@ $listGenres = $requeteGenres->fetchAll(); // récupère tous les genres
         </div>
 
         <!-- Genre -->
-        <div class="genre">
-            <label>Genre</label>
+        <div id="modifierFilmGenre" class="genre">
+            <label>Genre <button id="ajouter-genre">+</button></label>
             <?php
             foreach ($genresFilm as $genreFilm) {
             ?>
-                <select id="genre" name="genre[]">
-                    <option value="">Sélection d'un genre</option>
-                    <?php
-                    foreach ($listGenres as $genre) {
-                        $selected = ($genreFilm['id_genre'] == $genre['id_genre']) ? "selected" : ""; // compare les id des genres pour ajouté selected ou non à l'option
-                    ?>
-                        <option value="<?= $genre['id_genre'] ?>" <?= $selected ?>><?= $genre['nom']; ?></option>
-                    <?php
-                    }
-                    ?>
-                </select>
+                <div class="genre-select">
+                    <select id="genre" name="genre[]">
+                        <option value="">Sélection d'un genre</option>
+                        <?php
+                        foreach ($listGenres as $genre) {
+                            $selected = ($genreFilm['id_genre'] == $genre['id_genre']) ? "selected" : ""; // compare les id des genres pour ajouté selected ou non à l'option
+                        ?>
+                            <option value="<?= $genre['id_genre'] ?>" <?= $selected ?>><?= $genre['nom']; ?></option>
+                        <?php
+                        }
+                        ?>
+                    </select>
+                    <button id="supprimer-genre">-</button>
+                </div>
             <?php
             }
             ?>
@@ -71,64 +78,74 @@ $listGenres = $requeteGenres->fetchAll(); // récupère tous les genres
         </div>
 
 
-        <!-- Acteur(s) -->
-        <div class="casting">
-            <div class="acteur">
-                <label>Acteur(s)</label>
-                <?php
-                foreach ($casting as $acteurCasting) {
-                ?>
-                    <select id="acteur" name="acteur[]">
-                        <option value="">Sélection d'un acteur</option>
-                        <?php
-                        foreach ($acteurs as $acteur) {
-                            $selected = ($acteurCasting['id_acteur'] == $acteur['id_acteur']) ? "selected" : "";
-                        ?>
-                            <option value="<?= $acteur['id_acteur'] ?>" <?= $selected ?>><?= $acteur['acteur']; ?></option>
-                        <?php
-                        }
-                        ?>
-                    </select>
-                <?php
-                }
-                ?>
+        <!-- Casting(s) -->
+        <div id="modifierFilmCasting">
+            <div class="label">
+                <p>Acteur</p>
+                <p>Rôle</p>
+                <button id="ajouter-casting">+</button>
             </div>
+            <?php
+            foreach ($casting as $casting) {
+            ?>
+                <div id="casting">
+                    <div id="acteurRole">
+                        <!-- Acteur(s) -->
+                        <div class="acteur-select">
+                            <select id="acteur" name="acteur[]">
+                                <option value="">Sélection d'un acteur</option>
+                                <?php
+                                foreach ($acteurs as $acteur) {
+                                    $selected = ($casting['id_acteur'] == $acteur['id_acteur']) ? "selected" : "";
+                                ?>
+                                    <option value="<?= $acteur['id_acteur'] ?>" <?= $selected ?>><?= $acteur['acteur']; ?></option>
+                                <?php
+                                }
+                                ?>
+                            </select>
+                        </div>
 
-            <!-- Rôle -->
-            <div class="role">
-                <label>Rôle</label>
-                <?php
-                foreach ($casting as $roleCasting) {
-                ?>
-                    <select id="role" name="role[]">
-                        <option value="">Sélection d'un role</option>
-                        <?php
-                        foreach ($roles as $role) {
-                            $selected = ($roleCasting['id_role'] == $role['id_role']) ? "selected" : "";
-                        ?>
-                            <option value="<?= $role['id_role'] ?>" <?= $selected ?>><?= $role['role']; ?></option>
-                        <?php
-                        }
-                        ?>
-                    </select>
-                <?php
-                }
-                ?>
-            </div>
+                        <!-- Rôle -->
+                        <div class="role-select">
+                            <select id="role" name="role[]">
+                                <option value="">Sélection d'un role</option>
+                                <?php
+                                foreach ($roles as $role) {
+                                    $selected = ($casting['id_role'] == $role['id_role']) ? "selected" : "";
+                                ?>
+                                    <option value="<?= $role['id_role'] ?>" <?= $selected ?>><?= $role['role']; ?></option>
+                                <?php
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+                    <button id="supprimer-casting">-</button>
+
+                </div>
+            <?php
+            }
+            ?>
         </div>
 
-            <!-- Synopsis -->
-            <div class="synopsis">
-                <label for="synopsis">Synopsis</label>
-                <textarea id="synopsis" name="synopsis" required minlength="1" maxlength="2000"><?= $film['synopsis'] ?></textarea>
-            </div>
+        <!-- Synopsis -->
+        <div class="synopsis">
+            <label for="synopsis">Synopsis</label>
+            <textarea id="synopsis" name="synopsis" required minlength="1" maxlength="2000"><?= $film['synopsis'] ?></textarea>
+        </div>
 
-            <!-- Bouton submit -->
-            <div class="button">
-                <input type="submit" name="updateSubmit" id="submit" Value="Modifier le film">
-            </div>
+        <!-- Bouton submit -->
+        <div class="button">
+            <input type="submit" name="updateSubmit" id="submit" Value="Modifier le film">
+        </div>
     </form>
 </section>
+
+<script>
+    var genresData = <?php echo $genresJSON; ?>;
+    var acteursData = <?php echo $acteursJSON; ?>;
+    var rolesData = <?php echo $rolesJSON; ?>;
+</script>
 
 <?php
 
