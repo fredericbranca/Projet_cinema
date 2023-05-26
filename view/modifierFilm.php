@@ -31,14 +31,13 @@ $rolesJSON = json_encode($roles);
             </div>
 
             <!-- Bouton ajouter le genre -->
-            <div class="button">
+            <div class="buttonHidden">
                 <input type="submit" name="addGenreSubmit" id="addGenreSubmit" Value="Ajouter le genre">
             </div>
+            <div class="button">
+                <button onclick="openModalConfirmation(addGenreSubmit)" id="addGenreSubmit">Ajouter le genre</button>
+            </div>
         </form>
-        <button id="confirmGenreSubmit" type="submit">Oui</button>
-
-        <!-- Bouton ferme le modal -->
-        <button onclick="closeModal('#modalAddGenre')" class="modal-button">Fermer</button>
     </div>
 </div>
 
