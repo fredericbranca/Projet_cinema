@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS `acteur` (
   CONSTRAINT `acteur_ibfk_1` FOREIGN KEY (`id_personne`) REFERENCES `personne` (`id_personne`)
 ) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
 
--- Listage des données de la table cinema.acteur : ~25 rows (environ)
+-- Listage des données de la table cinema.acteur : ~8 rows (environ)
 INSERT INTO `acteur` (`id_acteur`, `id_personne`) VALUES
 	(1, 2),
 	(2, 3),
@@ -115,13 +115,13 @@ CREATE TABLE IF NOT EXISTS `film` (
 
 -- Listage des données de la table cinema.film : ~10 rows (environ)
 INSERT INTO `film` (`id_film`, `titre`, `dateSortie`, `duree`, `synopsis`, `note`, `affiche`, `id_realisateur`) VALUES
-	(1, 'Super Mario Bros, le film', '2023-04-05', 92, 'Alors qu’ils tentent de réparer une canalisation souterraine, Mario et son frère Luigi, tous deux plombiers, se retrouvent plongés dans un nouvel univers féerique à travers un mystérieux conduit. Mais lorsque les deux frères sont séparés, Mario s’engage dans une aventure trépidante pour retrouver Luigi.Dans sa quête, il peut compter sur l’aide du champignon Toad, habitant du Royaume Champignon, et les conseils avisés, en matière de techniques de combat, de la Princesse Peach, guerrière déterminée à la tête du Royaume. C’est ainsi que Mario réussit à mobiliser ses propres forces pour aller au bout de sa mission.', 4, 'Super_Mario_Bros_Film.jpg', 1),
+	(1, 'Super Mario Bros, le film', '2023-04-05', 92, 'Alors qu&rsquo;ils tentent de r&eacute;parer une canalisation souterraine, Mario et son fr&egrave;re Luigi, tous deux plombiers, se retrouvent plong&eacute;s dans un nouvel univers f&eacute;erique &agrave; travers un myst&eacute;rieux conduit. Mais lorsque les deux fr&egrave;res sont s&eacute;par&eacute;s, Mario s&rsquo;engage dans une aventure tr&eacute;pidante pour retrouver Luigi.Dans sa qu&ecirc;te, il peut compter sur l&rsquo;aide du champignon Toad, habitant du Royaume Champignon, et les conseils avis&eacute;s, en mati&egrave;re de techniques de combat, de la Princesse Peach, guerri&egrave;re d&eacute;termin&eacute;e &agrave; la t&ecirc;te du Royaume. C&rsquo;est ainsi que Mario r&eacute;ussit &agrave; mobiliser ses propres forces pour aller au bout de sa mission.', 4, '6470a5ea617209.21185750.jpg', 1),
 	(2, 'À vol d\'oiseaux', '2023-04-05', 57, 'À Vol d’oiseaux rassemble trois courts métrages d’animation délicats, sensibles. Un pur moment de bonheur, aérien, à la fin duquel on se sent pousser des ailes ! Un programme comme une parenthèse de douceur, où les adultes retrouvent leur âme d’enfant, les plus jeunes grandissent dans l’espoir d’une vie bienveillante, où chacun est incité à sortir de sa coquille pour voler de ses propres ailes. ', 3, 'A_vol_d_oiseaux.jpg', 2),
 	(3, 'Suzume no Tojimari', '2023-04-12', 122, 'Dans une petite ville paisible de Kyushu, une jeune fille de 17 ans, Suzume, rencontre un homme qui dit voyager à la recherche d’une porte. Décidant de le suivre dans les montagnes, elle découvre une porte délabrée trônant au milieu des ruines, seul vestige ayant survécu au passage du temps. Cédant à une inexplicable impulsion, Suzume tourne la poignée, et d’autres portes s’ouvrent alors aux quatre coins du Japon, laissant passer toutes les catastrophes qu’elles renfermaient. L’homme est formel : toute porte ouverte doit être refermée. Suzume s’est égarée où se trouvent les étoiles, le crépuscule et l’aube, une voûte céleste où tous les temps se confondent. Guidée par des portes nimbées de mystère, elle entame un périple afin de toutes les refermer.', 4, 'Suzume.jpg', 3),
 	(4, 'Dragons : L\'Honneur des voleurs', '2023-04-12', 134, 'Un voleur beau gosse et une bande d\'aventuriers improbables entreprennent un casse épique pour récupérer une relique perdue. Les choses tournent mal lorsqu\'ils s\'attirent les foudres des mauvaises personnes. Donjons & Dragons : L\'honneur des voleurs transpose sur grand écran l\'univers riche et l\'esprit ludique du légendaire jeu de rôle à travers une aventure hilarante et pleine d\'action.', 4, 'Donjour_et_Dragon.jpg', 4),
 	(5, 'Le Royaume de Naya', '2023-03-29', 99, 'Par-delà les hautes Montagnes Noires se cache un royaume peuplé de créatures fantastiques. Depuis des siècles, elles protègent du monde des hommes une source de vie éternelle aux pouvoirs infinis. Jusqu’au jour où Naya, la nouvelle élue de cette forêt enchantée, rencontre Lucas, un jeune humain égaré dans les montagnes. À l’encontre des règles établies depuis des millénaires, ils vont se revoir, sans prendre garde aux conséquences qui s’abattront sur le royaume. L’aventure ne fait que commencer.', 3, 'Royaume_de_Naya.jpg', 5),
 	(6, 'John Wick : Chapitre 4', '2023-03-22', 170, 'John Wick découvre un moyen de vaincre l’organisation criminelle connue sous le nom de la Grande Table. Mais avant de gagner sa liberté, Il doit affronter un nouvel ennemi qui a tissé de puissantes alliances à travers le monde et qui transforme les vieux amis de John en ennemis.', 4, 'John_Wick_4.jpg', 6),
-	(7, 'Scream VI', '2023-03-08', 122, 'Après avoir frappé à trois reprises à Woodsboro, après avoir terrorisé le campus de Windsor et les studios d’Hollywood, Ghostface a décidé de sévir dans Big Apple, mais dans une ville aussi grande que New-York personne ne vous entendra crier…', 3, 'Scream_6.jpg', 7),
+	(7, 'Scream VI', '2023-03-08', 122, 'Apr&egrave;s avoir frapp&eacute; &agrave; trois reprises &agrave; Woodsboro, apr&egrave;s avoir terroris&eacute; le campus de Windsor et les studios d&rsquo;Hollywood, Ghostface a d&eacute;cid&eacute; de s&eacute;vir dans Big Apple, mais dans une ville aussi grande que New-York personne ne vous entendra crier&hellip;', 3, '6470a60aa07b37.51429984.jpg', 7),
 	(8, 'Creed III', '2023-03-01', 117, 'Idole de la boxe et entouré de sa famille, Adonis Creed n’a plus rien à prouver. Jusqu’au jour où son ami d’enfance, Damian, prodige de la boxe lui aussi, refait surface. A peine sorti de prison, Damian est prêt à tout pour monter sur le ring et reprendre ses droits. Adonis joue alors sa survie, face à un adversaire déterminé à l’anéantir.', 4, 'Creed_3.jpg', 8),
 	(9, 'Les Gardiennes de la planète', '2023-02-22', 82, 'Une baleine à bosse s\'est échouée sur un rivage isolé. Alors qu\'un groupe d\'hommes et de femmes organise son sauvetage, nous découvrons l\'histoire extraordinaire des cétacés, citoyens des océans du monde, essentiels à l’écosystème de notre planète depuis plus de 50 millions d’années.', 4, 'Les_Gardiennes_de_la_planete.jpg', 9),
 	(68, 'Misanthrope', '2023-04-26', 118, 'Eleanor, une jeune enqu&ecirc;trice au lourd pass&eacute;, est appel&eacute;e sur les lieux d&rsquo;un crime de masse terrible. La police et le FBI lancent une chasse &agrave; l&rsquo;homme sans pr&eacute;c&eacute;dent, mais face au mode op&eacute;ratoire constamment impr&eacute;visible de l&rsquo;assassin, l&rsquo;enqu&ecirc;te pi&eacute;tine. Eleanor, quant &agrave; elle se trouve de plus en plus impliqu&eacute;e dans l&#039;affaire et se rend compte que ses propres d&eacute;mons int&eacute;rieurs peuvent l&rsquo;aider &agrave; cerner l&#039;esprit de ce tueur si singulier&hellip;', 3.9, '646b788fb6b6b6.28655703.jpg', 30);
@@ -131,7 +131,7 @@ CREATE TABLE IF NOT EXISTS `genre` (
   `id_genre` int NOT NULL AUTO_INCREMENT,
   `nom` varchar(50) NOT NULL,
   PRIMARY KEY (`id_genre`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=latin1;
 
 -- Listage des données de la table cinema.genre : ~15 rows (environ)
 INSERT INTO `genre` (`id_genre`, `nom`) VALUES
@@ -197,7 +197,7 @@ CREATE TABLE IF NOT EXISTS `personne` (
   PRIMARY KEY (`id_personne`)
 ) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=latin1;
 
--- Listage des données de la table cinema.personne : ~33 rows (environ)
+-- Listage des données de la table cinema.personne : ~0 rows (environ)
 INSERT INTO `personne` (`id_personne`, `nom`, `prenom`, `sexe`, `dateNaissance`) VALUES
 	(1, 'Horvath', 'Aaron ', 'H', '1980-08-19'),
 	(2, 'Pratt', 'Chris', 'H', '1979-06-21'),
@@ -242,7 +242,7 @@ CREATE TABLE IF NOT EXISTS `realisateur` (
   CONSTRAINT `realisateur_ibfk_1` FOREIGN KEY (`id_personne`) REFERENCES `personne` (`id_personne`)
 ) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=latin1;
 
--- Listage des données de la table cinema.realisateur : ~10 rows (environ)
+-- Listage des données de la table cinema.realisateur : ~0 rows (environ)
 INSERT INTO `realisateur` (`id_realisateur`, `id_personne`) VALUES
 	(1, 1),
 	(2, 5),
