@@ -49,7 +49,6 @@ $titres = $requeteTitres->fetchAll();
                     <h2>Créer un nouveau genre</h2>
                     <button id="ajouter-genre">+</button>
                 </div>
-
             </fieldset>
 
             <!-- Synopsis -->
