@@ -440,6 +440,22 @@
     flex-direction: column;
     width: fit-content;
 }
+.modal2 .buttonHidden {
+    display: none;
+}
+.modal3 {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    height: 200px;
+    background-color: #151313;
+    transform: translate(-50%, 100vh);
+    transition: 0.6s all ease-out;
+    z-index: 2;
+    color: white;
+}
 .modalDeleteFilm {
     position: fixed;
     top: 50%;
