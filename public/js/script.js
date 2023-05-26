@@ -112,23 +112,6 @@ function afficherMenuDeroulant(menuId) {
 }
 
 // Fonction vue modifierFilm
-    // Fonction pour ajouter un champ genre
-    function ajouterSelectGenre(event) {
-        event.preventDefault();
-
-        let options = `<option value="">Sélection d'un genre</option>`;
-        genresData.forEach(function(genre) {
-            options += '<option value="' + genre.id_genre + '">' + genre.nom + '</option>';
-        });
-        const genreSelect = document.createElement('div');
-        genreSelect.classList.add('genre-select');
-        genreSelect.innerHTML = `<select id="genre" name="genre[]">
-                                    ${options}
-                                </select>
-                                <button id="supprimer-genre">-</button>`;
-        genreSelectDiv.appendChild(genreSelect);
-    }
-
     // Fonction pour ajouter un casting
     function ajouterCasting(event) {
         event.preventDefault();
@@ -158,25 +141,27 @@ function afficherMenuDeroulant(menuId) {
                             <button id="supprimer-casting">-</button>`;
         modifierFilmCasting.appendChild(casting);
     }
+
+    // Fonction pour le modal de confirmation
+    function openModalConfirmation(buttonId) {
+        buttonId.preventDefault();
+
+        const button = document.querySelectorAll("[name=",buttonId,"]");
+        console.log(button);
+        const modal = createElement('div');
+        modal.setAttribute('id', 'ModalConfirmSubmit');
+        modal.classList.add('modal3 modal-open');
+        modal.innerHTML = `<div>Les données entrées précédemment ne seront pas enregistré. Voulez-vous continuer ?</div>
+                            <button id="confirm-submit" type="submit>Oui</button>
+                            <button onclick="closeModal('#confirm-submit')" class="modal-button">Non</button>`
+        const buttonConfirm = document.querySelector('#confirm-submit');
+        buttonConfirm.addEventListener('click', function() {
+            button.click();
+        });
+    }
 /////////////////////////////////////////////////////////////////
 
 // ModifierFilm view
-    // Ajouter un champ genre
-    const genreSelectDiv = document.getElementById('modifierFilmGenre');
-    if (genreSelectDiv) {
-        const ajouterGenreButton = document.getElementById('ajouter-genre');
-
-        // Clic sur le bouton d'ajout
-        ajouterGenreButton.addEventListener('click', ajouterSelectGenre);
-
-        // Clic sur le bouton de suppression de genre
-        genreSelectDiv.addEventListener('click', function(event) {
-        event.preventDefault();
-        if (event.target.id === 'supprimer-genre') {
-            event.target.parentElement.remove();
-        }
-        });
-}
     // Ajouter un champ casting
     const modifierFilmCasting = document.getElementById('modifierFilmCasting');
     if (modifierFilmCasting) {
@@ -192,7 +177,7 @@ function afficherMenuDeroulant(menuId) {
             event.target.parentElement.remove();
         }
         });
-}
+    }
 
 //Ajouter un input acteur
 const acteursInputContainer = document.getElementById('acteurs-input-container');
