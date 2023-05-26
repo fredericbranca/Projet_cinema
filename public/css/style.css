@@ -494,20 +494,32 @@
 }
 
 #modifier-film .formulaire {
+    position: relative;
+    min-height: 60vh;
+    margin-top: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+}
+#modifier-film .affiche {
     display: flex;
     flex-direction: column;
-    gap: 30px;
+}
+#modifier-film .affiche img {
+    width: 279px;
+    height: 378px;
 }
 #modifier-film .genre {
     display: flex;
-    width: fit-content;
     flex-direction: column;
-    gap: 10px;
+    width: fit-content;
 }
 #modifier-film #modifierFilmCasting {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    margin-bottom: 30px;
 }
 #modifier-film .label {
     display: flex;
