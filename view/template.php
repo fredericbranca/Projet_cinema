@@ -28,6 +28,7 @@ if(isset($_SESSION['Message'])) {
 <body>
     <div class="overlay"></div>
     <div class="overlay2"></div>
+    <div class="OverlayModalConfirmation"></div>
 
     <header>
         <!-- NAVBAR -->
