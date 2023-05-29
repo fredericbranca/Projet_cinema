@@ -22,7 +22,7 @@ $rolesJSON = json_encode($roles);
     <div onclick="closeModal('#modalAddGenre')" class="modal-close">Retour</div>
     <div class="modal-body">
 
-        <form action="index.php?action=modifierFilm&id=<?= $film['id_film'] ?>" method="POST" enctype="multipart/form-data">
+        <form id="formAddGenre" action="index.php?action=modifierFilm&id=<?= $film['id_film'] ?>" method="POST" enctype="multipart/form-data">
             <p>Ajouter un genre</p>
 
             <!-- Ajouter Genre -->
@@ -35,7 +35,7 @@ $rolesJSON = json_encode($roles);
                 <input type="submit" name="addGenreSubmit" id="addGenreSubmit" Value="Ajouter le genre">
             </div>
             <div class="button">
-                <button onclick="checkAndOpenModalConfirmation(event, 'addGenreSubmit')" id="addGenreButton">Ajouter le genre</button>
+                <button onclick="checkAndOpenModalConfirmation(event, 'addGenreSubmit', 'formAddGenre')" id="addGenreButton">Ajouter le genre</button>
             </div>
         </form>
     </div>
@@ -47,17 +47,17 @@ $rolesJSON = json_encode($roles);
     <div onclick="closeModal('#modalAddRealisateur')" class="modal-close">Retour</div>
     <div class="modal-body">
 
-        <form action="index.php?action=modifierFilm&id=<?= $film['id_film'] ?>" method="POST" enctype="multipart/form-data">
+        <form id="formAddRealisateur" action="index.php?action=modifierFilm&id=<?= $film['id_film'] ?>" method="POST" enctype="multipart/form-data">
             <p>Ajouter un réalisateur</p>
 
             <!-- Ajouter Realisateur -->
             <div class="addPersonne">
                 <!-- Nom -->
                 <label for="nom">Nom</label>
-                <input type="text" id="nom" name="nom" maxlength="50" size="20">
+                <input type="text" id="nom" name="nom" required minlength="1" maxlength="50" size="20">
                 <!-- Prenom -->
                 <label for="prenom">Prénom</label>
-                <input type="text" id="prenom" name="prenom" maxlength="50" size="20">
+                <input type="text" id="prenom" name="prenom" required minlength="1" maxlength="50" size="20">
                 <!-- Sexe -->
                 <legend>Sexe</legend>
                 <select name="sexe">
@@ -66,12 +66,15 @@ $rolesJSON = json_encode($roles);
                 </select>
                 <!-- Date de naissance -->
                 <label for="dateNaissance">Date de naissance</label>
-                <input type="date" id="dateNaissance" name="dateNaissance" size="20">
+                <input type="date" id="dateNaissance" name="dateNaissance" required size="20">
             </div>
 
             <!-- Bouton ajouter le réalisateur -->
+            <div class="buttonHidden">
+                <input type="submit" name="addRealisateurSubmit" id="addRealisateurSubmit" Value="Ajouter le réalisateur">
+            </div>
             <div class="button">
-                <input type="submit" name="addRealisateurSubmit" id="submit" Value="Ajouter le réalisateur">
+                <button onclick="checkAndOpenModalConfirmation(event, 'addRealisateurSubmit', 'formAddRealisateur')" id="addRealisateurButton">Ajouter le réalisateur</button>
             </div>
         </form>
 
@@ -86,17 +89,17 @@ $rolesJSON = json_encode($roles);
     <div onclick="closeModal('#modalAddActeur')" class="modal-close">Retour</div>
     <div class="modal-body">
 
-        <form action="index.php?action=modifierFilm&id=<?= $film['id_film'] ?>" method="POST" enctype="multipart/form-data">
+        <form id="formAddActeur" action="index.php?action=modifierFilm&id=<?= $film['id_film'] ?>" method="POST" enctype="multipart/form-data">
             <p>Ajouter un acteur</p>
 
             <!-- Ajouter Acteur -->
             <div class="addPersonne">
                 <!-- Nom -->
                 <label for="nom">Nom</label>
-                <input type="text" id="nom" name="nom" maxlength="50" size="20">
+                <input type="text" id="nom" name="nom" required minlength="1" maxlength="50" size="20">
                 <!-- Prenom -->
                 <label for="prenom">Prénom</label>
-                <input type="text" id="prenom" name="prenom" maxlength="50" size="20">
+                <input type="text" id="prenom" name="prenom" required minlength="1" maxlength="50" size="20">
                 <!-- Sexe -->
                 <legend>Sexe</legend>
                 <select name="sexe">
@@ -105,12 +108,15 @@ $rolesJSON = json_encode($roles);
                 </select>
                 <!-- Date de naissance -->
                 <label for="dateNaissance">Date de naissance</label>
-                <input type="date" id="dateNaissance" name="dateNaissance" size="20">
+                <input type="date" id="dateNaissance" name="dateNaissance" required size="20">
             </div>
 
             <!-- Bouton ajouter l'acteur -->
+            <div class="buttonHidden">
+                <input type="submit" name="addActeurSubmit" id="addActeurSubmit" Value="Ajouter l'acteur'">
+            </div>
             <div class="button">
-                <input type="submit" name="addActeurSubmit" id="submit" Value="Ajouter l'acteur'">
+                <button onclick="checkAndOpenModalConfirmation(event, 'addActeurSubmit', 'formAddActeur')" id="addActeurButton">Ajouter l'acteur'</button>
             </div>
         </form>
 
@@ -125,17 +131,20 @@ $rolesJSON = json_encode($roles);
     <div onclick="closeModal('#modalAddRole')" class="modal-close">Retour</div>
     <div class="modal-body">
 
-        <form action="index.php?action=modifierFilm&id=<?= $film['id_film'] ?>" method="POST" enctype="multipart/form-data">
+        <form id="formAddRole" action="index.php?action=modifierFilm&id=<?= $film['id_film'] ?>" method="POST" enctype="multipart/form-data">
             <p>Ajouter un rôle</p>
 
             <!-- Ajouter Role -->
             <div>
-                <input type="text" name="role" placeholder="Nom du rôle" maxlength="50" size="20" required>
+                <input type="text" name="role" placeholder="Nom du rôle" minlength="1" maxlength="50" size="20" required>
             </div>
 
             <!-- Bouton ajouter le rôle -->
+            <div class="buttonHidden">
+                <input type="submit" name="addRoleSubmit" id="addRoleSubmit" Value="Ajouter le rôle">
+            </div>
             <div class="button">
-                <input type="submit" name="addRoleSubmit" id="submit" Value="Ajouter le rôle">
+                <button onclick="checkAndOpenModalConfirmation(event, 'addRoleSubmit', 'formAddRole')" id="addRoleButton">Ajouter le rôle</button>
             </div>
         </form>
 
