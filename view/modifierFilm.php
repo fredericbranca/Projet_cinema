@@ -35,7 +35,7 @@ $rolesJSON = json_encode($roles);
                 <input type="submit" name="addGenreSubmit" id="addGenreSubmit" Value="Ajouter le genre">
             </div>
             <div class="button">
-                <button onclick="openModalConfirmation(addGenreSubmit)" id="addGenreSubmit">Ajouter le genre</button>
+                <button onclick="openModalConfirmation(event, 'addGenreSubmit')" id="addGenreButton">Ajouter le genre</button>
             </div>
         </form>
     </div>
