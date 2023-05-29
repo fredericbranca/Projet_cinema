@@ -145,6 +145,17 @@ function afficherMenuDeroulant(menuId) {
         modifierFilmCasting.appendChild(casting);
     }
 
+    // Fonction qui check sur l'input est rempli
+    function checkAndOpenModalConfirmation(event, buttonId) {
+        event.preventDefault();
+
+        const form = document.querySelector('form');
+        if (!form.checkValidity()) {
+            return document.getElementById(buttonId).click();
+        }
+        openModalConfirmation(event, buttonId);
+    }
+
     // Fonction pour le modal de confirmation
     function openModalConfirmation(event, buttonId) {
         event.preventDefault();
