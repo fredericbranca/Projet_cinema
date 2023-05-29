@@ -27,7 +27,7 @@ $rolesJSON = json_encode($roles);
 
             <!-- Ajouter Genre -->
             <div>
-                <input type="text" name="genre" placeholder="Nom du genre" maxlength="50" size="20" required>
+                <input type="text" name="genre" placeholder="Nom du genre" minlength="1" maxlength="50" size="20" required>
             </div>
 
             <!-- Bouton ajouter le genre -->
@@ -35,7 +35,7 @@ $rolesJSON = json_encode($roles);
                 <input type="submit" name="addGenreSubmit" id="addGenreSubmit" Value="Ajouter le genre">
             </div>
             <div class="button">
-                <button onclick="openModalConfirmation(event, 'addGenreSubmit')" id="addGenreButton">Ajouter le genre</button>
+                <button onclick="checkAndOpenModalConfirmation(event, 'addGenreSubmit')" id="addGenreButton">Ajouter le genre</button>
             </div>
         </form>
     </div>
