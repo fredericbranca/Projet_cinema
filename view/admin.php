@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 ob_start();
 
@@ -132,19 +132,6 @@ $titres = $requeteTitres->fetchAll();
     </div>
 </div>
 
-<!-- Modal supprimer film 
-
-<div id="modalDelFilm" class="modalDeleteFilm">
-    <div class="modal-body">
-        <div>Voulez-vous vraiment supprimer le film : ... ?</div>
-        <div class="bouton">
-            <div>Oui</div>
-            <div onclick="closeModal('#modalDelFilm')" class="modal-close">Non</div>
-        </div>
-    </div>
-</div> -->
-
-
 <section id="admin">
     <div class="header">
         <div class="lettres">
@@ -175,7 +162,13 @@ $titres = $requeteTitres->fetchAll();
                                 <div id="menuId<?= $titre['id_film']; ?>" class="menuFilm" style="display: none;">
                                     <a href="index.php?action=modifierFilm&id=<?= $titre['id_film']; ?>">Modifier</a>
                                     <form action="index.php?action=admin&id=<?= $titre['id_film']; ?>" method="POST" enctype="multipart/form-data">
-                                        <input type="submit" name="supprimerFilmSubmit" id="submit" value="Supprimer">
+                                        <div class="buttonHidden">
+                                            <input type="submit" name="supprimerFilmSubmit" id="supprimerFilmSubmit<?= $titre['id_film']; ?>" value="Supprimer">
+                                        </div>
+                                        <div class="button">
+                                            <button onclick="openModalConfirmationSupprimerFilm(event, 'supprimerFilmSubmit<?= $titre['id_film']; ?>', '<?= addslashes($titre['titre']) ?>')" id="supprimerFilmButton">Supprimer</button>
+                                            <!-- Retourne la chaîne str après avoir échappé tous les caractères qui doivent l'être. Ces caractères sont : ' " \ NUL -->
+                                        </div>
                                     </form>
                                 </div>
                         <?php
