@@ -497,7 +497,7 @@ class CinemaController
 
         // Supprimer un film
 
-        if (isset($_POST['supprimerFilmSubmit'])) {
+        if (isset($_POST['supprimerFilmSubmit']) && isset($_GET['id'])) {
 
             $idFilm = $_GET['id'];
 
@@ -515,8 +515,6 @@ class CinemaController
 
             $affiche = $requeteImage->fetch();
             $nomAffiche = $affiche['affiche'];
-            // var_dump($nomAffiche);
-            // die();
             unlink("public/img/" . $nomAffiche);
 
             // requete pour supprimer des castings
