@@ -19,7 +19,10 @@
             document.querySelector('.overlay2').style.opacity = '0';
             document.querySelector('.overlay2').style.zIndex = '-1';
             document.querySelector(modalId).classList.remove('modal-open');
-        } else {
+        } else if (modalId == '#ModalConfirmSubmit') {
+            document.querySelector(modalId).classList.remove('modal-open');
+        }
+        else {
             document.querySelector('.overlay').style.opacity = '0';
             document.querySelector('.overlay').style.zIndex = '-1';
             document.querySelector(modalId).classList.remove('modal-open');
@@ -143,25 +146,36 @@ function afficherMenuDeroulant(menuId) {
     }
 
     // Fonction pour le modal de confirmation
-    function openModalConfirmation(buttonId) {
-        buttonId.preventDefault();
+    function openModalConfirmation(event, buttonId) {
+        event.preventDefault();
 
-        const button = document.querySelectorAll("[name=",buttonId,"]");
-        console.log(button);
-        const modal = createElement('div');
-        modal.setAttribute('id', 'ModalConfirmSubmit');
-        modal.classList.add('modal3 modal-open');
-        modal.innerHTML = `<div>Les données entrées précédemment ne seront pas enregistré. Voulez-vous continuer ?</div>
-                            <button id="confirm-submit" type="submit>Oui</button>
-                            <button onclick="closeModal('#confirm-submit')" class="modal-button">Non</button>`
+        const button = document.getElementById(buttonId);
+        let modal = document.getElementById('ModalConfirmSubmit');
+
+        if (!modal) {
+            modal = document.createElement('div');
+            modal.setAttribute('id', 'ModalConfirmSubmit');
+            modal.classList.add('modal3');
+            modal.innerHTML = `<div>Les données entrées précédemment ne seront pas enregistré. Voulez-vous continuer ?</div>
+                                <button id="confirm-submit" type="submit">Oui</button>
+                                <button onclick="closeModal('#ModalConfirmSubmit')" class="modal-button">Non</button>`;
+            document.body.appendChild(modal);
+        }
+        modal.classList.add('modal-open');
+
         const buttonConfirm = document.querySelector('#confirm-submit');
-        buttonConfirm.addEventListener('click', function() {
-            button.click();
-        });
+        if (buttonConfirm) {
+            buttonConfirm.addEventListener('click', function() {
+                button.click();
+            });
+        }
     }
 /////////////////////////////////////////////////////////////////
 
 // ModifierFilm view
+    // Validation du formulaire avec le bouton de confirmation
+
+
     // Ajouter un champ casting
     const modifierFilmCasting = document.getElementById('modifierFilmCasting');
     if (modifierFilmCasting) {
