@@ -20,6 +20,7 @@
             document.querySelector('.overlay2').style.zIndex = '-1';
             document.querySelector(modalId).classList.remove('modal-open');
         } else if (modalId == '#ModalConfirmSubmit') {
+            document.querySelector('.OverlayModalConfirmation').style.display = 'none';
             document.querySelector(modalId).classList.remove('modal-open');
         }
         else {
@@ -27,6 +28,11 @@
             document.querySelector('.overlay').style.zIndex = '-1';
             document.querySelector(modalId).classList.remove('modal-open');
         }
+    }
+    function removeModal(event, modalId) {
+        event.preventDefault();
+        document.getElementById(modalId).remove();
+        document.querySelector('.OverlayModalConfirmation').style.display = 'none';
     }
 
 // Ouvrir le modal si le lien contient l'id #modal
@@ -146,11 +152,11 @@ function afficherMenuDeroulant(menuId) {
     }
 
     // Fonction qui check sur l'input est rempli
-    function checkAndOpenModalConfirmation(event, buttonId) {
+    function checkAndOpenModalConfirmation(event, buttonId, formId) {
         event.preventDefault();
 
-        const form = document.querySelector('form');
-        if (!form.checkValidity()) {
+        const form = document.getElementById(formId);
+        if (form.checkValidity() == false) {
             return document.getElementById(buttonId).click();
         }
         openModalConfirmation(event, buttonId);
@@ -173,6 +179,34 @@ function afficherMenuDeroulant(menuId) {
             document.body.appendChild(modal);
         }
         modal.classList.add('modal-open');
+        document.querySelector('.OverlayModalConfirmation').style.display = 'block';
+
+        const buttonConfirm = document.querySelector('#confirm-submit');
+        if (buttonConfirm) {
+            buttonConfirm.addEventListener('click', function() {
+                button.click();
+            });
+        }
+    }
+//Fontion vue admin
+    // Fonction pour le modal de confirmation pour supprimer un film
+    function openModalConfirmationSupprimerFilm(event, buttonId, titre) {
+        event.preventDefault();
+
+        const button = document.getElementById(buttonId);
+        let modal = document.getElementById('ModalConfirmSubmit');
+        console.log(titre);
+        if (!modal) {
+            modal = document.createElement('div');
+            modal.setAttribute('id', 'ModalConfirmSubmit');
+            modal.classList.add('modal3');
+            modal.innerHTML = `<div>Voulez vraiment supprimer le film ${titre} ?</div>
+                                <button id="confirm-submit" type="submit">Oui</button>
+                                <button onclick="removeModal(event, 'ModalConfirmSubmit')" class="modal-button">Non</button>`;
+            document.body.appendChild(modal);
+        }
+        modal.classList.add('modal-open');
+        document.querySelector('.OverlayModalConfirmation').style.display = 'block';
 
         const buttonConfirm = document.querySelector('#confirm-submit');
         if (buttonConfirm) {
