@@ -46,5 +46,6 @@ if(isset($_GET["action"])) {
         // AuthentificationController
         case "login" : $ctrlAuthentification -> login(); break;
         case "register" : $ctrlAuthentification -> register(); break;
+        case "logout" : $ctrlAuthentification -> logout(); break;
     }
 }
