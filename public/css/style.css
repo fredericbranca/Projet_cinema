@@ -315,6 +315,10 @@
     min-height: 100vh;
 }
 #admin .header {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: #ffffff;
     height: 173px;
     display: flex;
     align-items: center;
