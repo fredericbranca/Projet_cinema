@@ -6,6 +6,8 @@ use Controller\CinemaController; // On "use" le controller Cinema
 use Controller\ActeurController;
 use Controller\RealisateurController;
 use Controller\GenreController;
+use Controller\AuthentificationController;
+
 
 // On autocharge les classes du projet
 spl_autoload_register(function ($class_name) {
@@ -16,6 +18,8 @@ $ctrlCinema = new CinemaController(); // On instancie le controller Cinema
 $ctrlActeur = new ActeurController(); 
 $ctrlRealisateur = new RealisateurController();
 $ctrlGenre = new GenreController();
+$ctrlAuthentification = new AuthentificationController();
+
 
 $id = (isset($_GET["id"])) ? $_GET["id"] : null;
 
@@ -38,5 +42,9 @@ if(isset($_GET["action"])) {
         // GenreController
         case "listGenres" : $ctrlGenre -> listGenres(); break;
         case "listFilmsGenre" : $ctrlGenre -> listFilmsGenre($id); break;
+
+        // AuthentificationController
+        case "login" : $ctrlAuthentification -> login(); break;
+        case "register" : $ctrlAuthentification -> register(); break;
     }
 }
