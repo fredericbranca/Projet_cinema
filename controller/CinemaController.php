@@ -15,8 +15,10 @@ class CinemaController
         $pdo = Connect::seConnecter();
         $requeteLangue = $pdo->query("SET lc_time_names = 'fr_FR';");
         $requeteFilms = $pdo->query("
-            SELECT id_film, affiche, duree, titre, TIME_FORMAT(SEC_TO_TIME(duree * 60), '%k H %i') AS dureeFormat, DATE_FORMAT(dateSortie, '%e %M %Y') as dateSortie, titre as test
+            SELECT id_film, affiche, duree, titre, TIME_FORMAT(SEC_TO_TIME(duree * 60), '%k H %i') AS dureeFormat, DATE_FORMAT(dateSortie, '%e %M %Y') as dateDeSortie, titre as test
             FROM film
+            ORDER BY dateSortie DESC
+            LIMIT 20
         ");
 
         require "view/accueil.php";
