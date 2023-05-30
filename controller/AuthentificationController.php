@@ -13,27 +13,27 @@ class AuthentificationController
         if (isset($_POST['login'])) {
 
             // Filtres
-            $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
+            $utilisateur = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             // FILTER_VALIDATE_EMAIL : permet la validation des adresses e-mail Unicode conformément aux normes (n'accepte que les caractères ASCII)
             // FILTER_FLAG_EMAIL_UNICODE : autorise l'utilisation de caractère non-ASCII (accent, caractères chinois, ...)
             $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-            if ($email !== false && $password !== false && !empty($email) && !empty($password)) {
+            if ($utilisateur !== false && $password !== false && !empty($utilisateur) && !empty($password)) {
 
                 $pdo = Connect::seConnecter();
 
-                $requeteEmail = $pdo->prepare("
-                    SELECT password
+                $requeteUtilisateur = $pdo->prepare("
+                    SELECT id, password
                     FROM users
-                    WHERE email = :email
+                    WHERE email = :utilisateur OR username = :utilisateur
                 ");
-                $requeteEmail->execute([
-                    'email' => $email
+                $requeteUtilisateur->execute([
+                    'utilisateur' => $utilisateur
                 ]);
 
                 // Vérifie si l'utilisateur existe
-                if ($requeteEmail->rowCount() === 1) {
-                    $userData = $requeteEmail->fetch();
+                if ($requeteUtilisateur->rowCount() === 1) {
+                    $userData = $requeteUtilisateur->fetch();
                     $hashedPassword = $userData['password'];
 
                     // Vérifie le mot de passe
@@ -143,4 +143,17 @@ class AuthentificationController
 
         require "view/register.php";
     }
+
+    // Déconnexion
+    public function logout()
+    {
+        if ($_GET['action'] === 'logout') {
+            // Détruit la session et rediriger vers l'accueil
+            session_start();
+            session_destroy();
+            header("Location: index.php?action=accueil");
+            exit;
+        }
+    }
+
 }
