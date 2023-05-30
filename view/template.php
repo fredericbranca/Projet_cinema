@@ -3,9 +3,9 @@
 $titre = (isset($titre)) ? $titre : "";
 $titre_secondaire = (isset($titre_secondaire)) ? $titre_secondaire : "";
 
-if(isset($_SESSION['Message'])) {
-    echo $_SESSION['Message'];
-    unset($_SESSION['Message']);
+if(isset($_SESSION['message'])) {
+    echo $_SESSION['message'];
+    unset($_SESSION['message']);
 }
 
 ?>
@@ -38,6 +38,8 @@ if(isset($_SESSION['Message'])) {
                 <li><a href="index.php?action=accueil">Accueil</a></li>
                 <li><a href="index.php?action=listGenres">Genres</a></li>
                 <li><a href="index.php?action=admin">Admin</a></li>
+                <li><a href="index.php?action=login">Connexion</a></li>
+                <li><a href="index.php?action=register">Inscription</a></li>
             </ul>
         </nav>
     </header>
