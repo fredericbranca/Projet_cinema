@@ -6,8 +6,8 @@ ob_start();
 
 <section id="login">
     <form method="POST" action="index.php?action=login" enctype="multipart/form-data">
-        <label for="email">Email :</label>
-        <input type="email" id="email" name="email" required>
+        <label for="email">Email / Nom d'utilisateur :</label>
+        <input type="text" id="email" name="email" required>
 
         <label for="password">Mot de passe :</label>
         <input type="password" id="password" name="password" required>
