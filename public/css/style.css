@@ -106,6 +106,14 @@
     position: relative;
     height: 1159px;
     overflow-x: hidden;
+    background: no-repeat;
+    background-size: cover;
+    transition: 0.4s;
+}
+#listFilms .blur {
+    height: 1159px;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px); 
 }
 .header-films {
     max-width: 1920px;
@@ -117,7 +125,7 @@
     left: 151px;
     font-size: 40px;
     font-weight: 700;
-    /* color: #FFF; */
+    color: #FFF;
 }
 .header-films .whiteline {
     position: absolute;
@@ -133,6 +141,7 @@
 #caroussel {
     width: fit-content;
     height: 850px;
+    transition: 1s;
 }
 #listFilms .cards {
     height: 850px;
@@ -177,6 +186,13 @@
     width: 279px;
     height: 378px;
 }
+#listFilms .cards img.scaled {
+    height: 465px;
+    width: 343.21px;
+    top: 10px;
+    left: 15px;
+    transition: 0.4s ease-in;
+}
 #listFilms .info-film {
     position: absolute;
     padding-top: 45px;
@@ -184,6 +200,7 @@
     height: 280px;
     top: 475px;
     left: 33.5px;
+    color: #FFF;
 }
 #listFilms h2 {
     display: flex;
