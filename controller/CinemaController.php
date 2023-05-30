@@ -156,18 +156,16 @@ class CinemaController
 
                             // Si aucun champ réalisateur est rempli, affiche un message
                             if (empty($idRealisateur) && (empty($nom) && empty($prenom) && empty($sexe) && empty($dateNaiss))) {
-                                var_dump("1er filtre rea");
-                                die();
-                                $_SESSION['Message'] = "Un réalisateur doit être sélectionné ou créé.";
+                                $_SESSION['messageError'] = "Un réalisateur doit être sélectionné ou créé.";
                                 header("Location: index.php?action=admin#modalAddFilm");
-
+                                exit;
                                 // Si un réalisateur existant a été choisit : utilise la requête avec un réalisateur existant (+check le filtre)
                             } elseif ((!empty($idRealisateur) && $idRealisateur !== false) && (empty($nom) || empty($prenom) || empty($sexe) || empty($dateNaiss))) {
 
                                 // Requete pour ajouter un/des genre(s) à la db
                                 $requeteAddNewGenre = $pdo->prepare("
                                     INSERT INTO genre (nom)
-                                    VALUE (:genre)
+                                    VALUES (:genre)
                                 ");
                                 $requeteGetGenreId = $pdo->prepare("
                                     SELECT LAST_INSERT_ID() as genreId
@@ -236,15 +234,16 @@ class CinemaController
                                 $_SESSION['titre'] = $lastFilm['titre'];
 
                                 // Redirection sur le modal après l'ajout du film
-                                $_SESSION['Message'] = "Film ajouté.";
+                                $_SESSION['message'] = "Film ajouté.";
                                 header("Location: index.php?action=admin#modalAddCasting");
+                                exit;
                             } elseif ((!empty($nom) && !empty($prenom) && !empty($sexe) && !empty($dateNaiss)) & ($nom !== false && $prenom !== false && $sexe !== false && $dateNaiss !== false)) { // Si l'utilisateur veut créer un nouveau réalisateur
 
 
                                 // Requete pour ajouter un/des genre(s) à la db
                                 $requeteAddNewGenre = $pdo->prepare("
                                     INSERT INTO genre (nom)
-                                    VALUE (:genre)
+                                    VALUES (:genre)
                                 ");
                                 $requeteGetGenreId = $pdo->prepare("
                                     SELECT LAST_INSERT_ID() as genreId
@@ -253,7 +252,7 @@ class CinemaController
                                 // Requete pour créer une personne
                                 $requeteAddPersonne = $pdo->prepare("
                                     INSERT INTO personne (nom, prenom, sexe, dateNaissance)
-                                    VALUE (:nom, :prenom, :sexe, :dateNaissance)
+                                    VALUES (:nom, :prenom, :sexe, :dateNaissance)
                                 ");
 
                                 // Requete pour que cette personne soit un rélisateur
@@ -341,31 +340,34 @@ class CinemaController
                                 $_SESSION['titre'] = $lastFilm['titre'];
 
                                 // Redirection sur le modal après l'ajout du film
-                                $_SESSION['Message'] = "Nouveau réalisateur créé et film ajouté.";
+                                $_SESSION['message'] = "Le film $titre a été créé. Ajoutez des castings au film !";
                                 header("Location: index.php?action=admin#modalAddCasting");
+                                exit;
                             }
 
                             // Affiche un message si un des champs du film est vide    
                         } else {
-                            var_dump("champs film erreur");
-                            die();
-                            $_SESSION['Message'] = "Tous les champs sont obligatoires.";
+                            $_SESSION['messageError'] = "Tous les champs sont obligatoires.";
                             header("Location: index.php?action=admin#modalAddFilm");
+                            exit;
                         }
                         // Si les filtres pour le film ne passe pas
                     } else {
-                        var_dump("erreur filtre bool");
-                        die();
+                        $_SESSION['messageError'] = "Erreur dans le formulaire.";
+                        header("Location: index.php?action=admin#modalAddFilm");
+                        exit;
                     }
                     // Si les caractéristiques de l'image ne correspondent pas
                 } else {
-                    var_dump("Caractéristiques image incorrect");
-                    die();
+                    $_SESSION['messageError'] = "Impossible d'ajouter l'image.";
+                    header("Location: index.php?action=admin#modalAddFilm");
+                    exit;
                 }
                 // Else pour le champ image
             } else {
-                var_dump("Image obligatoire");
-                die();
+                $_SESSION['messageError'] = "Veuillez ajouter une image.";
+                header("Location: index.php?action=admin#modalAddFilm");
+                exit;
             }
         }
 
@@ -383,8 +385,6 @@ class CinemaController
             $datesNaiss = filter_input(INPUT_POST, 'dateNaissance', FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_REQUIRE_ARRAY);
             $roles = filter_input(INPUT_POST, 'role2', FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_REQUIRE_ARRAY);
 
-            var_dump($noms);
-
             if ($idActeur !== false && $arrayRoles !== false && $noms !== false && $prenoms !== false && $sexes !== false && $datesNaiss !== false && $roles !== false) {
                 if ((!empty($idActeur) && !empty($arrayRoles)) || (!empty($noms) && !empty($prenoms) && !empty($sexes) && !empty($datesNaiss) && !empty($roles))) {
 
@@ -394,12 +394,12 @@ class CinemaController
                             // requete pour ajouter un nouveau role
                             $requeteAddRole = $pdo->prepare("
                                 INSERT INTO role (role)
-                                VALUE (:role)
+                                VALUES (:role)
                             ");
                             // requete pour ajouter la partie select dans la table casting
                             $requeteAddCasting = $pdo->prepare("
                                 INSERT INTO casting (id_film, id_acteur, id_role)
-                                VALUE (:id_film, :id_acteur, LAST_INSERT_ID())
+                                VALUES (:id_film, :id_acteur, LAST_INSERT_ID())
                             ");
 
                             // execute la requete pour ajouter un nouveau role
@@ -419,7 +419,7 @@ class CinemaController
 
                         $requeteAddPersonne = $pdo->prepare("
                         INSERT INTO personne (nom, prenom, sexe, dateNaissance)
-                            VALUE (:nom, :prenom, :sexe, :dateNaissance)
+                            VALUES (:nom, :prenom, :sexe, :dateNaissance)
                         ");
                         // Requete pour que cette personne soit un acteur
                         $requeteAddActeur = $pdo->prepare("
@@ -433,7 +433,7 @@ class CinemaController
                         // Requete pour ajouter un role
                         $requeteAddRole = $pdo->prepare("
                             INSERT INTO role (role)
-                            VALUE (:role)
+                            VALUES (:role)
                         ");
                         // Requete pour récupérer l'ID du role ajouté
                         $requeteLastRole = $pdo->query("
@@ -442,7 +442,7 @@ class CinemaController
                         // Requete pour ajouter un casting
                         $requeteAddCasting = $pdo->prepare("
                             INSERT INTO casting (id_film, id_acteur, id_role)
-                            VALUE (:id_film, :id_acteur, :id_role)
+                            VALUES (:id_film, :id_acteur, :id_role)
                         ");
 
                         foreach ($noms as $i => $nom) {
@@ -482,16 +482,18 @@ class CinemaController
                         }
                     }
 
-                    session_unset();
-                    $_SESSION['Message'] = "Le casting a été ajouté.";
+                    unset($_SESSION['id']);
+                    $_SESSION['message'] = "Le casting a été ajouté.";
                     header("Location: index.php?action=admin");
                 } else {
-                    var_dump("Erreur input ajouter casting");
-                    die();
+                    $_SESSION['messageError'] = "Tous les champs sont obligatoires.";
+                    header("Location: index.php?action=admin#modalAddCasting");
+                    exit;
                 }
             } else {
-                var_dump("Erreur filtre bool");
-                die();
+                $_SESSION['messageError'] = "Un des champs contient une erreur.";
+                header("Location: index.php?action=admin#modalAddCasting");
+                exit;
             }
         }
 
@@ -505,7 +507,7 @@ class CinemaController
 
             //Requete pour récupérer le nom de l'image
             $requeteImage = $pdo->prepare("
-                SELECT affiche
+                SELECT titre, affiche
                 FROM film
                 WHERE id_film = :id_film
             ");
@@ -515,8 +517,9 @@ class CinemaController
                 "id_film" => $idFilm
             ]);
 
-            $affiche = $requeteImage->fetch();
-            $nomAffiche = $affiche['affiche'];
+            $filmData = $requeteImage->fetch();
+            $titre = $filmData['titre'];
+            $nomAffiche = $filmData['affiche'];
             unlink("public/img/" . $nomAffiche);
 
             // requete pour supprimer des castings
@@ -553,7 +556,7 @@ class CinemaController
             ]);
 
 
-            $_SESSION['Message'] = "Film supprimé";
+            $_SESSION['message'] = "Le film $titre a été supprimé";
             header("Location: index.php?action=admin");
         }
 
@@ -687,8 +690,9 @@ class CinemaController
                                 'id_film' => $id
                             ]);
                         } else {
-                            var_dump("Erreur caractéristiques image");
-                            die;
+                            $_SESSION['messageError'] = "L'image contient une erreur.";
+                            header("Location: index.php?action=modifierFilm&id=$id");
+                            exit;
                         }
                     }
 
@@ -722,7 +726,7 @@ class CinemaController
                     foreach ($genres as $genre) {
                         $requeteAjouterGenre = $pdo->prepare("
                             INSERT INTO genre_film (id_film, id_genre)
-                            VALUE (:id_film, :id_genre)
+                            VALUES (:id_film, :id_genre)
                         ");
                         $requeteAjouterGenre->execute([
                             'id_film' => $id,
@@ -742,7 +746,7 @@ class CinemaController
                     foreach (array_combine($acteurs, $roles) as $acteur => $role) {
                         $requeteCasting = $pdo->prepare("
                             INSERT INTO casting (id_film, id_acteur, id_role)
-                            VALUE (:id_film, :id_acteur, :id_role)
+                            VALUES (:id_film, :id_acteur, :id_role)
                         ");
                         $requeteCasting->execute([
                             'id_film' => $id,
@@ -755,10 +759,14 @@ class CinemaController
                     header("Location: index.php?action=modifierFilm&id=$id");
                     
                 } else {
-                    var_dump("Erreur champs");
+                    $_SESSION['messageError'] = "Un des champs contient une erreur";
+                    header("Location: index.php?action=modifierFilm&id=$id");
+                    exit;
                 }
             } else {
-                var_dump("Erreur booléen");
+                $_SESSION['messageError'] = "Erreur formulaire";
+                header("Location: index.php?action=modifierFilm&id=$id");
+                exit;
             }
         }
 
@@ -773,7 +781,7 @@ class CinemaController
 
                 $requeteAddGenre = $pdo->prepare("
                     INSERT INTO genre (nom)
-                    VALUE (:nom)
+                    VALUES (:nom)
                 ");
                 $requeteAddGenre->execute([
                     'nom' => $genre
@@ -781,9 +789,11 @@ class CinemaController
 
                 $_SESSION['message'] = "Le genre $genre a été ajouté.";
                 header("Location: index.php?action=modifierFilm&id=$id");
+                exit;
             } else {
-                $_SESSION['message'] = "Erreur : Le champ n'a pas pu être ajouté";
+                $_SESSION['messageError'] = "Le champ n'a pas pu être ajouté";
                 header("Location: index.php?action=modifierFilm&id=$id");
+                exit;
             }
         }
 
@@ -801,7 +811,7 @@ class CinemaController
 
                 $requeteAddPersonne = $pdo->prepare("
                     INSERT INTO personne (nom, prenom, sexe, dateNaissance)
-                    VALUE (:nom, :prenom, :sexe, :dateNaissance)
+                    VALUES (:nom, :prenom, :sexe, :dateNaissance)
                 ");
                 $requeteAddRealisateur = $pdo->prepare("
                     INSERT INTO realisateur (id_personne)
@@ -817,9 +827,11 @@ class CinemaController
 
                 $_SESSION['message'] = "Le réalisateur $nom $prenom a été ajouté.";
                 header("Location: index.php?action=modifierFilm&id=$id");
+                exit;
             } else {
-                $_SESSION['message'] = "Erreur : Le réalisateur n'a pas pu être ajouté.";
+                $_SESSION['messageError'] = "Le réalisateur n'a pas pu être ajouté.";
                 header("Location: index.php?action=modifierFilm&id=$id");
+                exit;
             }
         }
 
@@ -837,7 +849,7 @@ class CinemaController
 
                 $requeteAddPersonne = $pdo->prepare("
                     INSERT INTO personne (nom, prenom, sexe, dateNaissance)
-                    VALUE (:nom, :prenom, :sexe, :dateNaissance)
+                    VALUES (:nom, :prenom, :sexe, :dateNaissance)
                 ");
                 $requeteAddActeur = $pdo->prepare("
                     INSERT INTO acteur (id_personne)
@@ -853,9 +865,11 @@ class CinemaController
 
                 $_SESSION['message'] = "L'acteur $nom $prenom a été ajouté.";
                 header("Location: index.php?action=modifierFilm&id=$id");
+                exit;
             } else {
-                $_SESSION['message'] = "Erreur : L'acteur n'a pas pu être ajouté.";
+                $_SESSION['messageError'] = "L'acteur n'a pas pu être ajouté.";
                 header("Location: index.php?action=modifierFilm&id=$id");
+                exit;
             }
         }
 
@@ -870,7 +884,7 @@ class CinemaController
 
                 $requeteAddGenre = $pdo->prepare("
                     INSERT INTO role (role)
-                    VALUE (:role)
+                    VALUES (:role)
                 ");
                 $requeteAddGenre->execute([
                     'role' => $role
@@ -878,9 +892,11 @@ class CinemaController
 
                 $_SESSION['message'] = "Le rôle $genre a été ajouté.";
                 header("Location: index.php?action=modifierFilm&id=$id");
+                exit;
             } else {
-                $_SESSION['message'] = "Erreur : Le rôle n'a pas pu être ajouté";
+                $_SESSION['messageError'] =  "Le rôle n'a pas pu être ajouté";
                 header("Location: index.php?action=modifierFilm&id=$id");
+                exit;
             }
         }
 

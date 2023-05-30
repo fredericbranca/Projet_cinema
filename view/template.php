@@ -3,11 +3,6 @@
 $titre = (isset($titre)) ? $titre : "";
 $titre_secondaire = (isset($titre_secondaire)) ? $titre_secondaire : "";
 
-if(isset($_SESSION['message'])) {
-    echo $_SESSION['message'];
-    unset($_SESSION['message']);
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -64,6 +59,24 @@ if(isset($_SESSION['message'])) {
 
     <!-- script -->
     <script type="text/javascript" src="public/js/script.js"></script>
+
+<?php 
+    if(isset($_SESSION['message'])) { 
+    ?>
+        <div id="alert"><?= $_SESSION['message'] ?></div>
+        <script>tempAlert(3000, 'alertError')</script>
+        <?php
+        unset($_SESSION['message']);
+}
+if(isset($_SESSION['messageError'])) { 
+    ?>
+        <div id="alertError"><?= $_SESSION['messageError'] ?></div>
+        <script>tempAlert(3000, 'alertError')</script>
+        <?php
+        unset($_SESSION['messageError']);
+}
+?>
+
 </body>
 
 </html>

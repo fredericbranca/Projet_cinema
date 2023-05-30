@@ -38,16 +38,18 @@ class AuthentificationController
 
                     // Vérifie le mot de passe
                     if (password_verify($password, $hashedPassword)) {
+                        $userId = $userData['id'];
                         $_SESSION['message'] = "Connexion réussie";
-                        header("Location: index.php?action=login");
+                        $_SESSION['user'] = $userId;
+                        header("Location: index.php?action=accueil");
                         exit;
                     } else {
-                        $_SESSION['message'] = "Mot de passe incorrect";
+                        $_SESSION['messageError'] = "Mot de passe incorrect";
                         header("Location: index.php?action=login");
                         exit;
                     }
                 } else {
-                    $_SESSION['message'] = "Email inexistante";
+                    $_SESSION['messageError'] = "Email inexistante";
                     header("Location: index.php?action=login");
                     exit;
                 }
@@ -85,7 +87,8 @@ class AuthentificationController
 
                 // J'utilise fetchColumn() pour vérifier si le nombre de ligne est supérieur à 0, si oui : l'email est déjà utilisé
                 if ($requeteEmail->fetchColumn() > 0) {
-                    $_SESSION['message'] = "Email déjà utilisé sur ce site";
+                    $_SESSION['messageError'] = "Email déjà utilisé sur ce site";
+                    header("Location: index.php?action=register");
                     exit;
                 }
 
@@ -100,13 +103,15 @@ class AuthentificationController
                 ]);
 
                 if ($requeteUsername->fetchColumn() > 0) {
-                    $_SESSION['message'] = "Username déjà utilisé sur ce site";
+                    $_SESSION['messageError'] = "Username déjà utilisé sur ce site";
+                    header("Location: index.php?action=register");
                     exit;
                 }
 
                 // Vérifie que les 2 mots de passe correspondent
                 if ($_POST['password'] !== $_POST['confirm_password']) {
-                    $_SESSION['message'] = "Les mots de passe ne correspondent pas";
+                    $_SESSION['messageError'] = "Les mots de passe ne correspondent pas";
+                    header("Location: index.php?action=register");
                     exit;
                   }
 
@@ -116,7 +121,7 @@ class AuthentificationController
                 // Ajout à la db
                 $requeteAjoutUser = $pdo->prepare("
                   INSERT INTO users (username, password, email)
-                  VALUE (:username, :password, :email)
+                  VALUES (:username, :password, :email)
                 ");
                 $requeteAjoutUser->execute([
                     'username' => $username,
@@ -127,9 +132,12 @@ class AuthentificationController
                 // Redirection + message
                 $_SESSION['message'] = "Inscription réussie !";
                 header("Location: index.php?action=accueil");
+                exit;
 
             } else {
-                var_dump("erreur filter");
+                $_SESSION['messageError'] = "Erreur dans le formulaire";
+                header("Location: index.php?action=register");
+                exit;
             }
         }
 
