@@ -82,6 +82,7 @@ class CinemaController
         $requeteGenre = $pdo->query("
             SELECT *
             FROM genre
+            ORDER BY nom ASC
         ");
         $requeteRealisateur = $pdo->query("
             SELECT r.id_realisateur as id_realisateur, CONCAT(p.nom, ' ', p.prenom) as name
