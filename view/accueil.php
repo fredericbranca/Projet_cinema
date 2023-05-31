@@ -5,7 +5,7 @@ $films = $requeteFilms->fetchAll();
 
 ?>
 
-<section id="header" class="headerAccueil">
+<section id="header">
     <div class="header headerFilm">
         <ul>
             <li>Cinema</li>
