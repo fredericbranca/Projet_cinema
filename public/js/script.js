@@ -135,8 +135,8 @@ function scrollToElement(elementId, px) {
         acteurInput.innerHTML =   `<input type="text" name="nom[]" placeholder="Nom de l'acteur">
                                 <input type="text" name="prenom[]" placeholder="Prénom de l'acteur">
                                 <select name="sexe[]">
-                                <option value="homme">Homme</option>
-                                <option value="femme">Femme</option>
+                                <option value="H">Homme</option>
+                                <option value="F">Femme</option>
                                 </select>
                                 <input type="date" name="dateNaissance[]">
                                 <input type="text" name="role2[]" placeholder="Rôle de l'acteur">
