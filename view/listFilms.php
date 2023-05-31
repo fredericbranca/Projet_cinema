@@ -78,7 +78,7 @@ $filmsPageCourante = array_slice($filmsFiltres, $indiceDebut, $filmsParPage);
       <?php
       foreach ($filmsPageCourante as $film) {
       ?>
-        <li><?= $film['titre'] ?></li>
+        <li><a href="index.php?action=detailsFilm&id=<?= $film['id_film'] ?>"><?= $film['titre'] ?></a></li>
       <?php
       }
       ?>
