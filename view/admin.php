@@ -1,5 +1,8 @@
 <?php
 
+// Check si l'utilisateur est admin pour accéder à la page admin
+if (isset($_SESSION['user']) && $_SESSION['admin'] == 1) {
+
 ob_start();
 
 $genres = $requeteGenre->fetchAll();
@@ -133,7 +136,7 @@ $titres = $requeteTitres->fetchAll();
 </div>
 
 <section id="admin">
-    <div class="header">
+    <div class="header adminHeader">
         <div class="lettres">
             <?php
             foreach (range('A', 'Z') as $lettre) { ?>
@@ -191,6 +194,13 @@ $titres = $requeteTitres->fetchAll();
 </script>
 
 <?php
+
+// redirection si l'utilisateur connecté n'est pas admin
+} else {
+    $_SESSION['messageError'] = "Vous n'avez pas les droits d'accès à cette page";
+    header("Location: index.php?action=accueil");
+    exit;
+}
 
 $titre = "Admin";
 $titre_secondaire = "Admin";

@@ -1,6 +1,10 @@
 <?php
 
+if (isset($_SESSION['user']) && $_SESSION['admin'] == 1) {
+    
 ob_start();
+
+
 
 $realisateurs = $requeteRealisateur->fetchAll(); // récupère tous les réalisateurs
 $acteurs = $requeteActeur->fetchAll(); // récupère tous les acteurs
@@ -320,6 +324,13 @@ $rolesJSON = json_encode($roles);
 </script>
 
 <?php
+
+// redirection si l'utilisateur connecté n'est pas admin
+} else {
+    $_SESSION['messageError'] = "Vous n'avez pas les droits d'accès à cette page";
+    header("Location: index.php?action=accueil");
+    exit;
+}
 
 $titre = "Modifier film : " . $film['titre'];
 $titre_secondaire = "Modification des films";

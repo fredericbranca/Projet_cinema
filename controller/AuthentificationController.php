@@ -23,7 +23,7 @@ class AuthentificationController
                 $pdo = Connect::seConnecter();
 
                 $requeteUtilisateur = $pdo->prepare("
-                    SELECT id, password
+                    SELECT *
                     FROM users
                     WHERE email = :utilisateur OR username = :utilisateur
                 ");
@@ -41,6 +41,11 @@ class AuthentificationController
                         $userId = $userData['id'];
                         $_SESSION['message'] = "Connexion réussie";
                         $_SESSION['user'] = $userId;
+                        if($userData['admin'] == 0) {
+                            $_SESSION['admin'] = 0;
+                        } else {
+                            $_SESSION['admin'] = 1;
+                        }
                         header("Location: index.php?action=accueil");
                         exit;
                     } else {
@@ -49,7 +54,7 @@ class AuthentificationController
                         exit;
                     }
                 } else {
-                    $_SESSION['messageError'] = "Email inexistante";
+                    $_SESSION['messageError'] = "Nom d'utilisateur ou email incorrect";
                     header("Location: index.php?action=login");
                     exit;
                 }
@@ -131,7 +136,7 @@ class AuthentificationController
 
                 // Redirection + message
                 $_SESSION['message'] = "Inscription réussie !";
-                header("Location: index.php?action=accueil");
+                header("Location: index.php?action=login");
                 exit;
 
             } else {
@@ -149,11 +154,12 @@ class AuthentificationController
     {
         if ($_GET['action'] === 'logout') {
             // Détruit la session et rediriger vers l'accueil
-            session_start();
-            session_destroy();
+            unset($_SESSION['user']);
+            $_SESSION['message'] = "Déconnexion réussie";
             header("Location: index.php?action=accueil");
             exit;
         }
+
     }
 
 }

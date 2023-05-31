@@ -1,5 +1,11 @@
 <?php
 
+if (isset($_SESSION['user'])) { 
+    $_SESSION['messageError'] = "Page inaccessible, vous êtes déjà connecté.";
+    header("Location: index.php?action=accueil");
+    exit;
+}
+
 ob_start();
 
 ?>

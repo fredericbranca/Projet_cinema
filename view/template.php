@@ -32,9 +32,25 @@ $titre_secondaire = (isset($titre_secondaire)) ? $titre_secondaire : "";
                 <img src="public/img/logo.jpg" alt="logo CNEMA Cretria">
                 <li><a href="index.php?action=accueil">Accueil</a></li>
                 <li><a href="index.php?action=listGenres">Genres</a></li>
-                <li><a href="index.php?action=admin">Admin</a></li>
-                <li><a href="index.php?action=login">Connexion</a></li>
-                <li><a href="index.php?action=register">Inscription</a></li>
+                <?php
+                if (isset($_SESSION['user']) && $_SESSION['admin'] == 0) {
+                ?>
+                    <li><a href="index.php?action=profil">Profil</a></li>
+                    <li><a href="index.php?action=logout">Déconnexion</a></li>
+                <?php
+                } elseif (isset($_SESSION['user']) && $_SESSION['admin'] == 1) {
+                ?>
+                    <li><a href="index.php?action=admin">Admin</a></li>
+                    <li><a href="index.php?action=profil">Profil</a></li>
+                    <li><a href="index.php?action=logout">Déconnexion</a></li>
+                <?php
+                } else { 
+                ?>
+                    <li><a href="index.php?action=login">Connexion</a></li>
+                    <li><a href="index.php?action=register">Inscription</a></li>
+                <?php
+                }
+                ?>
             </ul>
         </nav>
     </header>
@@ -61,19 +77,20 @@ $titre_secondaire = (isset($titre_secondaire)) ? $titre_secondaire : "";
     <script type="text/javascript" src="public/js/script.js"></script>
 
 <?php 
-    if(isset($_SESSION['message'])) { 
+if(isset($_SESSION['message'])) { 
     ?>
-        <div id="alert"><?= $_SESSION['message'] ?></div>
-        <script>tempAlert(3000, 'alertError')</script>
-        <?php
-        unset($_SESSION['message']);
+    <div id="alert"><?= $_SESSION['message'] ?></div>
+    <script>tempAlert(3000, 'alert')</script>
+    <?php
+    unset($_SESSION['message']);
 }
+
 if(isset($_SESSION['messageError'])) { 
     ?>
-        <div id="alertError"><?= $_SESSION['messageError'] ?></div>
-        <script>tempAlert(3000, 'alertError')</script>
-        <?php
-        unset($_SESSION['messageError']);
+    <div id="alertError"><?= $_SESSION['messageError'] ?></div>
+    <script>tempAlert(3000, 'alertError')</script>
+    <?php
+    unset($_SESSION['messageError']);
 }
 ?>
 
