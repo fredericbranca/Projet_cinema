@@ -90,7 +90,13 @@ $filmsPageCourante = array_slice($filmsFiltres, $indiceDebut, $filmsParPage);
       // Générer les liens de pagination
       for ($i = 1; $i <= $totalPages; $i++) {
         $activeClass = ($i == $page) ? 'active' : '';
-        echo "<a href=\"index.php?action=listFilms&page=$i\" class=\"$activeClass\">$i</a>";
+        if ($genreFiltre) {
+          echo "<a href=\"index.php?action=listFilms&genre=$genreFiltre&page=$i\" class=\"$activeClass\">$i</a>";
+        } elseif ($yearFiltre) {
+          echo "<a href=\"index.php?action=listFilms&year=$yearFiltre&page=$i\" class=\"$activeClass\">$i</a>";
+        } else {
+          echo "<a href=\"index.php?action=listFilms&page=$i\" class=\"$activeClass\">$i</a>";
+        }
       }
       ?>
     </div>
