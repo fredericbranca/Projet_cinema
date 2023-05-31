@@ -5,7 +5,7 @@ session_start();
 use Controller\CinemaController; // On "use" le controller Cinema
 use Controller\ActeurController;
 use Controller\RealisateurController;
-use Controller\GenreController;
+use Controller\ListeFilmsController;
 use Controller\AuthentificationController;
 
 
@@ -17,11 +17,13 @@ spl_autoload_register(function ($class_name) {
 $ctrlCinema = new CinemaController(); // On instancie le controller Cinema
 $ctrlActeur = new ActeurController(); 
 $ctrlRealisateur = new RealisateurController();
-$ctrlGenre = new GenreController();
+$ctrlFilms = new ListeFilmsController();
 $ctrlAuthentification = new AuthentificationController();
 
 
 $id = (isset($_GET["id"])) ? $_GET["id"] : null;
+$genreFiltre = isset($_GET['genre']) ? $_GET['genre'] : null;
+$yearFiltre = isset($_GET['year']) ? $_GET['year'] : null;
 
 if(isset($_GET["action"])) {
 
@@ -39,9 +41,8 @@ if(isset($_GET["action"])) {
         // RealisateurController
         case "detailsRealisateur" : $ctrlRealisateur -> detailsRealisateur($id); break;
 
-        // GenreController
-        case "listGenres" : $ctrlGenre -> listGenres(); break;
-        case "listFilmsGenre" : $ctrlGenre -> listFilmsGenre($id); break;
+        // ListFilmsController
+        case "listFilms" : $ctrlFilms -> listFilms($id, $genreFiltre, $yearFiltre); break;
 
         // AuthentificationController
         case "login" : $ctrlAuthentification -> login(); break;

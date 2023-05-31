@@ -31,7 +31,7 @@ $titre_secondaire = (isset($titre_secondaire)) ? $titre_secondaire : "";
             <ul>
                 <img src="public/img/logo.jpg" alt="logo CNEMA Cretria">
                 <li><a href="index.php?action=accueil">Accueil</a></li>
-                <li><a href="index.php?action=listGenres">Genres</a></li>
+                <li><a href="index.php?action=listFilms">Tous les films</a></li>
                 <?php
                 if (isset($_SESSION['user']) && $_SESSION['admin'] == 0) {
                 ?>
