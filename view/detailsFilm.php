@@ -53,7 +53,7 @@ $acteurs = $requeteActeur->fetchAll() // Récupération des acteurs ayant joué 
                 <?php                           // Affichage du/des genre(s) du film
                 foreach ($genres as $genre) { 
                 ?>
-                    <li><a href="index.php?action=listFilmsGenre&id=<?= $genre['id_genre']?>"><?= $genre['nom'] ?></a></li>
+                    <li><a href="index.php?action=listFilms&genre=<?= $genre['id_genre']?>"><?= $genre['nom'] ?></a></li>
                 <?php
                 }
                 ?>
