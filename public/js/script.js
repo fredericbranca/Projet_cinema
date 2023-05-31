@@ -78,11 +78,11 @@ function scrollToElement(elementId, px) {
     // Ces fonctions modifient le style css du modal pour le rendre visible ou invisible
     function openModal(modalId) {
         if (modalId === '#modalDelFilm') {
-            document.querySelector('.overlay2').style.zIndex = '1';
+            document.querySelector('.overlay2').style.zIndex = '2';
             document.querySelector('.overlay2').style.opacity = '1';
             document.querySelector(modalId).classList.add('modal-open');
         } else {
-            document.querySelector('.overlay').style.zIndex = '1';
+            document.querySelector('.overlay').style.zIndex = '2';
             document.querySelector('.overlay').style.opacity = '1';
             document.querySelector(modalId).classList.add('modal-open');
         }
@@ -354,6 +354,18 @@ function scrollToElement(elementId, px) {
         });
     }
 
+    // Défilement au clic sur les lettres
+    const letter = document.querySelectorAll('.lettres');
+    if (letter) {
+        letter.forEach(letter => {
+        letter.addEventListener('click', (event) => {
+            event.preventDefault();
+            const targetId = event.target.getAttribute('href').slice(1);
+            scrollToElement(targetId, 50);
+        });
+        });
+    }   
+
 /////////////////////////////////////////////////////////////////////// Vue accueil ///////////////////////////////////////////////////////////////////////
 
     // Caroussel, liste des films de la page d'accueil
@@ -395,13 +407,13 @@ function scrollToElement(elementId, px) {
     }
 
     // Défilement au clic sur "Voir les films récent"
-    const button = document.querySelectorAll('.header');
+    const button = document.querySelectorAll('.headerFilm');
     if (button) {
-        button.forEach(title => {
-        title.addEventListener('click', (event) => {
+        button.forEach(button => {
+        button.addEventListener('click', (event) => {
             event.preventDefault();
             const targetId = event.target.getAttribute('href').slice(1);
-            scrollToElement(targetId, 100);
+            scrollToElement(targetId, 90);
         });
         });
     }   
