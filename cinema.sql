@@ -26,9 +26,9 @@ CREATE TABLE IF NOT EXISTS `acteur` (
   PRIMARY KEY (`id_acteur`),
   UNIQUE KEY `id_personne` (`id_personne`),
   CONSTRAINT `acteur_ibfk_1` FOREIGN KEY (`id_personne`) REFERENCES `personne` (`id_personne`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
 
--- Listage des données de la table cinema.acteur : ~8 rows (environ)
+-- Listage des données de la table cinema.acteur : ~25 rows (environ)
 INSERT INTO `acteur` (`id_acteur`, `id_personne`) VALUES
 	(1, 2),
 	(2, 3),
@@ -54,7 +54,10 @@ INSERT INTO `acteur` (`id_acteur`, `id_personne`) VALUES
 	(22, 29),
 	(26, 59),
 	(27, 60),
-	(28, 61);
+	(28, 61),
+	(31, 67),
+	(32, 68),
+	(33, 69);
 
 -- Listage de la structure de table cinema. casting
 CREATE TABLE IF NOT EXISTS `casting` (
@@ -95,7 +98,10 @@ INSERT INTO `casting` (`id_film`, `id_acteur`, `id_role`) VALUES
 	(3, 22, 22),
 	(68, 26, 32),
 	(68, 27, 33),
-	(68, 28, 34);
+	(68, 28, 34),
+	(81, 31, 47),
+	(81, 32, 48),
+	(81, 33, 49);
 
 -- Listage de la structure de table cinema. film
 CREATE TABLE IF NOT EXISTS `film` (
@@ -111,9 +117,9 @@ CREATE TABLE IF NOT EXISTS `film` (
   UNIQUE KEY `titre` (`titre`),
   KEY `id_realisateur` (`id_realisateur`),
   CONSTRAINT `film_ibfk_1` FOREIGN KEY (`id_realisateur`) REFERENCES `realisateur` (`id_realisateur`)
-) ENGINE=InnoDB AUTO_INCREMENT=80 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=latin1;
 
--- Listage des données de la table cinema.film : ~10 rows (environ)
+-- Listage des données de la table cinema.film : ~11 rows (environ)
 INSERT INTO `film` (`id_film`, `titre`, `dateSortie`, `duree`, `synopsis`, `note`, `affiche`, `id_realisateur`) VALUES
 	(1, 'Super Mario Bros, le film', '2023-04-05', 92, 'Alors qu&rsquo;ils tentent de r&eacute;parer une canalisation souterraine, Mario et son fr&egrave;re Luigi, tous deux plombiers, se retrouvent plong&eacute;s dans un nouvel univers f&eacute;erique &agrave; travers un myst&eacute;rieux conduit. Mais lorsque les deux fr&egrave;res sont s&eacute;par&eacute;s, Mario s&rsquo;engage dans une aventure tr&eacute;pidante pour retrouver Luigi.Dans sa qu&ecirc;te, il peut compter sur l&rsquo;aide du champignon Toad, habitant du Royaume Champignon, et les conseils avis&eacute;s, en mati&egrave;re de techniques de combat, de la Princesse Peach, guerri&egrave;re d&eacute;termin&eacute;e &agrave; la t&ecirc;te du Royaume. C&rsquo;est ainsi que Mario r&eacute;ussit &agrave; mobiliser ses propres forces pour aller au bout de sa mission.', 4, '6470a5ea617209.21185750.jpg', 1),
 	(2, 'À vol d\'oiseaux', '2023-04-05', 57, 'À Vol d’oiseaux rassemble trois courts métrages d’animation délicats, sensibles. Un pur moment de bonheur, aérien, à la fin duquel on se sent pousser des ailes ! Un programme comme une parenthèse de douceur, où les adultes retrouvent leur âme d’enfant, les plus jeunes grandissent dans l’espoir d’une vie bienveillante, où chacun est incité à sortir de sa coquille pour voler de ses propres ailes. ', 3, 'A_vol_d_oiseaux.jpg', 2),
@@ -124,14 +130,15 @@ INSERT INTO `film` (`id_film`, `titre`, `dateSortie`, `duree`, `synopsis`, `note
 	(7, 'Scream VI', '2023-03-08', 122, 'Apr&egrave;s avoir frapp&eacute; &agrave; trois reprises &agrave; Woodsboro, apr&egrave;s avoir terroris&eacute; le campus de Windsor et les studios d&rsquo;Hollywood, Ghostface a d&eacute;cid&eacute; de s&eacute;vir dans Big Apple, mais dans une ville aussi grande que New-York personne ne vous entendra crier&hellip;', 3, '6470a60aa07b37.51429984.jpg', 7),
 	(8, 'Creed III', '2023-03-01', 117, 'Idole de la boxe et entouré de sa famille, Adonis Creed n’a plus rien à prouver. Jusqu’au jour où son ami d’enfance, Damian, prodige de la boxe lui aussi, refait surface. A peine sorti de prison, Damian est prêt à tout pour monter sur le ring et reprendre ses droits. Adonis joue alors sa survie, face à un adversaire déterminé à l’anéantir.', 4, 'Creed_3.jpg', 8),
 	(9, 'Les Gardiennes de la planète', '2023-02-22', 82, 'Une baleine à bosse s\'est échouée sur un rivage isolé. Alors qu\'un groupe d\'hommes et de femmes organise son sauvetage, nous découvrons l\'histoire extraordinaire des cétacés, citoyens des océans du monde, essentiels à l’écosystème de notre planète depuis plus de 50 millions d’années.', 4, 'Les_Gardiennes_de_la_planete.jpg', 9),
-	(68, 'Misanthrope', '2023-04-26', 118, 'Eleanor, une jeune enqu&ecirc;trice au lourd pass&eacute;, est appel&eacute;e sur les lieux d&rsquo;un crime de masse terrible. La police et le FBI lancent une chasse &agrave; l&rsquo;homme sans pr&eacute;c&eacute;dent, mais face au mode op&eacute;ratoire constamment impr&eacute;visible de l&rsquo;assassin, l&rsquo;enqu&ecirc;te pi&eacute;tine. Eleanor, quant &agrave; elle se trouve de plus en plus impliqu&eacute;e dans l&#039;affaire et se rend compte que ses propres d&eacute;mons int&eacute;rieurs peuvent l&rsquo;aider &agrave; cerner l&#039;esprit de ce tueur si singulier&hellip;', 3.9, '646b788fb6b6b6.28655703.jpg', 30);
+	(68, 'Misanthrope', '2023-04-26', 118, 'Eleanor, une jeune enqu&ecirc;trice au lourd pass&eacute;, est appel&eacute;e sur les lieux d&rsquo;un crime de masse terrible. La police et le FBI lancent une chasse &agrave; l&rsquo;homme sans pr&eacute;c&eacute;dent, mais face au mode op&eacute;ratoire constamment impr&eacute;visible de l&rsquo;assassin, l&rsquo;enqu&ecirc;te pi&eacute;tine. Eleanor, quant &agrave; elle se trouve de plus en plus impliqu&eacute;e dans l&#039;affaire et se rend compte que ses propres d&eacute;mons int&eacute;rieurs peuvent l&rsquo;aider &agrave; cerner l&#039;esprit de ce tueur si singulier&hellip;', 3.9, '646b788fb6b6b6.28655703.jpg', 30),
+	(81, 'Forrest Gump', '2015-10-28', 140, 'Quelques d&eacute;cennies d&#039;histoire am&eacute;ricaine, des ann&eacute;es 1940 &agrave; la fin du XX&egrave;me si&egrave;cle, &agrave; travers le regard et l&#039;&eacute;trange odyss&eacute;e d&#039;un homme simple et pur, Forrest Gump.', 4.6, '647747441e31c6.31478253.jpg', 33);
 
 -- Listage de la structure de table cinema. genre
 CREATE TABLE IF NOT EXISTS `genre` (
   `id_genre` int NOT NULL AUTO_INCREMENT,
   `nom` varchar(50) NOT NULL,
   PRIMARY KEY (`id_genre`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=latin1;
 
 -- Listage des données de la table cinema.genre : ~15 rows (environ)
 INSERT INTO `genre` (`id_genre`, `nom`) VALUES
@@ -148,7 +155,7 @@ INSERT INTO `genre` (`id_genre`, `nom`) VALUES
 	(11, 'Famille'),
 	(12, 'Policier'),
 	(14, 'Apocalyptique'),
-	(15, 'Romande'),
+	(15, 'Romance'),
 	(16, 'Biographie');
 
 -- Listage de la structure de table cinema. genre_film
@@ -170,8 +177,10 @@ INSERT INTO `genre_film` (`id_film`, `id_genre`) VALUES
 	(4, 2),
 	(5, 2),
 	(1, 3),
+	(81, 3),
 	(3, 4),
 	(8, 4),
+	(81, 4),
 	(7, 5),
 	(68, 7),
 	(4, 8),
@@ -185,7 +194,8 @@ INSERT INTO `genre_film` (`id_film`, `id_genre`) VALUES
 	(2, 11),
 	(5, 11),
 	(9, 11),
-	(68, 12);
+	(68, 12),
+	(81, 15);
 
 -- Listage de la structure de table cinema. personne
 CREATE TABLE IF NOT EXISTS `personne` (
@@ -195,9 +205,9 @@ CREATE TABLE IF NOT EXISTS `personne` (
   `sexe` varchar(10) NOT NULL,
   `dateNaissance` date DEFAULT NULL,
   PRIMARY KEY (`id_personne`)
-) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=latin1;
 
--- Listage des données de la table cinema.personne : ~0 rows (environ)
+-- Listage des données de la table cinema.personne : ~33 rows (environ)
 INSERT INTO `personne` (`id_personne`, `nom`, `prenom`, `sexe`, `dateNaissance`) VALUES
 	(1, 'Horvath', 'Aaron ', 'H', '1980-08-19'),
 	(2, 'Pratt', 'Chris', 'H', '1979-06-21'),
@@ -231,7 +241,11 @@ INSERT INTO `personne` (`id_personne`, `nom`, `prenom`, `sexe`, `dateNaissance`)
 	(58, 'Szifron', 'Dami&aacute;n', 'H', '1975-07-09'),
 	(59, 'Woodley', 'Shailene', 'femme', '1991-11-15'),
 	(60, 'Mendelsohn', 'Ben', 'homme', '1969-04-03'),
-	(61, 'Adepo', 'Jovan', 'homme', '1988-09-06');
+	(61, 'Adepo', 'Jovan', 'homme', '1988-09-06'),
+	(66, 'Zemeckis', 'ROBERT', 'H', '1952-05-14'),
+	(67, 'Hanks', 'Tom', 'homme', '1956-07-09'),
+	(68, 'Sinise', 'Gary', 'homme', '1955-03-17'),
+	(69, 'Wright', 'Robin', 'femme', '1966-04-08');
 
 -- Listage de la structure de table cinema. realisateur
 CREATE TABLE IF NOT EXISTS `realisateur` (
@@ -240,9 +254,9 @@ CREATE TABLE IF NOT EXISTS `realisateur` (
   PRIMARY KEY (`id_realisateur`),
   UNIQUE KEY `id_personne` (`id_personne`),
   CONSTRAINT `realisateur_ibfk_1` FOREIGN KEY (`id_personne`) REFERENCES `personne` (`id_personne`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
 
--- Listage des données de la table cinema.realisateur : ~0 rows (environ)
+-- Listage des données de la table cinema.realisateur : ~10 rows (environ)
 INSERT INTO `realisateur` (`id_realisateur`, `id_personne`) VALUES
 	(1, 1),
 	(2, 5),
@@ -253,14 +267,15 @@ INSERT INTO `realisateur` (`id_realisateur`, `id_personne`) VALUES
 	(7, 20),
 	(8, 25),
 	(9, 26),
-	(30, 58);
+	(30, 58),
+	(33, 66);
 
 -- Listage de la structure de table cinema. role
 CREATE TABLE IF NOT EXISTS `role` (
   `id_role` int NOT NULL AUTO_INCREMENT,
   `role` varchar(50) NOT NULL,
   PRIMARY KEY (`id_role`)
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=latin1;
 
 -- Listage des données de la table cinema.role : ~25 rows (environ)
 INSERT INTO `role` (`id_role`, `role`) VALUES
@@ -288,7 +303,27 @@ INSERT INTO `role` (`id_role`, `role`) VALUES
 	(22, 'Daijin'),
 	(32, 'Eleonor'),
 	(33, 'Lammark'),
-	(34, 'Mackenzie');
+	(34, 'Mackenzie'),
+	(47, 'Forrest Gump'),
+	(48, 'Lieutenant Daniel Taylor'),
+	(49, 'Jenny');
+
+-- Listage de la structure de table cinema. users
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `email` varchar(80) NOT NULL,
+  `admin` int NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+-- Listage des données de la table cinema.users : ~2 rows (environ)
+INSERT INTO `users` (`id`, `username`, `password`, `email`, `admin`) VALUES
+	(3, 'admin', '$2y$10$mtwMcPUAFvQY6byAKyhHq.ve28zVw/S8ic3HxAVXV3faQTk9sZMH2', 'admin@gmail.com', 1),
+	(5, 'testUser', '$2y$10$Dv0lASMmb.X2yW4ilv93V.juwGKBSNN6YkmfBD5BHEdfBzZ5u.Aha', 'testUser@gmail.com', 0);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
