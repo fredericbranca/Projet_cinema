@@ -5,6 +5,24 @@ ob_start();
 // Configuration
 $filmsParPage = 10; // Nombre de films par page
 $films = $requeteAfficherFilms->fetchAll();
+
+$filmsAvecGenres = array();
+while ($filmGenres = $requeteAfficherFilmsGenres->fetch()) {
+  $idFilm = $filmGenres['id_film'];
+  $idGenre = $filmGenres['id_genre'];
+  $nomGenre = $filmGenres['nom'];
+
+  if (!isset($filmsAvecGenres[$idFilm])) {
+    $filmsAvecGenres[$idFilm] = array(
+      'id_film' => $idFilm,
+      'nomGenres' => array(),
+      'idGenres' => array()
+    );
+  }
+  $filmsAvecGenres[$idFilm]['nomGenres'][] = $nomGenre;
+  $filmsAvecGenres[$idFilm]['idGenres'][] = $idGenre;
+}
+
 $genres = $requeteAfficherGenres->fetchAll();
 $years = $requeteAfficherAnnees->fetchAll();
 
@@ -50,27 +68,27 @@ $filmsPageCourante = array_slice($filmsFiltres, $indiceDebut, $filmsParPage);
       <h3>Filtres</h3>
       <a href="index.php?action=listFilms">Reset</a>
     </div>
-      <div class="dropdown-toggle">Par genres &#x25BC;</div>
-      <ul class="dropdown-menu">
-        <?php
-        foreach ($genres as $genre) {
-        ?>
-          <li><a href="index.php?action=listFilms&genre=<?= $genre['id_genre'] ?>"><?= $genre['nom'] ?></a></li>
-        <?php
-        }
-        ?>
-      </ul>
+    <div class="dropdown-toggle">Par genres &#x25BC;</div>
+    <ul class="dropdown-menu">
+      <?php
+      foreach ($genres as $genre) {
+      ?>
+        <li><a href="index.php?action=listFilms&genre=<?= $genre['id_genre'] ?>"><?= $genre['nom'] ?></a></li>
+      <?php
+      }
+      ?>
+    </ul>
 
-      <div class="dropdown-toggle">Par années de production &#x25BC;</div>
-      <ul class="dropdown-menu">
-        <?php
-        foreach ($years as $year) {
-        ?>
-          <li><a href="index.php?action=listFilms&year=<?= $year['year'] ?>"><?= $year['year'] ?></a></li>
-        <?php
-        }
-        ?>
-      </ul>
+    <div class="dropdown-toggle">Par années de production &#x25BC;</div>
+    <ul class="dropdown-menu">
+      <?php
+      foreach ($years as $year) {
+      ?>
+        <li><a href="index.php?action=listFilms&year=<?= $year['year'] ?>"><?= $year['year'] ?></a></li>
+      <?php
+      }
+      ?>
+    </ul>
   </div>
 
   <div class="films">
@@ -78,7 +96,26 @@ $filmsPageCourante = array_slice($filmsFiltres, $indiceDebut, $filmsParPage);
       <?php
       foreach ($filmsPageCourante as $film) {
       ?>
-        <li><a href="index.php?action=detailsFilm&id=<?= $film['id_film'] ?>"><?= $film['titre'] ?></a></li>
+        <li>
+          <img src="public/img/<?= $film['affiche']; ?>" alt="Affiche du film : <?= $film['id_film'] ?>">
+          <div>
+            <a href="index.php?action=detailsFilm&id=<?= $film['id_film'] ?>"><?= $film['titre'] ?></a>
+            <div>
+              <?= $film['dureeFormat']; ?> / 
+                <?php
+                $idFilm = $film['id_film'];
+                if (isset($filmsAvecGenres[$idFilm])) {
+                  $nomGenres = $filmsAvecGenres[$idFilm]['nomGenres'];
+                  $genresListe = implode(', ', $nomGenres); // permet de concaténer les noms des genres avec une virgule
+                  echo rtrim($genresListe, ', '); // permet de supprimer ", " à droite de la chaîne de caractère $genresListe (fonctionne comme trim mais avec r ou l pour le début ou la fin)
+                }
+                ?>
+            </div>
+            <div>
+              De 
+            </div>
+          </div>
+        </li>
       <?php
       }
       ?>
