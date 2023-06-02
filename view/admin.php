@@ -1,7 +1,7 @@
 <?php
 
 // Check si l'utilisateur est admin pour accéder à la page admin
-if (isset($_SESSION['user']) && $_SESSION['admin'] == 1) {
+if (isset($_SESSION['users']) && $_SESSION['users']['admin']) {
 
 ob_start();
 
