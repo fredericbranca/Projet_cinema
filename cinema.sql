@@ -26,9 +26,9 @@ CREATE TABLE IF NOT EXISTS `acteur` (
   PRIMARY KEY (`id_acteur`),
   UNIQUE KEY `id_personne` (`id_personne`),
   CONSTRAINT `acteur_ibfk_1` FOREIGN KEY (`id_personne`) REFERENCES `personne` (`id_personne`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=latin1;
 
--- Listage des données de la table cinema.acteur : ~28 rows (environ)
+-- Listage des données de la table cinema.acteur : ~16 rows (environ)
 INSERT INTO `acteur` (`id_acteur`, `id_personne`) VALUES
 	(1, 2),
 	(2, 3),
@@ -92,7 +92,7 @@ CREATE TABLE IF NOT EXISTS `casting` (
   CONSTRAINT `casting_ibfk_3` FOREIGN KEY (`id_role`) REFERENCES `role` (`id_role`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Listage des données de la table cinema.casting : ~28 rows (environ)
+-- Listage des données de la table cinema.casting : ~48 rows (environ)
 INSERT INTO `casting` (`id_film`, `id_acteur`, `id_role`) VALUES
 	(1, 1, 1),
 	(1, 2, 2),
@@ -157,7 +157,7 @@ CREATE TABLE IF NOT EXISTS `film` (
   UNIQUE KEY `titre` (`titre`),
   KEY `id_realisateur` (`id_realisateur`),
   CONSTRAINT `film_ibfk_1` FOREIGN KEY (`id_realisateur`) REFERENCES `realisateur` (`id_realisateur`)
-) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=latin1;
 
 -- Listage des données de la table cinema.film : ~21 rows (environ)
 INSERT INTO `film` (`id_film`, `titre`, `dateSortie`, `duree`, `synopsis`, `note`, `affiche`, `id_realisateur`) VALUES
@@ -188,9 +188,9 @@ CREATE TABLE IF NOT EXISTS `genre` (
   `id_genre` int NOT NULL AUTO_INCREMENT,
   `nom` varchar(50) NOT NULL,
   PRIMARY KEY (`id_genre`)
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=latin1;
 
--- Listage des données de la table cinema.genre : ~16 rows (environ)
+-- Listage des données de la table cinema.genre : ~19 rows (environ)
 INSERT INTO `genre` (`id_genre`, `nom`) VALUES
 	(1, 'Action'),
 	(2, 'Aventure'),
@@ -283,9 +283,9 @@ CREATE TABLE IF NOT EXISTS `personne` (
   `sexe` varchar(10) NOT NULL,
   `dateNaissance` date DEFAULT NULL,
   PRIMARY KEY (`id_personne`)
-) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=98 DEFAULT CHARSET=latin1;
 
--- Listage des données de la table cinema.personne : ~49 rows (environ)
+-- Listage des données de la table cinema.personne : ~65 rows (environ)
 INSERT INTO `personne` (`id_personne`, `nom`, `prenom`, `sexe`, `dateNaissance`) VALUES
 	(1, 'Horvath', 'Aaron ', 'H', '1980-08-19'),
 	(2, 'Pratt', 'Chris', 'H', '1979-06-21'),
@@ -360,9 +360,9 @@ CREATE TABLE IF NOT EXISTS `realisateur` (
   PRIMARY KEY (`id_realisateur`),
   UNIQUE KEY `id_personne` (`id_personne`),
   CONSTRAINT `realisateur_ibfk_1` FOREIGN KEY (`id_personne`) REFERENCES `personne` (`id_personne`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=latin1;
 
--- Listage des données de la table cinema.realisateur : ~11 rows (environ)
+-- Listage des données de la table cinema.realisateur : ~19 rows (environ)
 INSERT INTO `realisateur` (`id_realisateur`, `id_personne`) VALUES
 	(1, 1),
 	(2, 5),
@@ -389,9 +389,9 @@ CREATE TABLE IF NOT EXISTS `role` (
   `id_role` int NOT NULL AUTO_INCREMENT,
   `role` varchar(50) NOT NULL,
   PRIMARY KEY (`id_role`)
-) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=latin1;
 
--- Listage des données de la table cinema.role : ~28 rows (environ)
+-- Listage des données de la table cinema.role : ~48 rows (environ)
 INSERT INTO `role` (`id_role`, `role`) VALUES
 	(1, 'Mario'),
 	(2, 'Princesse Peach'),
@@ -448,16 +448,15 @@ CREATE TABLE IF NOT EXISTS `users` (
   `username` varchar(50) NOT NULL,
   `password` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `email` varchar(80) NOT NULL,
-  `admin` int NOT NULL DEFAULT '0',
+  `admin` tinyint NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
--- Listage des données de la table cinema.users : ~2 rows (environ)
+-- Listage des données de la table cinema.users : ~1 rows (environ)
 INSERT INTO `users` (`id`, `username`, `password`, `email`, `admin`) VALUES
-	(3, 'admin', '$2y$10$mtwMcPUAFvQY6byAKyhHq.ve28zVw/S8ic3HxAVXV3faQTk9sZMH2', 'admin@gmail.com', 1),
-	(5, 'testUser', '$2y$10$Dv0lASMmb.X2yW4ilv93V.juwGKBSNN6YkmfBD5BHEdfBzZ5u.Aha', 'testUser@gmail.com', 0);
+	(10, 'admin', '$2y$10$zjxQVvFDuLEz9.VCOCDU1O3WF9RbyxExC9pT3imvHlLdhZ6cyvpOe', 'admin@gmail.com', 1);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
