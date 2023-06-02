@@ -33,12 +33,12 @@ $titre_secondaire = (isset($titre_secondaire)) ? $titre_secondaire : "";
                 <li><a href="index.php?action=accueil">Accueil</a></li>
                 <li><a href="index.php?action=listFilms">Tous les films</a></li>
                 <?php
-                if (isset($_SESSION['user']) && $_SESSION['admin'] == 0) {
+                if (isset($_SESSION['users']) && !$_SESSION['users']['admin']) {
                 ?>
                     <!-- <li><a href="index.php?action=profil">Profil</a></li> -->
                     <li><a href="index.php?action=logout">Déconnexion</a></li>
                 <?php
-                } elseif (isset($_SESSION['user']) && $_SESSION['admin'] == 1) {
+                } elseif (isset($_SESSION['users']) && $_SESSION['users']['admin']) {
                 ?>
                     <li><a href="index.php?action=admin">Admin</a></li>
                     <!-- <li><a href="index.php?action=profil">Profil</a></li> -->
