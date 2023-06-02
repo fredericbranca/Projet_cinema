@@ -1,6 +1,6 @@
 <?php
 
-if (isset($_SESSION['user'])) { 
+if (isset($_SESSION['user'])) {
     $_SESSION['messageError'] = "Vous êtes déjà connecté";
     header("Location: index.php?action=accueil");
     exit;
@@ -10,16 +10,18 @@ ob_start();
 
 ?>
 
-<section id="login">
-    <form method="POST" action="index.php?action=login" enctype="multipart/form-data">
-        <label for="email">Email / Nom d'utilisateur :</label>
-        <input type="text" id="email" name="email" required>
+<section id="login-container">
+    <div id="user">
+        <form method="POST" action="index.php?action=login" enctype="multipart/form-data">
+            <label for="email">Email / Nom d'utilisateur :</label>
+            <input type="text" id="email" name="email" required autocomplete="off">
 
-        <label for="password">Mot de passe :</label>
-        <input type="password" id="password" name="password" required>
+            <label for="password">Mot de passe :</label>
+            <input type="password" id="password" name="password" required autocomplete="off">
 
-        <button type="submit" name="login" id="login">Se connecter</button>
-    </form>
+            <button type="submit" name="login" id="login">Se connecter</button>
+        </form>
+    </div>
 </section>
 
 <?php
