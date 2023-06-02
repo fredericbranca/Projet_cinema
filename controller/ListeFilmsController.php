@@ -35,17 +35,19 @@ class ListeFilmsController
             FROM film
         ");
 
-        // Requete pour récupérer les infos du réalisateur
-        $requeteAfficherRealisateurs = $pdo->query("
-            SELECT id_realisateur, CONCAT(nom, ' ', prenom) as name
-            FROM realisateur r
+        // Requete pour récupérer les infos des réalisateurs et l'id film
+        $requeteAfficherFilmsRealisateurs = $pdo->query("
+            SELECT f.id_film, r.id_realisateur, CONCAT(p.prenom, ' ', p.nom) as name
+            FROM film f
+            JOIN realisateur r ON r.id_realisateur = f.id_realisateur
             JOIN personne p ON p.id_personne = r.id_personne
         ");
 
-        // Requete pour récupérer les infos des acteurs
-        $requeteAfficherActeurs = $pdo->query("
-            SELECT id_acteur, CONCAT(nom, ' ', prenom) as name
-            FROM acteur a
+        // Requete pour récupérer les infos des acteurs et l'id film
+        $requeteAfficherFilmsActeurs = $pdo->query("
+            SELECT c.id_film, a.id_acteur, CONCAT(p.prenom, ' ', p.nom) as name
+            FROM casting c
+            JOIN acteur a ON a.id_acteur = c.id_acteur
             JOIN personne p ON p.id_personne = a.id_personne
         ");
 
@@ -58,7 +60,7 @@ class ListeFilmsController
 
         // Requete pour récupérer la liste des films par genre
         $requeteAfficherFilmsGenre = $pdo->prepare("
-            SELECT f.id_film as idFilm, f.titre as titre, g.nom as nomGenre
+            SELECT *, TIME_FORMAT(SEC_TO_TIME(duree * 60), '%k H %i') AS dureeFormat, DATE_FORMAT(dateSortie, '%e %M %Y') as dateDeSortie, g.id_genre, g.nom
             FROM film f
             JOIN genre_film gf ON gf.id_film = f.id_film
             JOIN genre g ON g.id_genre = gf.id_genre
@@ -70,7 +72,7 @@ class ListeFilmsController
 
         // Requete pour récupérer la liste des films par année
         $requeteAfficherFilmsAnnee = $pdo->prepare("
-            SELECT *
+            SELECT *, TIME_FORMAT(SEC_TO_TIME(duree * 60), '%k H %i') AS dureeFormat
             FROM film
             WHERE YEAR(dateSortie) = :year
         ");
