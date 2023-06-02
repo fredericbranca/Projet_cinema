@@ -20,7 +20,7 @@ $titre_secondaire = (isset($titre_secondaire)) ? $titre_secondaire : "";
     <title><?= $titre ?></title>
 </head>
 
-<body>
+<body class="body">
     <div class="overlay"></div>
     <div class="overlay2"></div>
     <div class="OverlayModalConfirmation"></div>
@@ -35,13 +35,12 @@ $titre_secondaire = (isset($titre_secondaire)) ? $titre_secondaire : "";
                 <?php
                 if (isset($_SESSION['users']) && !$_SESSION['users']['admin']) {
                 ?>
-                    <!-- <li><a href="index.php?action=profil">Profil</a></li> -->
+                    <li><a href="index.php?action=profil">Profil</a></li>
                     <li><a href="index.php?action=logout">Déconnexion</a></li>
                 <?php
                 } elseif (isset($_SESSION['users']) && $_SESSION['users']['admin']) {
                 ?>
                     <li><a href="index.php?action=admin">Admin</a></li>
-                    <!-- <li><a href="index.php?action=profil">Profil</a></li> -->
                     <li><a href="index.php?action=logout">Déconnexion</a></li>
                 <?php
                 } else { 
