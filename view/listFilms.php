@@ -95,6 +95,21 @@ $filmsPageCourante = array_slice($filmsFiltres, $indiceDebut, $filmsParPage);
 
 <section id="allFilms">
   <h1>Liste des Films</h1>
+  <div class="pagination">
+        <?php
+        // Générer les liens de pagination
+        for ($i = 1; $i <= $totalPages; $i++) {
+          $activeClass = ($i == $page) ? 'active' : '';
+          if ($genreFiltre) {
+            echo "<a href=\"index.php?action=listFilms&genre=$genreFiltre&page=$i\" class=\"$activeClass\">$i</a>";
+          } elseif ($yearFiltre) {
+            echo "<a href=\"index.php?action=listFilms&year=$yearFiltre&page=$i\" class=\"$activeClass\">$i</a>";
+          } else {
+            echo "<a href=\"index.php?action=listFilms&page=$i\" class=\"$activeClass\">$i</a>";
+          }
+        }
+        ?>
+  </div>
   <div class="main">
     <div class="filtres">
       <div class="header">
@@ -255,7 +270,7 @@ $filmsPageCourante = array_slice($filmsFiltres, $indiceDebut, $filmsParPage);
 
 <?php
 
-$titre = "Liste des genres";
-$titre_secondaire = "Liste des genres";
+$titre = "Liste des films";
+$titre_secondaire = "Liste des films";
 $contenu = ob_get_clean();
 require "view/template.php";
