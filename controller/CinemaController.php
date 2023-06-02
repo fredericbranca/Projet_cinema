@@ -45,14 +45,14 @@ class CinemaController
             WHERE f.id_film = :id
         ");
         $requeteRealisateur = $pdo->prepare("
-            SELECT CONCAT(p.nom, ' ', p.prenom) AS realisateur, r.id_realisateur AS idRealisateur
+            SELECT CONCAT(p.prenom, ' ', p.nom) AS realisateur, r.id_realisateur AS idRealisateur
             FROM personne p
             JOIN realisateur r ON r.id_personne = p.id_personne
             JOIN film f ON f.id_realisateur = r.id_realisateur
             WHERE f.id_film = :id
         ");
         $requeteActeur = $pdo->prepare("
-            SELECT c.id_acteur as idActeur, CONCAT(p.nom, ' ', p.prenom) as acteur, r.role as role
+            SELECT c.id_acteur as idActeur, CONCAT(p.prenom, ' ', p.nom) as acteur, r.role as role
             FROM casting c
             JOIN role r ON r.id_role = c.id_role
             JOIN film f ON f.id_film = c.id_film
@@ -72,7 +72,7 @@ class CinemaController
     /* Ajouter un film */
     public function addFilm()
     {
-        if (empty($_SESSION['user']) || !$_SESSION['admin']){
+        if (isset($_SESSION['users']) && !$_SESSION['users']['admin']){
             
             $_SESSION['messageError'] = "Vous n'avez l'accès";
             header("Location: index.php?action=accueil");
@@ -91,13 +91,13 @@ class CinemaController
             ORDER BY nom ASC
         ");
         $requeteRealisateur = $pdo->query("
-            SELECT r.id_realisateur as id_realisateur, CONCAT(p.nom, ' ', p.prenom) as name
+            SELECT r.id_realisateur as id_realisateur, CONCAT(p.prenom, ' ', p.nom) as name
             FROM personne p
             JOIN realisateur r ON r.id_personne = p.id_personne
             ORDER BY p.nom ASC
         ");
         $requeteActeur = $pdo->query("
-            SELECT a.id_acteur as id_acteur, CONCAT(p.nom, ' ', p.prenom) as name
+            SELECT a.id_acteur as id_acteur, CONCAT(p.prenom, ' ', p.nom) as name
             FROM personne p
             JOIN acteur a ON a.id_personne = p.id_personne
             ORDER BY p.nom ASC
@@ -572,19 +572,23 @@ class CinemaController
     /* Modifier les informations d'un film */
     public function modifierFilm($id)
     {
-
+        if (!isset($_SESSION['users']) || !$_SESSION['users']['admin']) {
+            $_SESSION['messageError'] = "Vous n'avez pas les droits d'accès";
+            header("Location: index.php?action=accueil");
+            exit;
+        }
         $pdo = Connect::seConnecter();
 
         // Requête pour récupérer tous les réalisateurs
         $requeteRealisateur = $pdo->query("
-            SELECT CONCAT(p.nom, ' ', p.prenom) AS realisateur, r.id_realisateur AS id_realisateur
+            SELECT CONCAT(p.prenom, ' ', p.nom) AS realisateur, r.id_realisateur AS id_realisateur
             FROM personne p
             JOIN realisateur r ON r.id_personne = p.id_personne
             ORDER BY realisateur ASC
         ");
         // Requête pour récupérer tous les acteurs
         $requeteActeur = $pdo->query("
-            SELECT CONCAT(p.nom, ' ', p.prenom) AS acteur, a.id_acteur AS id_acteur
+            SELECT CONCAT(p.prenom, ' ', p.nom) AS acteur, a.id_acteur AS id_acteur
             FROM personne p
             JOIN acteur a ON a.id_personne = p.id_personne
             ORDER BY acteur ASC
@@ -597,7 +601,7 @@ class CinemaController
         ");
         // Requête pour récupérer les infos de tous les castings
         $requeteCasting = $pdo->prepare("
-            SELECT c.id_film, c.id_acteur, c.id_role, f.titre, CONCAT(p.nom, ' ', p.prenom) AS acteur, r.role
+            SELECT c.id_film, c.id_acteur, c.id_role, f.titre, CONCAT(p.prenom, ' ', p.nom) AS acteur, r.role
             FROM casting c
             JOIN film f ON f.id_film = c.id_film
             JOIN acteur a ON a.id_acteur = c.id_acteur
