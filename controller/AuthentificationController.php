@@ -10,6 +10,11 @@ class AuthentificationController
     /* Connexion */
     public function login()
     {
+        if (isset($_SESSION['users'])) {
+            $_SESSION['message'] = "Vous êtes déjà connecté";
+            header("Location: index.php?action=accueil");
+            exit;
+        }
         if (isset($_POST['login'])) {
 
             // Filtres
@@ -40,12 +45,7 @@ class AuthentificationController
                     if (password_verify($password, $hashedPassword)) {
                         $userId = $userData['id'];
                         $_SESSION['message'] = "Connexion réussie";
-                        $_SESSION['user'] = $userId;
-                        if($userData['admin'] == 0) {
-                            $_SESSION['admin'] = 0;
-                        } else {
-                            $_SESSION['admin'] = 1;
-                        }
+                        $_SESSION['users'] = $userData;
                         header("Location: index.php?action=accueil");
                         exit;
                     } else {
@@ -67,6 +67,11 @@ class AuthentificationController
     // Inscription
     public function register()
     {
+        if (isset($_SESSION['users'])) {
+            $_SESSION['message'] = "Vous êtes déjà connecté";
+            header("Location: index.php?action=accueil");
+            exit;
+        }
         if (isset($_POST['register'])) {
 
             // Filtres
@@ -152,9 +157,14 @@ class AuthentificationController
     // Déconnexion
     public function logout()
     {
+        if (!isset($_SESSION['users'])) {
+            $_SESSION['message'] = "Vous êtes déjà déconnecté";
+            header("Location: index.php?action=accueil");
+            exit;
+        }
         if ($_GET['action'] === 'logout') {
             // Détruit la session et rediriger vers l'accueil
-            unset($_SESSION['user']);
+            unset($_SESSION['users']);
             $_SESSION['message'] = "Déconnexion réussie";
             header("Location: index.php?action=accueil");
             exit;
