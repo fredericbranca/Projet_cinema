@@ -1,6 +1,6 @@
 <?php
 
-if (isset($_SESSION['user']) && $_SESSION['admin'] == 1) {
+if (!isset($_SESSION['user']) || !$_SESSION['users']['admin']) {
     
 ob_start();
 
