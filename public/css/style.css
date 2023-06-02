@@ -275,70 +275,89 @@
     min-height: 80vh;
     background: #151313;
 }
-
+#allFilms .main {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 10px
+}
 #allFilms .filtres .header {
     display: flex;
     gap: 20px;
     align-items: center;
 }
-#allFilms .filtres a {
+#allFilms a {
     text-decoration: none;
     color: #000;
 }
-
+#allFilms a:hover {
+    text-decoration: none;
+    color: #3391ff;
+}
+#allFilms .description {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
 #allFilms h1 {
+    padding-top: 70px;
     text-align: center;
     color: #fff;
-  }
-  
+}
 #allFilms .filtres {
-    float: left;
-    width: 200px;
+    height: fit-content;
+    margin-left: 10px;
     padding: 10px;
     background-color: #f2f2f2;
-  }
-
+}
 #allFilms .dropdown-toggle {
     cursor: pointer;
-    }
+}
 
 #allFilms .dropdown-menu {
     display: none;
     list-style-type: none;
     padding: 0;
     margin: 0;
-    }
-
+}
 #allFilms .active {
     display: block;
-    }
-  
-#allFilms .films {
-    margin-left: 220px;
-    padding: 10px;
-  }
-
+}
+#allFilms .note {
+    font-size: 15px;
+    font-weight: 400;
+}
+#allFilms .fa-star, #allFilms .fa-star-half-stroke {
+    font-size: 15px;
+    padding-right: 5px;
+    color: #FFC107;
+}
 #allFilms .films ul {
+    display: flex;
+    flex-direction: column;
     list-style-type: none;
     padding: 0;
-  }
-  
+}
 #allFilms .films li {
+    display: flex;
+    width: 800px;
+    gap : 20px;
     margin-bottom: 10px;
     padding: 10px;
     background-color: #f9f9f9;
     border: 1px solid #ddd;
-  }
-  
+}
+#allFilms .films li img {
+    width: 145px;
+    height: 197px;
+}
 #allFilms .films li:hover {
     background-color: #e9e9e9;
-  }
-  
+}
 #allFilms .pagination {
     margin-top: 20px;
     text-align: center;
-  }
-  
+}
 #allFilms .pagination a {
     display: inline-block;
     padding: 5px 10px;
@@ -347,17 +366,15 @@
     color: #555;
     text-decoration: none;
     border: 1px solid #ddd;
-  }
-  
+}
 #allFilms .pagination a:hover {
     background-color: #ddd;
     color: #000;
-  }
-  
+}
 #allFilms .pagination .active {
     background-color: #007bff;
     color: #fff;
-  }
+}
 
 /***************************************** Details Film */
 #detail-film {
