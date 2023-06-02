@@ -78,10 +78,12 @@ function scrollToElement(elementId, px) {
     // Ces fonctions modifient le style css du modal pour le rendre visible ou invisible
     function openModal(modalId) {
         if (modalId === '#modalDelFilm') {
+            document.querySelector('.body').style.overflow = 'hidden';
             document.querySelector('.overlay2').style.zIndex = '2';
             document.querySelector('.overlay2').style.opacity = '1';
             document.querySelector(modalId).classList.add('modal-open');
         } else {
+            document.querySelector('.body').style.overflow = 'hidden';
             document.querySelector('.overlay').style.zIndex = '2';
             document.querySelector('.overlay').style.opacity = '1';
             document.querySelector(modalId).classList.add('modal-open');
@@ -91,14 +93,17 @@ function scrollToElement(elementId, px) {
     // Fonction pour fermer le modal
     function closeModal(modalId) {
         if (modalId === '#modalDelFilm') {
+            document.querySelector('.body').style.overflow = 'auto';
             document.querySelector('.overlay2').style.opacity = '0';
             document.querySelector('.overlay2').style.zIndex = '-1';
             document.querySelector(modalId).classList.remove('modal-open');
         } else if (modalId == '#ModalConfirmSubmit') {
+            document.querySelector('.body').style.overflow = 'auto';
             document.querySelector('.OverlayModalConfirmation').style.display = 'none';
             document.querySelector(modalId).classList.remove('modal-open');
         }
         else {
+            document.querySelector('.body').style.overflow = 'auto';
             document.querySelector('.overlay').style.opacity = '0';
             document.querySelector('.overlay').style.zIndex = '-1';
             document.querySelector(modalId).classList.remove('modal-open');
@@ -198,9 +203,11 @@ function scrollToElement(elementId, px) {
             modal = document.createElement('div');
             modal.setAttribute('id', 'ModalConfirmSubmit');
             modal.classList.add('modal3');
-            modal.innerHTML = `<div>Voulez vraiment supprimer le film ${titre} ?</div>
-                                <button id="confirm-submit" type="submit">Oui</button>
-                                <button onclick="removeModal(event, 'ModalConfirmSubmit')" class="modal-button">Non</button>`;
+            modal.innerHTML = `<div>Voulez vraiment supprimer le film : ${titre} ?</div>
+                                <div class="button-confirmation">
+                                    <button id="confirm-submit" type="submit">Oui</button>
+                                    <button onclick="removeModal(event, 'ModalConfirmSubmit')" class="modal-button">Non</button>
+                                </div>`;
             document.body.appendChild(modal);
         }
         modal.classList.add('modal-open');
@@ -269,8 +276,10 @@ function scrollToElement(elementId, px) {
             modal.setAttribute('id', 'ModalConfirmSubmit');
             modal.classList.add('modal3');
             modal.innerHTML = `<div>Les données entrées précédemment ne seront pas enregistré. Voulez-vous continuer ?</div>
-                                <button id="confirm-submit" type="submit">Oui</button>
-                                <button onclick="closeModal('#ModalConfirmSubmit')" class="modal-button">Non</button>`;
+                                <div class="button-confirmation">
+                                    <button id="confirm-submit" type="submit">Oui</button>
+                                    <button onclick="closeModal('#ModalConfirmSubmit')" class="modal-button">Non</button>
+                                </div>`;
             document.body.appendChild(modal);
         }
         modal.classList.add('modal-open');
