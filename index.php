@@ -7,6 +7,7 @@ use Controller\ActeurController;
 use Controller\RealisateurController;
 use Controller\ListeFilmsController;
 use Controller\AuthentificationController;
+use Controller\ProfilController;
 
 
 // On autocharge les classes du projet
@@ -19,6 +20,7 @@ $ctrlActeur = new ActeurController();
 $ctrlRealisateur = new RealisateurController();
 $ctrlFilms = new ListeFilmsController();
 $ctrlAuthentification = new AuthentificationController();
+$ctrlProfil = new ProfilController();
 
 
 $id = (isset($_GET["id"])) ? $_GET["id"] : null;
@@ -48,5 +50,9 @@ if(isset($_GET["action"])) {
         case "login" : $ctrlAuthentification -> login(); break;
         case "register" : $ctrlAuthentification -> register(); break;
         case "logout" : $ctrlAuthentification -> logout(); break;
+
+        // ProfilController
+        case "profil" : $ctrlProfil -> profil(); break;
+        case "delete-account" : $ctrlProfil -> deleteAcc(); break;
     }
 }
