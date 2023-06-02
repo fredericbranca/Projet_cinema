@@ -16,7 +16,7 @@ class ActeurController
 
         // Requete pour afficher les info de l'acteur depuis l'id
         $requeteAfficherActeur = $pdo->prepare("
-        SELECT CONCAT(p.nom, ' ', P.prenom) AS acteur, sexe, DATE_FORMAT(dateNaissance, '%e %M %Y') as dateNaiss
+        SELECT CONCAT(p.prenom, ' ', P.nom) AS acteur, sexe, DATE_FORMAT(dateNaissance, '%e %M %Y') as dateNaiss
         FROM personne p
         JOIN acteur a ON a.id_personne = p.id_personne
         WHERE a.id_acteur = :id_acteur
